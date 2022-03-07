@@ -36,10 +36,11 @@ Installing the application in few steps
   npm run production
   php artisan route:cache
 ```
-4. Find API key in table API with note System API. Copy this key and set up this CRON:
-GET https://<Your URL>/api/main_check_agent/<API Token>
+4. Find API key in table API with note System API. 
+Copy this key and set up this CRON \
+GET https://Your-URL/api/main_check_agent/API-token
     
 ## License
 
-Licensed under [the AGPL License](/LICENSE.md)
+Licensed under [the AGPL License](/LICENSE)
 
