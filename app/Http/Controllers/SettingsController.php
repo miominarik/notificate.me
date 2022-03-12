@@ -17,7 +17,7 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('settings.index', [
+        return view('settings.Index', [
             'settings_data' => DB::table('users_settings')
                 ->where('user_id', Auth::id())
                 ->get()
