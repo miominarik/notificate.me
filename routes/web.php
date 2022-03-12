@@ -25,7 +25,10 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::resource('tasks', "App\Http\Controllers\TasksController")->except('show')->middleware(['auth','verified']);
-Route::resource('settings', "App\Http\Controllers\SettingsController")->middleware(['auth','verified']);
+
+Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');
+Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
+
 Route::put('tasks/complete/{task}', "App\Http\Controllers\TasksController@complete")->name('tasks.complete')->middleware(['auth','verified']);
 
 
