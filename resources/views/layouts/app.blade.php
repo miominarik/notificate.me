@@ -37,11 +37,11 @@
                         @auth
                             <ul class="nav">
                                 <li class="nav-item">
-                                    <a class="nav-link active"
+                                    <a class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}"
                                         href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link"
+                                    <a class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}"
                                         href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
                                 </li>
                             </ul>
