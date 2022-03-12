@@ -37,11 +37,11 @@
                         @auth
                             <ul class="nav">
                                 <li class="nav-item">
-                                    <a class="nav-link {{ (request()->is('tasks*')) ? 'active' : '' }}"
+                                    <a class="nav-link {{ request()->is('tasks*') ? 'active' : '' }}"
                                         href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}"
+                                    <a class="nav-link {{ request()->is('settings*') ? 'active' : '' }}"
                                         href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
                                 </li>
                             </ul>
@@ -80,8 +80,9 @@
 
                                 <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
                                     aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                         document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                                             document.getElementById('logout-form').submit();">
                                         {{ __('layout.menu_logout') }}
                                     </a>
 
