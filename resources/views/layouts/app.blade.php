@@ -40,6 +40,10 @@
                                     <a class="nav-link active"
                                         href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                        href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
+                                </li>
                             </ul>
                         @endauth
                     </ul>
