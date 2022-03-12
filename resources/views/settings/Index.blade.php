@@ -31,11 +31,10 @@
                             <div class="form-group row">
                                 <div class="col-lg-4 col-md-12 col-sm-12 col-12">
                                     <label for="enable_email_notif">{{ __('settings.enable_email_notif') }}</label>
-                                    <select class="form-control" name="enable_email_notif" id="enable_email_notif"
-                                        required>
-                                        <option value="1" @if ($settings_data[0]->enable_email_notification == 1) selected @endif>
+                                    <select class="form-control" name="enable_email_notif" id="enable_email_notif">
+                                        <option @if ($settings_data[0]->enable_email_notification == 1) selected @endif value="1">
                                             {{ __('settings.yes') }}</option>
-                                        <option value="0" @if ($settings_data[0]->enable_email_notification == 0) selected @endif>
+                                        <option @if ($settings_data[0]->enable_email_notification == 0) selected @endif value="0">
                                             {{ __('settings.no') }}</option>
                                     </select>
                                 </div>

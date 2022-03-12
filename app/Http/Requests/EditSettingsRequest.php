@@ -26,7 +26,7 @@ class EditSettingsRequest extends FormRequest
     {
         return [
             'enable_email_notif' => 'required|boolean',
-            'notification_time' => 'required|date_format:H:i',
+            'notification_time' => 'required|string|max:8',
         ];
     }
 }
