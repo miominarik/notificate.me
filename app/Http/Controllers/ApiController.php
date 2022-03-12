@@ -28,7 +28,8 @@ class ApiController extends Controller
 
                 $data = DB::table('tasks')
                     ->join('users', 'tasks.user_id', '=', 'users.id')
-                    ->select('tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users.email', 'users.name')
+                    ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
+                    ->select('tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users.email', 'users.name', 'users_settings.enable_email_notification', 'users_settings.notification_time')
                     ->where([
                         'task_enabled' => true
                     ])
@@ -36,6 +37,11 @@ class ApiController extends Controller
 
                 if (!empty($data)) {
                     foreach ($data as $item) {
+
+                        //Checks if the user wants to send notifications
+                        if ($item->enable_email_notification == 0) {
+                            continue;
+                        };
 
                         $checked_date = Carbon::createFromFormat('Y-m-d', $item->task_next_date);
 
@@ -51,13 +57,19 @@ class ApiController extends Controller
 
                         $new_date = $new_date->format('Y-m-d');
 
-                        if ($new_date <= Carbon::now()) {
-                            array_push($notification_array, [
-                                'task_name' => $item->task_name,
-                                'task_next_date' => $item->task_next_date,
-                                'user_email' => $item->email,
-                                'user_name' => $item->name
-                            ]);
+                        //check whether the current time is the same as set by the user
+                        $now = Carbon::now()->format('H');
+                        $date2 = Carbon::createFromFormat('H:i:s', $item->notification_time)->format('H');
+
+                        if ($now == $date2) {
+                            if ($new_date <= Carbon::now()) {
+                                array_push($notification_array, [
+                                    'task_name' => $item->task_name,
+                                    'task_next_date' => $item->task_next_date,
+                                    'user_email' => $item->email,
+                                    'user_name' => $item->name
+                                ]);
+                            }
                         }
                     }
                 }
@@ -67,10 +79,10 @@ class ApiController extends Controller
                         Mail::to($one_task['user_email'], $one_task['user_name'])->send(new NotificationMail($one_task['task_name'], $one_task['task_next_date']));
                     }
                 }
-            }else{
+            } else {
                 return response()->json(['error' => 'API Token is invalid'], 200);
             };
-        }else{
+        } else {
             return response()->json(['error' => 'Missing API Token'], 200);
         }
     }

@@ -45,7 +45,7 @@
                                     <label for="notification_time">{{ __('settings.time_when_notif') }}</label>
                                     <input type="time" class="form-control" name="notification_time"
                                         id="notification_time" aria-describedby="time_when_notif_help"
-                                        value="{{ $settings_data[0]->notification_time }}" required>
+                                        value="{{ $settings_data[0]->notification_time }}" step="3600" required>
                                     <small id="time_when_notif_help"
                                         class="form-text text-muted">{{ __('settings.time_when_notif_help') }}</small>
                                 </div>
