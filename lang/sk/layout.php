@@ -6,5 +6,8 @@ return [
     'menu_tasks' => 'Dashboard',
     'menu_login' => 'Prihlásiť',
     'menu_register' => 'Registrácia',
-    'menu_logout' => 'Odhlásiť sa'
+    'menu_logout' => 'Odhlásiť sa',
+    'menu_lang' => 'Jazyk',
+    'lang_slovak' => 'Slovenčina',
+    'lang_english' => 'Angličtina'
 ];
