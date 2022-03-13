@@ -24,57 +24,60 @@
                 @endif
                 <div class="d-flex flex-row-reverse bd-highlight">
                     <div class="pb-2 bd-highlight">
-                        <a href="{{route('tasks.create')}}"><button type="button" class="btn btn-dark btn-sm">{{__('tasks.menu_task_create')}}</button></a>
+                        <a href="{{ route('tasks.create') }}"><button type="button"
+                                class="btn btn-dark btn-sm">{{ __('tasks.menu_task_create') }}</button></a>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-header">{{ __('tasks.all_active_tasks') }}</div>
                     <div class="card-body">
-
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>{{ __('tasks.task_name') }}</th>
-                                    <th>{{ __('tasks.task_note') }}</th>
-                                    <th>{{ __('tasks.task_date') }}</th>
-                                    <th>{{ __('tasks.task_repeat') }}</th>
-                                    <th>{{ __('tasks.task_action') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @isset($all_enabled_tasks)
-                                    @forelse ($all_enabled_tasks as $item)
-                                        @php
-                                            $item->task_repeat_type = match ($item->task_repeat_type) { 1 => trans_choice('tasks.day', $item->task_repeat_value),  2 => trans_choice('tasks.week', $item->task_repeat_value),  3 => trans_choice('tasks.month', $item->task_repeat_value),  4 => trans_choice('tasks.year', $item->task_repeat_value),  default => __('tasks.none') };
-                                        @endphp
-                                        <tr>
-                                            <td scope="row">{{ $item->task_name }}</td>
-                                            <td scope="row">{{ $item->task_note }}</td>
-                                            <td scope="row">
-                                                {{ \Carbon\Carbon::parse($item->task_next_date)->format('d.m.Y') }}
-                                            </td>
-                                            <td scope="row">{{ $item->task_repeat_value }} {{ $item->task_repeat_type }}
-                                            </td>
-                                            <td scope="row">
-                                                <span data-bs-toggle="modal" data-bs-target="#completeModal"
-                                                    onclick="document.getElementById('form_complete_task').setAttribute('action', '{{ route('tasks.complete', $item->id) }}')"><i
-                                                        class="fa-solid fa-check succes_icon"></i></span>
-                                                |
-                                                <a href="{{ route('tasks.edit', $item->id) }}"><i
-                                                        class="fa-solid fa-pen"></i></a </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td scope="row">{{ __('tasks.no_data') }}</td>
-                                            <td scope="row"></td>
-                                            <td scope="row"></td>
-                                            <td scope="row"></td>
-                                            <td scope="row"></td>
-                                        </tr>
-                                    @endforelse
-                                @endisset
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>{{ __('tasks.task_name') }}</th>
+                                        <th>{{ __('tasks.task_note') }}</th>
+                                        <th>{{ __('tasks.task_date') }}</th>
+                                        <th>{{ __('tasks.task_repeat') }}</th>
+                                        <th>{{ __('tasks.task_action') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @isset($all_enabled_tasks)
+                                        @forelse ($all_enabled_tasks as $item)
+                                            @php
+                                                $item->task_repeat_type = match ($item->task_repeat_type) { 1 => trans_choice('tasks.day', $item->task_repeat_value),  2 => trans_choice('tasks.week', $item->task_repeat_value),  3 => trans_choice('tasks.month', $item->task_repeat_value),  4 => trans_choice('tasks.year', $item->task_repeat_value),  default => __('tasks.none') };
+                                            @endphp
+                                            <tr>
+                                                <td scope="row">{{ $item->task_name }}</td>
+                                                <td scope="row">{{ $item->task_note }}</td>
+                                                <td scope="row">
+                                                    {{ \Carbon\Carbon::parse($item->task_next_date)->format('d.m.Y') }}
+                                                </td>
+                                                <td scope="row">{{ $item->task_repeat_value }}
+                                                    {{ $item->task_repeat_type }}
+                                                </td>
+                                                <td scope="row">
+                                                    <span data-bs-toggle="modal" data-bs-target="#completeModal"
+                                                        onclick="document.getElementById('form_complete_task').setAttribute('action', '{{ route('tasks.complete', $item->id) }}')"><i
+                                                            class="fa-solid fa-check succes_icon"></i></span>
+                                                    |
+                                                    <a href="{{ route('tasks.edit', $item->id) }}"><i
+                                                            class="fa-solid fa-pen"></i></a </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td scope="row">{{ __('tasks.no_data') }}</td>
+                                                <td scope="row"></td>
+                                                <td scope="row"></td>
+                                                <td scope="row"></td>
+                                                <td scope="row"></td>
+                                            </tr>
+                                        @endforelse
+                                    @endisset
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

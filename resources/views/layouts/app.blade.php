@@ -23,55 +23,67 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #343A40;">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+
+        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #343A40;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">{{ config('app.name', 'Laravel') }}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                    aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-                        @auth
-                            <ul class="nav">
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->is('tasks*') ? 'active' : '' }}"
-                                        href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->is('settings*') ? 'active' : '' }}"
-                                        href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
-                                </li>
-                            </ul>
-                        @endauth
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <div style="margin: 7px 5px 5px 5px">
-                            <a href="/language/sk"><img src="{{ url('/images/sk.webp') }}" alt="Slovak"
-                                    width="35px" /></a>
-                            <a href="/language/en"><img src="{{ url('/images/gb.webp') }}" alt="English"
-                                    width="35px" /></a>
-                        </div>
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link"
-                                        href="{{ route('login') }}">{{ __('layout.menu_login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link"
-                                        href="{{ route('register') }}">{{ __('layout.menu_register') }}</a>
-                                </li>
-                            @endif
-                        @else
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    @auth
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('tasks*') ? 'active' : '' }}" aria-current="page"
+                                    href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('settings*') ? 'active' : '' }}" aria-current="page"
+                                    href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
+                            </li>
+                        </ul>
+                    @endauth
+                    @guest
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('login*') ? 'active' : '' }}" aria-current="page"
+                                    href="{{ route('login') }}">{{ __('layout.menu_login') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('register*') ? 'active' : '' }}" aria-current="page"
+                                    href="{{ route('register') }}">{{ __('layout.menu_register') }}</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ __('layout.menu_lang') }}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="/language/sk">{{ __('layout.lang_slovak') }}</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="/language/en">{{ __('layout.lang_english') }}</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    @endguest
+                    @auth
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ __('layout.menu_lang') }}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="/language/sk">{{ __('layout.lang_slovak') }}</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="/language/en">{{ __('layout.lang_english') }}</a>
+                                    </li>
+                                </ul>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -81,8 +93,7 @@
                                 <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
                                     aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                                             document.getElementById('logout-form').submit();">
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('layout.menu_logout') }}
                                     </a>
 
@@ -92,8 +103,8 @@
                                     </form>
                                 </div>
                             </li>
-                        @endguest
-                    </ul>
+                        </ul>
+                    @endauth
                 </div>
             </div>
         </nav>

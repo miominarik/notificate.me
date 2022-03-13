@@ -6,5 +6,8 @@ return [
     'menu_tasks' => 'Dashboard',
     'menu_login' => 'Login',
     'menu_register' => 'Registration',
-    'menu_logout' => 'Logout'
+    'menu_logout' => 'Logout',
+    'menu_lang' => 'Language',
+    'lang_slovak' => 'Slovak',
+    'lang_english' => 'English'
 ];
