@@ -18,18 +18,11 @@ return new class extends Migration
     {
         Schema::create('api', function (Blueprint $table) {
             $table->id();
-            $table->string('api_token', 255);
+            $table->string('ip', 15);
             $table->string('note', 50)->nullable();
             $table->boolean('enabled')->default(true);
             $table->timestamps();
         });
-
-        DB::table('api')
-            ->insert([
-                'api_token' => Crypt::encryptString(rand()),
-                'note' => 'System API',
-                'created_at' => Carbon::now()
-            ]);
     }
 
     /**
