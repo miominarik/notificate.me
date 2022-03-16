@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\WhiteListIpAddressessMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/main_check_agent/{token}', "App\Http\Controllers\ApiController@AgentCheckDates");
+Route::get('/main_check_agent', "App\Http\Controllers\ApiController@AgentCheckDates")->middleware(WhiteListIpAddressessMiddleware::class);

@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('tasks.add_new_task') }}</div>
+    <section style="height: 100%">
+        <div class="container-fluid py-5">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-9">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <h3 class="mb-5">{{ __('tasks.add_new_task') }}</h3>
 
-                    <div class="card-body">
-                        <div class="container">
                             <form method="POST" action="{{ route('tasks.store') }}">
                                 @csrf
                                 @method('POST')
@@ -41,7 +41,8 @@
                                             class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_value') }}</label>
                                         <div class="col-sm-1-12">
                                             <input type="number" class="form-control" name="task_repeat_value"
-                                                id="task_repeat_value" min="1" max="16777215" placeholder="{{ __('tasks.amount') }}" required>
+                                                id="task_repeat_value" min="1" max="16777215"
+                                                placeholder="{{ __('tasks.amount') }}" required>
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -71,7 +72,8 @@
                                         <label for="task_notification_type"
                                             class="col-sm-1-12 col-form-label">{{ __('tasks.task_notification_type') }}</label>
                                         <div class="col-sm-1-12">
-                                            <select class="form-control" name="task_notification_type" id="task_notification_type">
+                                            <select class="form-control" name="task_notification_type"
+                                                id="task_notification_type">
                                                 <option value="1">{{ __('tasks.one_day') }}</option>
                                                 <option value="2">{{ __('tasks.one_week') }}</option>
                                                 <option value="3">{{ __('tasks.one_month') }}</option>
@@ -92,5 +94,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection

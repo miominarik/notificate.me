@@ -45,23 +45,13 @@
                         </ul>
                     @endauth
                     @guest
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('login*') ? 'active' : '' }}" aria-current="page"
-                                    href="{{ route('login') }}">{{ __('layout.menu_login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('register*') ? 'active' : '' }}" aria-current="page"
-                                    href="{{ route('register') }}">{{ __('layout.menu_register') }}</a>
-                            </li>
-                        </ul>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ __('layout.menu_lang') }}
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                                     <li><a class="dropdown-item" href="/language/sk">{{ __('layout.lang_slovak') }}</a>
                                     </li>
                                     <li><a class="dropdown-item" href="/language/en">{{ __('layout.lang_english') }}</a>
@@ -77,7 +67,7 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     {{ __('layout.menu_lang') }}
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                                     <li><a class="dropdown-item" href="/language/sk">{{ __('layout.lang_slovak') }}</a>
                                     </li>
                                     <li><a class="dropdown-item" href="/language/en">{{ __('layout.lang_english') }}</a>
