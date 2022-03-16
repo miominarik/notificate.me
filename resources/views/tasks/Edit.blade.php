@@ -1,13 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('tasks.edit_task') }}</div>
-                    <div class="card-body">
-                        <div class="container">
+    <section style="height: 100%">
+        <div class="container-fluid py-5">
+            <div class="row d-flex justify-content-center align-items-center">
+                <div class="col-12 col-md-12 col-lg-12 col-xl-9">
+                    <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                        <div class="card-body p-5 text-center">
+                            <h3 class="mb-5">{{ __('tasks.edit_task') }}</h3>
+
                             <form method="POST" action="{{ route('tasks.update', $task_data[0]->id) }}">
                                 @csrf
                                 @method('PUT')
@@ -31,8 +32,8 @@
                                     <label for="task_next_date"
                                         class="col-sm-1-12 col-form-label">{{ __('tasks.task_next_date') }}</label>
                                     <div class="col-sm-1-12">
-                                        <input type="date" class="form-control"
-                                            required readonly disabled value="{{ $task_data[0]->task_next_date }}">
+                                        <input type="date" class="form-control" required readonly disabled
+                                            value="{{ $task_data[0]->task_next_date }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -99,12 +100,13 @@
                                     </div>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
     <form method="POST" action="{{ route('tasks.destroy', $task_data[0]->id) }}" id="delete_form">
         @method('DELETE')
         @csrf
