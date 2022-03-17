@@ -15,6 +15,7 @@
                             @endif
                             <form method="POST" action="{{ route('password.email') }}">
                                 @csrf
+                                {!! GoogleReCaptchaV3::renderField('reset_id', 'verify') !!}
                                 <div class="form-outline mb-4">
                                     <input type="email" id="email" name="email"
                                         class="form-control form-control-lg @error('email') is-invalid @enderror"
@@ -45,10 +46,16 @@
                                     {{ __('layout.menu_register') }}
                                 </a>
                             </div>
+                            <small>
+                                This site is protected by reCAPTCHA and the Google
+                                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+                            </small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    {!! GoogleReCaptchaV3::init() !!}
 @endsection
