@@ -10,6 +10,7 @@
                             <h3 class="mb-5">{{ __('auth.login') }}</h3>
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
+                                {!! GoogleReCaptchaV3::renderField('login_id', 'verify') !!}
                                 <div class="form-outline mb-4">
                                     <input type="email" id="email" name="email"
                                         class="form-control form-control-lg @error('email') is-invalid @enderror"
@@ -61,10 +62,16 @@
                                     {{ __('auth.forgot_pass') }}
                                 </a>
                             </div>
+                            <small>
+                                This site is protected by reCAPTCHA and the Google
+                                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+                            </small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    {!! GoogleReCaptchaV3::init() !!}
 @endsection

@@ -18555,3 +18555,8 @@ readers do not read off random characters that represent icons */
   background-color: #343A3F;
   color: white;
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+  display: none;
+}
