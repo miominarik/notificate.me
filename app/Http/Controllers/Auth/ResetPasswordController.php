@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\VerifyGoogleRecaptcha;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
@@ -20,6 +21,11 @@ class ResetPasswordController extends Controller
     */
 
     use ResetsPasswords;
+
+    public function __construct()
+    {
+        $this->middleware(VerifyGoogleRecaptcha::class);
+    }
 
     /**
      * Where to redirect users after resetting their password.
