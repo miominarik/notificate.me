@@ -18560,3 +18560,11 @@ readers do not read off random characters that represent icons */
   visibility: hidden;
   display: none;
 }
+
+#notif_bell {
+  color: white;
+}
+
+#notif_bell.active {
+  color: #DC3545;
+}

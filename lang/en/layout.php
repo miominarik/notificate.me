@@ -9,5 +9,6 @@ return [
     'menu_logout' => 'Logout',
     'menu_lang' => 'Language',
     'lang_slovak' => 'Slovak',
-    'lang_english' => 'English'
+    'lang_english' => 'English',
+    'notif_comming' => 'Upcoming tasks'
 ];

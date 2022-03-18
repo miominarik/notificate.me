@@ -28,3 +28,10 @@
     visibility: hidden;
     display: none;
 }
+
+#notif_bell {
+    color: white;
+}
+#notif_bell.active {
+    color: #DC3545;
+}
