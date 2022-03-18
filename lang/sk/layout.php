@@ -9,5 +9,6 @@ return [
     'menu_logout' => 'Odhlásiť sa',
     'menu_lang' => 'Jazyk',
     'lang_slovak' => 'Slovenčina',
-    'lang_english' => 'Angličtina'
+    'lang_english' => 'Angličtina',
+    'notif_comming' => 'Blížiace sa úlohy'
 ];

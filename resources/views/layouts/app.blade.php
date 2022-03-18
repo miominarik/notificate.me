@@ -5,6 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon_io/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon_io/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon_io/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ asset('images/favicon_io/site.webmanifest') }}">
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -62,6 +68,31 @@
                     @endguest
                     @auth
                         <ul class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown pe-4">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarNotificationMenu" role="button"
+                                    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                    <button type="button" class="btn btn-link btn-sm position-relative">
+                                        <i class="fa-solid fa-bell fs-5 @if ($notifications['count'] < 1) text-white @endif "
+                                            id="notif_bell"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {{ $notifications['count'] }}
+                                            <span class="visually-hidden">{{__('layout.notif_comming')}}</span>
+                                        </span>
+                                    </button>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarNotificationMenu">
+                                    <li><h6 class="dropdown-header">{{__('layout.notif_comming')}}</h6></li>
+                                    @forelse ($notifications['data'] as $one_notif)
+                                        <li><span class="dropdown-item"
+                                                style="cursor: default">{{ $one_notif['task_name'] }} -
+                                                {{ $one_notif['task_next_date'] }}</span></li>
+                                    @empty
+                                        <li><span class="dropdown-item"
+                                                style="cursor: default">{{ __('tasks.no_data') }}</span></li>
+                                    @endforelse
+                                </ul>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
