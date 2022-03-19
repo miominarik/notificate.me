@@ -21,11 +21,11 @@ Installing the application in few steps
 ```bash
   git clone --branch main https://github.com/miominarik/notificator.git
   cd notificator
-  composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 ```
 2. Setup Databse connection and SMTP server in .env file
 3.
 ```bash
+  composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
   php artisan migrate
   php artisan cache:clear
   php artisan auth:clear-resets
@@ -36,9 +36,9 @@ Installing the application in few steps
   npm run production
   php artisan route:cache
 ```
-4. Find API key in table API with note System API. 
-Copy this key and set up this CRON \
-GET https://Your-URL/api/main_check_agent/API-token
+4. Go to the Api table and add a new record that will contain the IP address of the server that will run CRON. \
+Then just set CRON to run this address every hour \
+GET https://Your-URL/api/main_check_agent
     
 ## License
 
