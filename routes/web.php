@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TasksController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -24,13 +25,17 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::resource('tasks', "App\Http\Controllers\TasksController")->except('show')->middleware(['auth', 'verified']);
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('tasks', 'App\Http\Controllers\TasksController@index')->name('tasks.index');
+    Route::post('tasks', 'App\Http\Controllers\TasksController@store')->name('tasks.store');
+    Route::post('tasks/{task}/edit', 'App\Http\Controllers\TasksController@edit')->name('tasks.edit');
+    Route::put('tasks/{task}', 'App\Http\Controllers\TasksController@update')->name('tasks.update');
+    Route::delete('tasks/{task}', 'App\Http\Controllers\TasksController@destroy')->name('tasks.destroy');
+    Route::put('tasks/complete/{task}', "App\Http\Controllers\TasksController@complete")->name('tasks.complete');
+});
 
 Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');
 Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
-
-Route::put('tasks/complete/{task}', "App\Http\Controllers\TasksController@complete")->name('tasks.complete')->middleware(['auth', 'verified']);
-
 
 Route::get('language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'sk'])) {

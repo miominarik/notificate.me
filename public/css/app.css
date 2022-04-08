@@ -18568,3 +18568,7 @@ readers do not read off random characters that represent icons */
 #notif_bell.active {
   color: #DC3545;
 }
+
+.offcanvas-end {
+  width: 600px;
+}
