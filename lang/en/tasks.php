@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'all_active_tasks' => 'All Active Tasks',
+    'all_active_tasks' => 'Active Tasks',
     'task_name' => 'Task Name',
     'task_note' => 'Description',
     'task_date' => 'Completion date',
@@ -31,4 +31,6 @@ return [
     'task_notification_value' => 'Remind before due date',
     'task_notification_type' => 'Type',
     'amount' => 'Amount',
+    'edit_btn' => 'Edit',
+    'complete_btn' => 'Complete'
 ];

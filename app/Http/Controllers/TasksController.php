@@ -31,16 +31,6 @@ class TasksController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('tasks.Create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -72,17 +62,6 @@ class TasksController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function show($task)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Task  $task
@@ -90,14 +69,14 @@ class TasksController extends Controller
      */
     public function edit($task)
     {
-        return view('tasks.Edit', [
-            'task_data' => DB::table('tasks')
-                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'task_notification_value', 'task_notification_type')
-                ->where('user_id', Auth::id())
-                ->where('task_enabled', true)
-                ->where('id', $task)
-                ->get()
-        ]);
+        $return_data = DB::table('tasks')
+            ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'task_notification_value', 'task_notification_type')
+            ->where('user_id', Auth::id())
+            ->where('task_enabled', true)
+            ->where('id', $task)
+            ->get();
+
+        return response()->json($return_data, 200);
     }
 
     /**
