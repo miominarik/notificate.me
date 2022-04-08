@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'all_active_tasks' => 'Všetky aktívne úlohy',
+    'all_active_tasks' => 'Aktívne úlohy',
     'task_name' => 'Názov úlohy',
     'task_note' => 'Popis',
     'task_date' => 'Kontrolovaný dátum',
@@ -31,4 +31,6 @@ return [
     'task_notification_value' => 'Pripomenúť pred dátumom splnenia',
     'task_notification_type' => 'Typ',
     'amount' => 'Počet',
+    'edit_btn' => 'Upraviť',
+    'complete_btn' => 'Splniť úlohu'
 ];
