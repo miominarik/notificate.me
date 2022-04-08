@@ -73,10 +73,8 @@
                                                             onclick="document.getElementById('form_complete_task').setAttribute('action', '{{ route('tasks.complete', $item->id) }}')"><i
                                                                 class="fa-solid fa-check succes_icon"></i></span>
                                                         |
-                                                        <i class="fa-solid fa-pen"
+                                                        <i class="fa-solid fa-pen" style="cursor: pointer;"
                                                             onclick="getDataToEditTaskForm({{ $item->id }})"></i>
-                                                        {{-- <a href="{{ route('tasks.edit', $item->id) }}"><i
-                                                                class="fa-solid fa-pen"></i></a </td> --}}
                                                 </tr>
                                             @empty
                                                 <tr>
