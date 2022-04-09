@@ -22,5 +22,7 @@ return [
     'check_mail' => 'Skôr než budete pokračovať, je potrebné potvrdiť Vašu e-mailovú adresu.',
     'not_receive_mail' => 'Ak ste email nedostali',
     'click_here_and_resend' => 'kliknite sem.',
-
+    'login_github' => 'Prihláste sa pomocou Github',
+    'register_github' => 'Zaregistrujte sa pomocou Github',
+    'github_settings_setted' => '- Nastavené'
 ];

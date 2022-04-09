@@ -49,17 +49,17 @@
                                         type="submit">{{ __('auth.login_btn') }}</button>
                                 </div>
                             </form>
-
+                            <div class="d-flex justify-content-between bd-highlight mb-3 mt-2">
+                                <div class="p-2 bd-highlight"><a
+                                        href="{{ route('register') }}">{{ __('layout.menu_register') }}</a></div>
+                                <div class="p-2 bd-highlight"></div>
+                                <div class="p-2 bd-highlight"><a
+                                        href="{{ route('password.request') }}">{{ __('auth.forgot_pass') }}</a></div>
+                            </div>
                             <hr class="my-4">
-
-                            <div class="d-grid gap-2">
-                                <a class="btn btn-lg btn-primary mb-2" style="background-color: #dd4b39;"
-                                    href="{{ route('register') }}">
-                                    {{ __('layout.menu_register') }}
-                                </a>
-                                <a class="btn btn-lg btn-primary mb-2" style="background-color: #3b5998;"
-                                    href="{{ route('password.request') }}">
-                                    {{ __('auth.forgot_pass') }}
+                            <div class="d-grid gap-2 mb-2">
+                                <a href="{{route('oauth.github-login')}}" class="btn btn-block btn-social btn-github">
+                                    <span class="fa-brands fa-github"></span> {{__('auth.login_github')}}
                                 </a>
                             </div>
                             <small>

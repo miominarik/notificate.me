@@ -33,5 +33,8 @@ return [
     'check_mail' => 'You need to confirm your email address before continuing.',
     'not_receive_mail' => 'If you did not receive an email',
     'click_here_and_resend' => 'click here.',
+    'login_github' => 'Sign in with Github',
+    'register_github' => 'Register in with Github',
+    'github_settings_setted' => '- Already set up'
 
 ];
