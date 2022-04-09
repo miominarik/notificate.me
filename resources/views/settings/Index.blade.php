@@ -62,6 +62,22 @@
                                     </div>
                                 </div>
                             </form>
+                            <hr class="my-4">
+                            <div class="d-grid gap-2 mb-2">
+                                @if ($github_oauth_status[0]->github_id == null)
+                                    <a href="{{ route('oauth.github-login') }}">
+                                        <button type="button" class="btn btn-block btn-social btn-github">
+                                            <span class="fa-brands fa-github"></span> {{ __('auth.login_github') }}
+                                        </button>
+                                    </a>
+                                @else
+                                    <a href="javascript:void(0)">
+                                        <button type="button" class="btn btn-block btn-social btn-github" disabled>
+                                            <span class="fa-brands fa-github"></span> {{ __('auth.login_github') }} {{__('auth.github_settings_setted')}}
+                                        </button>
+                                    </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -23,6 +23,6 @@ return [
     'not_receive_mail' => 'Ak ste email nedostali',
     'click_here_and_resend' => 'kliknite sem.',
     'login_github' => 'Prihláste sa pomocou Github',
-    'register_github' => 'Zaregistrujte sa pomocou Github'
-
+    'register_github' => 'Zaregistrujte sa pomocou Github',
+    'github_settings_setted' => '- Nastavené'
 ];

@@ -37,31 +37,41 @@ class OauthController extends Controller
 
             if ($check) {
                 $user = User::where('github_id', $githubUser->id)->first();
+                Auth::login($user);
             } else {
+                if (Auth::check() == true) {
+                    User::where('id', Auth::id())
+                        ->update([
+                            'github_id' => $githubUser->id,
+                            'github_token' => $githubUser->token,
+                            'github_refresh_token' => $githubUser->refreshToken,
+                            'updated_at' => Carbon::now()
+                        ]);
+                    return redirect(route('settings.index'));
+                } else {
+                    $user = new User;
 
-                $user = new User;
+                    $user->name = $githubUser->name;
+                    $user->email = $githubUser->email;
+                    $user->password = Hash::make(Str::random(30));
+                    $user->github_id = $githubUser->id;
+                    $user->github_token = $githubUser->token;
+                    $user->github_refresh_token = $githubUser->refreshToken;
+                    $user->email_verified_at = Carbon::now();
+                    $user->created_at = Carbon::now();
 
-                $user->name = $githubUser->name;
-                $user->email = $githubUser->email;
-                $user->password = Hash::make(Str::random(30));
-                $user->github_id = $githubUser->id;
-                $user->github_token = $githubUser->token;
-                $user->github_refresh_token = $githubUser->refreshToken;
-                $user->email_verified_at = Carbon::now();
-                $user->created_at = Carbon::now();
+                    $user->save();
 
-                $user->save();
+                    DB::table('users_settings')->insert([
+                        'user_id' => $user->id,
+                        'created_at' => Carbon::now()
+                    ]);
 
-                DB::table('users_settings')->insert([
-                    'user_id' => $user->id,
-                    'created_at' => Carbon::now()
-                ]);
-            }
-
-            Auth::login($user);
-        }
+                    Auth::login($user);
+                };
+            };
+        };
 
         return redirect('/');
-
     }
 }
