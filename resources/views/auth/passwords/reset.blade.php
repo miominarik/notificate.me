@@ -48,18 +48,14 @@
                                 </div>
                             </form>
 
-                            <hr class="my-4">
-
-                            <div class="d-grid gap-2">
-                                <a class="btn btn-lg btn-primary mb-2" style="background-color: #dd4b39;"
-                                    href="{{ route('login') }}">
-                                    {{ __('layout.menu_login') }}
-                                </a>
-                                <a class="btn btn-lg btn-primary mb-2" style="background-color: #3b5998;"
-                                    href="{{ route('register') }}">
-                                    {{ __('layout.menu_register') }}
-                                </a>
+                            <div class="d-flex justify-content-between bd-highlight mb-3 mt-2">
+                                <div class="p-2 bd-highlight"><a
+                                        href="{{ route('login') }}">{{ __('layout.menu_login') }}</a></div>
+                                <div class="p-2 bd-highlight"></div>
+                                <div class="p-2 bd-highlight"><a
+                                        href="{{ route('register') }}">{{ __('layout.menu_register') }}</a></div>
                             </div>
+
                             <small>
                                 This site is protected by reCAPTCHA and the Google
                                 <a href="https://policies.google.com/privacy">Privacy Policy</a> and

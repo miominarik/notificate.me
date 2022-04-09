@@ -59,6 +59,14 @@
                                 </div>
                             </form>
 
+                            <div class="d-flex justify-content-between bd-highlight mb-3 mt-2">
+                                <div class="p-2 bd-highlight"><a
+                                        href="{{ route('login') }}">{{ __('layout.menu_login') }}</a></div>
+                                <div class="p-2 bd-highlight"></div>
+                                <div class="p-2 bd-highlight"><a
+                                        href="{{ route('password.request') }}">{{ __('auth.forgot_pass') }}</a></div>
+                            </div>
+
                             <hr class="my-4">
 
                             <div class="d-grid gap-2">
