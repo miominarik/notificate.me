@@ -3,6 +3,7 @@
 use App\Http\Controllers\TasksController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +45,9 @@ Route::get('language/{locale}', function ($locale) {
     }
     return redirect()->back();
 });
+
+Route::get('/auth/oauth/github', function () {
+    return Socialite::driver('github')->redirect();
+})->name('oauth.github-login');
+
+Route::get('/auth/oauth/callback/github', "App\Http\Controllers\Auth\OauthController@GithubOauth");

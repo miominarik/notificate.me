@@ -25,6 +25,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://lipis.github.io/bootstrap-social/bootstrap-social.css" rel="stylesheet">
 </head>
 
 <body>
