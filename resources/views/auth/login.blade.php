@@ -62,6 +62,11 @@
                                     <span class="fa-brands fa-github"></span> {{__('auth.login_github')}}
                                 </a>
                             </div>
+                            <div class="d-grid gap-2 mb-2">
+                                <a href="{{route('oauth.google-login')}}" class="btn btn-block btn-social btn-google">
+                                    <span class="fa-brands fa-google"></span> {{__('auth.login_google')}}
+                                </a>
+                            </div>
                             <small>
                                 This site is protected by reCAPTCHA and the Google
                                 <a href="https://policies.google.com/privacy">Privacy Policy</a> and

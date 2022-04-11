@@ -35,6 +35,9 @@ return [
     'click_here_and_resend' => 'click here.',
     'login_github' => 'Sign in with Github',
     'register_github' => 'Register in with Github',
-    'github_settings_setted' => '- Already set up'
+    'github_settings_setted' => 'Github login set up',
+    'login_google' => 'Sign in with Google',
+    'register_google' => 'Sign up with Google',
+    'google_settings_setted' => 'Google login set up'
 
 ];
