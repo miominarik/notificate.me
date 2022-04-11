@@ -24,5 +24,8 @@ return [
     'click_here_and_resend' => 'kliknite sem.',
     'login_github' => 'Prihláste sa pomocou Github',
     'register_github' => 'Zaregistrujte sa pomocou Github',
-    'github_settings_setted' => '- Nastavené'
+    'github_settings_setted' => 'Github prihlásenie nastavené',
+    'login_google' => 'Prihláste sa pomocou Google',
+    'register_google' => 'Zaregistrujte sa pomocou Google',
+    'google_settings_setted' => 'Google prihlásenie nastavené'
 ];

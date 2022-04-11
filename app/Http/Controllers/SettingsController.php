@@ -24,6 +24,10 @@ class SettingsController extends Controller
             'github_oauth_status' => DB::table('users')
                 ->select('github_id')
                 ->where('id', Auth::id())
+                ->get(),
+            'google_oauth_status' => DB::table('users')
+                ->select('google_id')
+                ->where('id', Auth::id())
                 ->get()
         ]);
     }

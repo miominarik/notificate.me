@@ -50,4 +50,9 @@ Route::get('/auth/oauth/github', function () {
     return Socialite::driver('github')->redirect();
 })->name('oauth.github-login');
 
+Route::get('/auth/oauth/google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('oauth.google-login');
+
 Route::get('/auth/oauth/callback/github', "App\Http\Controllers\Auth\OauthController@GithubOauth");
+Route::get('/auth/oauth/callback/google', "App\Http\Controllers\Auth\OauthController@GoogleOauth");

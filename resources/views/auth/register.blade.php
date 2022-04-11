@@ -68,10 +68,14 @@
                             </div>
 
                             <hr class="my-4">
-
                             <div class="d-grid gap-2 mb-2">
                                 <a href="{{route('oauth.github-login')}}" class="btn btn-block btn-social btn-github">
                                     <span class="fa-brands fa-github"></span> {{ __('auth.register_github') }}
+                                </a>
+                            </div>
+                            <div class="d-grid gap-2 mb-2">
+                                <a href="{{route('oauth.google-login')}}" class="btn btn-block btn-social btn-google">
+                                    <span class="fa-brands fa-google"></span> {{ __('auth.register_google') }}
                                 </a>
                             </div>
                             <small>

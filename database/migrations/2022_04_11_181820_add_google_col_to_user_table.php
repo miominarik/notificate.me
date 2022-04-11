@@ -14,9 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('github_id')->after('remember_token')->unique()->nullable();
-            $table->string('github_token')->after('github_id')->unique()->nullable();
-            $table->string('github_refresh_token')->after('github_token')->unique()->nullable();
+            $table->string('google_id', 80)->after('github_refresh_token')->unique()->nullable();
+            $table->string('google_token', 200)->after('google_id')->unique()->nullable();
         });
     }
 
@@ -28,7 +27,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['github_id', 'github_token', 'github_refresh_token']);
+            $table->dropColumn(['google_id', 'google_token']);
         });
     }
 };
