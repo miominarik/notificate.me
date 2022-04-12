@@ -60,22 +60,22 @@
                                                     @php
                                                         $item->task_repeat_type = match ($item->task_repeat_type) { 1 => trans_choice('tasks.day', $item->task_repeat_value),  2 => trans_choice('tasks.week', $item->task_repeat_value),  3 => trans_choice('tasks.month', $item->task_repeat_value),  4 => trans_choice('tasks.year', $item->task_repeat_value),  default => __('tasks.none') };
                                                     @endphp
-                                                    <tr>
-                                                        <td scope="row">{{ $item->task_name }}</td>
-                                                        <td scope="row">{{ $item->task_note }}</td>
-                                                        <td scope="row">
+                                                    <tr style="cursor: pointer;">
+                                                        <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
+                                                            {{ $item->task_name }}</td>
+                                                        <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
+                                                            {{ $item->task_note }}</td>
+                                                        <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
                                                             {{ \Carbon\Carbon::parse($item->task_next_date)->format('d.m.Y') }}
                                                         </td>
-                                                        <td scope="row">{{ $item->task_repeat_value }}
+                                                        <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
+                                                            {{ $item->task_repeat_value }}
                                                             {{ $item->task_repeat_type }}
                                                         </td>
                                                         <td scope="row">
                                                             <span data-bs-toggle="modal" data-bs-target="#completeModal"
                                                                 onclick="document.getElementById('form_complete_task').setAttribute('action', '{{ route('tasks.complete', $item->id) }}')"><i
                                                                     class="fa-solid fa-check succes_icon"></i></span>
-                                                            |
-                                                            <i class="fa-solid fa-pen" style="cursor: pointer;"
-                                                                onclick="getDataToEditTaskForm({{ $item->id }})"></i>
                                                     </tr>
                                                 @empty
                                                     <tr>
