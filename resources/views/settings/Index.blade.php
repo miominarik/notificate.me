@@ -1,3 +1,7 @@
+@php
+$selected_time = \Carbon\Carbon::parse($settings_data[0]->notification_time)->format('G');
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -6,8 +10,8 @@
             <div class="row d-flex justify-content-center align-items-center">
                 @if ((new \Jenssegers\Agent\Agent())->isDesktop())
                     <div class="col-9 col-md-6 col-lg-5 col-xl-4">
-                @elseif((new \Jenssegers\Agent\Agent())->isMobile() || (new \Jenssegers\Agent\Agent())->isTablet())
-                    <div class="col-12 col-md-12 col-lg-12 col-xl-12">
+                    @elseif((new \Jenssegers\Agent\Agent())->isMobile() || (new \Jenssegers\Agent\Agent())->isTablet())
+                        <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                 @endif
                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
                     <div class="card-body p-5 text-center">
@@ -51,9 +55,17 @@
                             <div class="form-group row">
                                 <div class="mt-2">
                                     <label for="notification_time">{{ __('settings.time_when_notif') }}</label>
-                                    <input type="time" class="form-control" name="notification_time"
+                                    <select class="form-control" name="notification_time" id="notification_time" required>
+                                        @for ($i = 00; $i <= 23; $i++)
+                                            <option @if ($selected_time == $i) selected @endif
+                                                value="{{ $i }}">
+                                                {{ $i }}:00</option>
+                                        @endfor
+                                    </select>
+
+                                    {{-- <input type="time" class="form-control" name="notification_time"
                                         id="notification_time" aria-describedby="time_when_notif_help"
-                                        value="{{ $settings_data[0]->notification_time }}" step="3600" required>
+                                        value="{{ $settings_data[0]->notification_time }}" step="3600" required> --}}
                                     <small id="time_when_notif_help"
                                         class="form-text text-muted">{{ __('settings.time_when_notif_help') }}</small>
                                 </div>
