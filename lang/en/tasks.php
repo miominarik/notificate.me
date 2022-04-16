@@ -32,5 +32,7 @@ return [
     'task_notification_type' => 'Type',
     'amount' => 'Amount',
     'edit_btn' => 'Edit',
-    'complete_btn' => 'Complete'
+    'complete_btn' => 'Complete',
+    'history_header' => 'Last completed',
+    'history_btn' => 'View history'
 ];

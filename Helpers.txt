@@ -1,0 +1,5 @@
+1. Práva
+--------
+1 - Editácia úlohy
+2 - Pridanie úlohy
+3 - Vymazanie úlohy

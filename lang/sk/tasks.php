@@ -32,5 +32,7 @@ return [
     'task_notification_type' => 'Typ',
     'amount' => 'Počet',
     'edit_btn' => 'Upraviť',
-    'complete_btn' => 'Splniť úlohu'
+    'complete_btn' => 'Splniť úlohu',
+    'history_header' => 'Naposledy splnené',
+    'history_btn' => 'Zobraziť históriu'
 ];

@@ -43,7 +43,7 @@ class TasksController extends Controller
         $validated = $request->validated();
 
         if ($validated['task_next_date'] > Carbon::now()) {
-            DB::table('tasks')->insert([
+            $task = DB::table('tasks')->insertGetId([
                 'user_id' => Auth::id(),
                 'task_name' => $validated['task_name'],
                 'task_note' => $validated['task_note'],
@@ -55,6 +55,9 @@ class TasksController extends Controller
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]);
+
+            $this->AddNewActionToHistory($task, 2);
+
             return redirect(route('tasks.index'))->with('status_success', 'Úloha bola pridaná');
         } else {
             return redirect(route('tasks.index'))->with('status_warning', 'Úloha nebola pridaná. Dátum bol zadaný do minulosti');
@@ -104,6 +107,9 @@ class TasksController extends Controller
                 'task_notification_type' => $validated['task_notification_type'],
                 'updated_at' => Carbon::now()
             ]);
+
+        $this->AddNewActionToHistory($task, 1);
+
         return redirect(route('tasks.index'))->with('status_success', 'Úloha bola upravená');
     }
 
@@ -121,6 +127,8 @@ class TasksController extends Controller
             ->update([
                 'task_enabled' => false
             ]);
+
+        $this->AddNewActionToHistory($task, 3);
 
         return redirect(route('tasks.index'))->with('status_success', 'Úloha bola vymazaná');
     }
@@ -148,7 +156,7 @@ class TasksController extends Controller
 
             if (!empty($next_data[0])) {
 
-                $date = Carbon::createFromFormat('Y-m-d',  $request->complete_date);
+                $date = Carbon::createFromFormat('Y-m-d', $validated['complete_date']);
 
                 if ($next_data[0]->task_repeat_type == 1) { //Add x days
                     $new_date = $date->addDays($next_data[0]->task_repeat_value);
@@ -172,8 +180,69 @@ class TasksController extends Controller
                         'task_next_date' => $new_date,
                         'updated_at' => Carbon::now()
                     ]);
+
+                $this->AddNewCompleteToHistory($task, Carbon::createFromFormat('Y-m-d', $validated['complete_date'])->format('Y-m-d H:i:s'));
                 return redirect(route('tasks.index'))->with('status_success', 'Úloha bola splnená. Dátum nasledujúceho splnenia bol posunutý.');
             }
         }
+    }
+
+    /**
+     * AddNewActionToHistory
+     *
+     * @param  mixed $task_id
+     * @param  mixed $user_id
+     * @param  mixed $action
+     * @param  mixed $date
+     * @return void
+     */
+    public function AddNewActionToHistory($task_id, $action)
+    {
+        if (isset($task_id) && isset($action)) {
+            DB::table('history')
+                ->insert([
+                    'task_id' => $task_id,
+                    'user_id' => Auth::id(),
+                    'log_type' => $action,
+                    'created_at' => Carbon::now()
+                ]);
+        }
+    }
+
+    /**
+     * AddNewCompleteToHistory
+     *
+     * @param  mixed $task_id
+     * @param  mixed $user_id
+     * @param  mixed $action
+     * @param  mixed $date
+     * @return void
+     */
+    public function AddNewCompleteToHistory($task_id, $date)
+    {
+        if (isset($task_id) && isset($date)) {
+            DB::table('history')
+                ->insert([
+                    'task_id' => $task_id,
+                    'user_id' => Auth::id(),
+                    'log_type' => 99,
+                    'created_at' => $date
+                ]);
+        }
+    }
+
+    public function ShowHistory($task)
+    {
+        $return_data = DB::table('history')
+            ->select('created_at')
+            ->where([
+                'user_id' => Auth::id(),
+                'task_id' => $task,
+                'log_type' => 99
+            ])
+            ->orderByDesc('created_at')
+            ->get();
+
+        return response()->json($return_data, 200);
     }
 }
