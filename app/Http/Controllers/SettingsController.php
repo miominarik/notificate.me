@@ -44,6 +44,8 @@ class SettingsController extends Controller
 
         $validated = $request->validated();
 
+        $validated['notification_time'] = $validated['notification_time'] . ":00";
+
         DB::table('users_settings')
             ->where('user_id', Auth::id())
             ->update([
