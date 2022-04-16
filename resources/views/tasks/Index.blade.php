@@ -142,7 +142,7 @@
 
     {{-- Offcanvas to add task --}}
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddTask" aria-labelledby="offcanvasAddTaskLabel">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddTask" aria-labelledby="offcanvasAddTaskLabel" data-bs-keyboard="false">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">{{ __('tasks.add_new_task') }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -226,7 +226,7 @@
 
     {{-- Offcanvas to edit task --}}
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEditTask" aria-labelledby="offcanvasEditTaskLabel">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEditTask" aria-labelledby="offcanvasEditTaskLabel" data-bs-keyboard="false">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">{{ __('tasks.edit_task') }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -251,7 +251,7 @@
                     <label for="task_next_date"
                         class="col-sm-1-12 col-form-label">{{ __('tasks.task_next_date') }}</label>
                     <div class="col-sm-1-12">
-                        <input type="date" class="form-control" name="task_next_date" id="task_next_date_edit" required>
+                        <input type="date" class="form-control" id="task_next_date_edit" readonly>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -304,9 +304,24 @@
                         <button type="submit" class="btn btn-primary">{{ __('tasks.save_button') }}</button>
                         <button type="button" class="btn btn-danger"
                             onclick="delete_task();">{{ __('tasks.remove_button') }}</button>
+                        <button type="button" id="show_history_btn" class="btn btn-secondary">{{__('tasks.history_btn')}}</button>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    {{-- Offcanvas to show history --}}
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasShowHistory"
+        aria-labelledby="offcanvasShowHistoryLabel" data-bs-keyboard="false">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">{{ __('tasks.history_header') }}</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="history_list">
+            </div>
         </div>
     </div>
 
@@ -362,6 +377,14 @@
         })
     </script>
 
+    {{-- Reset History if offcanvas is hidden --}}
+    <script>
+        let offcanvasShowHistory = document.getElementById('offcanvasShowHistory')
+        offcanvasShowHistory.addEventListener('hidden.bs.offcanvas', function() {
+            document.getElementById('history_list').innerHTML = "";
+        })
+    </script>
+
     {{-- Ajax for editTaskForm --}}
     <script>
         function getDataToEditTaskForm(task_id) {
@@ -379,10 +402,45 @@
 
                     document.getElementById('delete_form').action = 'tasks/' + task_id;
                     document.getElementById('offcanvasEditForm').action = 'tasks/' + task_id;
+                    document.getElementById('show_history_btn').setAttribute('onclick', 'ShowHistoryTask(' +
+                        task_id + ')')
 
                     const offcanvasEditTask = new bootstrap.Offcanvas(document.getElementById(
                         'offcanvasEditTask'));
                     offcanvasEditTask.show();
+                })
+                .catch(function(error) {
+                    //console.log(error);
+                });
+        }
+    </script>
+
+    {{-- Ajax for showHistory --}}
+    <script>
+        function ShowHistoryTask(task_id) {
+            axios.post('/tasks/' + task_id + '/history')
+                .then(function(response) {
+                    if (response.data) {
+                        let container = document.querySelector('#history_list');
+                        let ul = document.createElement('ol');
+                        ul.classList.add('list-group');
+
+                        response.data.forEach(function(item) {
+                            let date = new Date(item.created_at);
+                            date = date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear();
+                            let li = document.createElement('li');
+                            li.classList.add('list-group-item');
+
+                            li.textContent = date;
+                            ul.appendChild(li);
+                        });
+
+                        container.appendChild(ul);
+
+                        const offcanvasShowHistory = new bootstrap.Offcanvas(document.getElementById(
+                            'offcanvasShowHistory'));
+                        offcanvasShowHistory.show();
+                    }
                 })
                 .catch(function(error) {
                     //console.log(error);

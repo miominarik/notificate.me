@@ -230,4 +230,19 @@ class TasksController extends Controller
                 ]);
         }
     }
+
+    public function ShowHistory($task)
+    {
+        $return_data = DB::table('history')
+            ->select('created_at')
+            ->where([
+                'user_id' => Auth::id(),
+                'task_id' => $task,
+                'log_type' => 99
+            ])
+            ->orderByDesc('created_at')
+            ->get();
+
+        return response()->json($return_data, 200);
+    }
 }
