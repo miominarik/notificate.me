@@ -35,7 +35,7 @@ class OauthController extends Controller
     public function GithubOauth(Request $request)
     {
         if (empty($request->query('error')) && $request->query('error') != 'access_denied') {
-            $githubUser = Socialite::driver('github')->user();
+            $githubUser = Socialite::driver('github')->stateless()->user();
 
             $check = User::where('github_id', $githubUser->id)->count();
 
@@ -87,7 +87,7 @@ class OauthController extends Controller
     public function GoogleOauth(Request $request)
     {
         if (!empty($request->query('state')) && $request->query('state') != '' && !empty($request->query('code')) && $request->query('code') != '') {
-            $googleUser = Socialite::driver('google')->user();
+            $googleUser = Socialite::driver('google')->stateless()->user();
 
             $check = User::where('google_id', $googleUser->id)->count();
 
