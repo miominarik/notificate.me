@@ -78,12 +78,14 @@
                                         <span
                                             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                             {{ $notifications['count'] }}
-                                            <span class="visually-hidden">{{__('layout.notif_comming')}}</span>
+                                            <span class="visually-hidden">{{ __('layout.notif_comming') }}</span>
                                         </span>
                                     </button>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarNotificationMenu">
-                                    <li><h6 class="dropdown-header">{{__('layout.notif_comming')}}</h6></li>
+                                    <li>
+                                        <h6 class="dropdown-header">{{ __('layout.notif_comming') }}</h6>
+                                    </li>
                                     @forelse ($notifications['data'] as $one_notif)
                                         <li><span class="dropdown-item"
                                                 style="cursor: default">{{ $one_notif['task_name'] }} -
@@ -133,6 +135,16 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <footer class="py-3 my-4 fixed-bottom">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Dashboard</a></li>
+                <li class="nav-item"><a href="{{route('settings.index')}}" class="nav-link px-2 text-muted">{{ __('layout.menu_settings') }}</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" class="nav-link px-2 text-muted">GDPR</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" class="nav-link px-2 text-muted">Cookies</a></li>
+                <li class="nav-item"><a href="javascript:void(0)" class="nav-link px-2 text-muted">VOP</a></li>
+            </ul>
+            <p class="text-center text-muted">&copy; <?php echo date('Y'); ?> <a href="https://miucode.com" target="_blank" style="text-decoration: none;">Miucode.com</a></p>
+        </footer>
     </div>
 </body>
 
