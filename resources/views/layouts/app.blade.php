@@ -135,16 +135,6 @@
         <main class="py-4">
             @yield('content')
         </main>
-        <footer class="py-3 my-4 fixed-bottom">
-            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-                <li class="nav-item"><a href="/" class="nav-link px-2 text-muted">Dashboard</a></li>
-                <li class="nav-item"><a href="{{route('settings.index')}}" class="nav-link px-2 text-muted">{{ __('layout.menu_settings') }}</a></li>
-                <li class="nav-item"><a href="javascript:void(0)" class="nav-link px-2 text-muted">GDPR</a></li>
-                <li class="nav-item"><a href="javascript:void(0)" class="nav-link px-2 text-muted">Cookies</a></li>
-                <li class="nav-item"><a href="javascript:void(0)" class="nav-link px-2 text-muted">VOP</a></li>
-            </ul>
-            <p class="text-center text-muted">&copy; <?php echo date('Y'); ?> <a href="https://miucode.com" target="_blank" style="text-decoration: none;">Miucode.com</a></p>
-        </footer>
     </div>
 </body>
 
