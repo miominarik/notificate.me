@@ -426,12 +426,10 @@
                         ul.classList.add('list-group');
 
                         response.data.forEach(function(item) {
-                            let date = new Date(item.created_at);
-                            date = date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear();
                             let li = document.createElement('li');
                             li.classList.add('list-group-item');
 
-                            li.textContent = date;
+                            li.textContent = item.created_at;
                             ul.appendChild(li);
                         });
 

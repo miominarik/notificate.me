@@ -234,7 +234,7 @@ class TasksController extends Controller
     public function ShowHistory($task)
     {
         $return_data = DB::table('history')
-            ->select('created_at')
+            ->select(DB::raw('DATE_FORMAT(created_at, "%d.%m.%Y") as created_at'))
             ->where([
                 'user_id' => Auth::id(),
                 'task_id' => $task,
