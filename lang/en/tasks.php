@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'all_active_tasks' => 'Active Tasks',
+    'all_active_tasks' => 'Tasks',
     'task_name' => 'Task Name',
-    'task_note' => 'Description',
+    'task_note' => 'Note',
     'task_date' => 'Completion date',
     'task_repeat' => 'Repeat',
     'task_action' => 'Action',

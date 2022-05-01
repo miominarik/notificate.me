@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'all_active_tasks' => 'Aktívne úlohy',
+    'all_active_tasks' => 'Úlohy',
     'task_name' => 'Názov úlohy',
-    'task_note' => 'Popis',
+    'task_note' => 'Poznámka',
     'task_date' => 'Kontrolovaný dátum',
     'task_repeat' => 'Opakovanie',
     'task_action' => 'Akcia',
@@ -28,7 +28,7 @@ return [
     'close_button' => 'Zavrieť',
     'complete_date' => 'Dátum splnenia',
     'menu_task_create' => 'Vytvoriť úlohu',
-    'task_notification_value' => 'Pripomenúť pred dátumom splnenia',
+    'task_notification_value' => 'Pripomenúť dopredu o',
     'task_notification_type' => 'Typ',
     'amount' => 'Počet',
     'edit_btn' => 'Upraviť',
