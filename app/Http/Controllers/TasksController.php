@@ -43,22 +43,32 @@ class TasksController extends Controller
         $validated = $request->validated();
 
         if ($validated['task_next_date'] > Carbon::now()) {
-            $task = DB::table('tasks')->insertGetId([
-                'user_id' => Auth::id(),
-                'task_name' => $validated['task_name'],
-                'task_note' => $validated['task_note'],
-                'task_next_date' => $validated['task_next_date'],
-                'task_repeat_value' => $validated['task_repeat_value'],
-                'task_repeat_type' => $validated['task_repeat_type'],
-                'task_notification_value' => $validated['task_notification_value'],
-                'task_notification_type' => $validated['task_notification_type'],
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]);
 
-            $this->AddNewActionToHistory($task, 2);
+            if ($validated['task_type'] == 0 || $validated['task_type'] == 1) {
 
-            return redirect(route('tasks.index'))->with('status_success', 'Úloha bola pridaná');
+                if ($validated['task_type'] == 0) {
+                    $validated['task_repeat_value'] = NULL;
+                    $validated['task_repeat_type'] = NULL;
+                };
+
+                $task = DB::table('tasks')->insertGetId([
+                    'user_id' => Auth::id(),
+                    'task_name' => $validated['task_name'],
+                    'task_note' => $validated['task_note'],
+                    'task_type' => $validated['task_type'],
+                    'task_next_date' => $validated['task_next_date'],
+                    'task_repeat_value' => $validated['task_repeat_value'],
+                    'task_repeat_type' => $validated['task_repeat_type'],
+                    'task_notification_value' => $validated['task_notification_value'],
+                    'task_notification_type' => $validated['task_notification_type'],
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
+                ]);
+
+                $this->AddNewActionToHistory($task, 2);
+
+                return redirect(route('tasks.index'))->with('status_success', 'Úloha bola pridaná');
+            }
         } else {
             return redirect(route('tasks.index'))->with('status_warning', 'Úloha nebola pridaná. Dátum bol zadaný do minulosti');
         };
@@ -73,7 +83,7 @@ class TasksController extends Controller
     public function edit($task)
     {
         $return_data = DB::table('tasks')
-            ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'task_notification_value', 'task_notification_type')
+            ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'task_notification_value', 'task_notification_type', 'task_type')
             ->where('user_id', Auth::id())
             ->where('task_enabled', true)
             ->where('id', $task)
@@ -94,11 +104,18 @@ class TasksController extends Controller
         // Retrieve the validated input data.
         $validated = $request->validated();
 
-        DB::table('tasks')
-            ->where('id', $task)
-            ->where('user_id', Auth::id())
-            ->where('task_enabled', true)
-            ->update([
+        if (is_null($validated['task_repeat_value'])) {
+            $update_arr = [
+                'task_name' => $validated['task_name'],
+                'task_note' => $validated['task_note'],
+                'task_repeat_value' => NULL,
+                'task_repeat_type' => NULL,
+                'task_notification_value' => $validated['task_notification_value'],
+                'task_notification_type' => $validated['task_notification_type'],
+                'updated_at' => Carbon::now()
+            ];
+        } else {
+            $update_arr = [
                 'task_name' => $validated['task_name'],
                 'task_note' => $validated['task_note'],
                 'task_repeat_value' => $validated['task_repeat_value'],
@@ -106,7 +123,14 @@ class TasksController extends Controller
                 'task_notification_value' => $validated['task_notification_value'],
                 'task_notification_type' => $validated['task_notification_type'],
                 'updated_at' => Carbon::now()
-            ]);
+            ];
+        };
+
+        DB::table('tasks')
+            ->where('id', $task)
+            ->where('user_id', Auth::id())
+            ->where('task_enabled', true)
+            ->update($update_arr);
 
         $this->AddNewActionToHistory($task, 1);
 

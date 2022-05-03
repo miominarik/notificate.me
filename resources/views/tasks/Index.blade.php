@@ -51,7 +51,6 @@
                                                 <th>{{ __('tasks.task_note') }}</th>
                                                 <th>{{ __('tasks.task_date') }}</th>
                                                 <th>{{ __('tasks.task_repeat') }}</th>
-                                                <th>{{ __('tasks.task_action') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -72,15 +71,10 @@
                                                             {{ $item->task_repeat_value }}
                                                             {{ $item->task_repeat_type }}
                                                         </td>
-                                                        <td scope="row">
-                                                            <span data-bs-toggle="modal" data-bs-target="#completeModal"
-                                                                onclick="document.getElementById('form_complete_task').setAttribute('action', '{{ route('tasks.complete', $item->id) }}')"><i
-                                                                    class="fa-solid fa-check succes_icon"></i></span>
                                                     </tr>
                                                 @empty
                                                     <tr>
                                                         <td scope="row">{{ __('tasks.no_data') }}</td>
-                                                        <td scope="row"></td>
                                                         <td scope="row"></td>
                                                         <td scope="row"></td>
                                                         <td scope="row"></td>
@@ -109,9 +103,6 @@
                                                             {{ __('tasks.task_repeat') }}: {{ $item->task_repeat_value }}
                                                             {{ $item->task_repeat_type }}
                                                         </p>
-                                                        <button type="button" class="btn btn-outline-success btn-sm"
-                                                            data-bs-toggle="modal" data-bs-target="#completeModal"
-                                                            onclick="document.getElementById('form_complete_task').setAttribute('action', '{{ route('tasks.complete', $item->id) }}')">{{ __('tasks.complete_btn') }}</button>
                                                         <button type="button" class="btn btn-outline-primary btn-sm"
                                                             onclick="getDataToEditTaskForm({{ $item->id }})">{{ __('tasks.edit_btn') }}</button>
                                                     </div>
@@ -153,6 +144,21 @@
                 @csrf
                 @method('POST')
                 <div class="form-group row">
+                    <label for="task_type" class="col-sm-1-12 col-form-label">Typ úlohy</label>
+                    <div class="col-sm-1-12">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="task_type" id="task_type0"
+                                onclick="NewTaskChangeType('one');" value="0" checked>
+                            <label class="form-check-label" for="inlineRadio1">Jednorázová</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="task_type" id="task_type1"
+                                onclick="NewTaskChangeType('reap');" value="1">
+                            <label class="form-check-label" for="inlineRadio2">Opakujúca sa</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="task_name" class="col-sm-1-12 col-form-label">{{ __('tasks.task_name') }}</label>
                     <div class="col-sm-1-12">
                         <input type="text" class="form-control" name="task_name" id="task_name" required max="50">
@@ -171,13 +177,13 @@
                         <input type="date" class="form-control" name="task_next_date" id="task_next_date" required>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row" id="add_task_repeat_group" style="display: none;">
                     <div class="col-6">
                         <label for="task_repeat_value"
                             class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_value') }}</label>
                         <div class="col-sm-1-12">
                             <input type="number" class="form-control" name="task_repeat_value" id="task_repeat_value"
-                                min="1" max="16777215" placeholder="{{ __('tasks.amount') }}" required>
+                                min="1" max="16777215" placeholder="{{ __('tasks.amount') }}">
                         </div>
                     </div>
                     <div class="col-6">
@@ -238,6 +244,19 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group row">
+                    <label for="task_type" class="col-sm-1-12 col-form-label">Typ úlohy</label>
+                    <div class="col-sm-1-12">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="task_type_edit0" disabled>
+                            <label class="form-check-label" for="inlineRadio1">Jednorázová</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="task_type_edit1" disabled>
+                            <label class="form-check-label" for="inlineRadio2">Opakujúca sa</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="task_name" class="col-sm-1-12 col-form-label">{{ __('tasks.task_name') }}</label>
                     <div class="col-sm-1-12">
                         <input type="text" class="form-control" name="task_name" id="task_name_edit" required max="50">
@@ -256,13 +275,14 @@
                         <input type="date" class="form-control" id="task_next_date_edit" readonly>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row" id="add_task_repeat_group_edit" style="display: none;">
                     <div class="col-6">
                         <label for="task_repeat_value"
                             class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_value') }}</label>
                         <div class="col-sm-1-12">
-                            <input type="number" class="form-control" name="task_repeat_value" id="task_repeat_value_edit"
-                                min="1" max="16777215" placeholder="{{ __('tasks.amount') }}" required>
+                            <input type="number" class="form-control" name="task_repeat_value"
+                                id="task_repeat_value_edit" min="1" max="16777215" placeholder="{{ __('tasks.amount') }}"
+                                required>
                         </div>
                     </div>
                     <div class="col-6">
@@ -304,10 +324,12 @@
                 <div class="form-group row">
                     <div class="offset mt-3">
                         <button type="submit" class="btn btn-primary">{{ __('tasks.save_button') }}</button>
+                        <button type="button" class="btn btn-success" id="complete_btn" data-bs-toggle="modal"
+                            data-bs-target="#completeModal">{{ __('tasks.complete_btn') }}</button>
                         <button type="button" class="btn btn-danger"
                             onclick="delete_task();">{{ __('tasks.remove_button') }}</button>
-                        <button type="button" id="show_history_btn"
-                            class="btn btn-secondary">{{ __('tasks.history_btn') }}</button>
+                        <button type="button" id="show_history_btn" class="btn btn-secondary"
+                            style="display: none;">{{ __('tasks.history_btn') }}</button>
                     </div>
                 </div>
             </form>
