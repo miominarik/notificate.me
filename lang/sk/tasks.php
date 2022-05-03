@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'all_active_tasks' => 'Aktívne úlohy',
+    'all_active_tasks' => 'Úlohy',
     'task_name' => 'Názov úlohy',
-    'task_note' => 'Popis',
+    'task_note' => 'Poznámka',
     'task_date' => 'Kontrolovaný dátum',
     'task_repeat' => 'Opakovanie',
     'task_action' => 'Akcia',
@@ -12,7 +12,7 @@ return [
     'month' => '{1} mesiac|[2,4] mesiace|[5,*] mesiacov',
     'year' => '{1} rok|[2,4] roky|[5,*] rokov',
     'no_data' => 'Žiadne úlohy',
-    'none' => 'Neznáme',
+    'none' => 'Nenastavené',
     'add_new_task' => 'Pridanie novej úlohy',
     'task_next_date' => 'Kontrolovaný dátum',
     'task_repeat_value' => 'Opakovať po',
@@ -28,11 +28,14 @@ return [
     'close_button' => 'Zavrieť',
     'complete_date' => 'Dátum splnenia',
     'menu_task_create' => 'Vytvoriť úlohu',
-    'task_notification_value' => 'Pripomenúť pred dátumom splnenia',
+    'task_notification_value' => 'Pripomenúť dopredu o',
     'task_notification_type' => 'Typ',
     'amount' => 'Počet',
     'edit_btn' => 'Upraviť',
     'complete_btn' => 'Splniť úlohu',
     'history_header' => 'Naposledy splnené',
-    'history_btn' => 'Zobraziť históriu'
+    'history_btn' => 'Zobraziť históriu',
+    'task_type' => 'Typ úlohy',
+    'one_time' => 'Jednorázová',
+    'many_time' => 'Opakujúca'
 ];

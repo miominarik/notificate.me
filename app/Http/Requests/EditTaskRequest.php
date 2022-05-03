@@ -27,8 +27,8 @@ class EditTaskRequest extends FormRequest
         return [
             'task_name' => 'required|max:50|string',
             'task_note' => 'nullable|max:50|string',
-            'task_repeat_value' => 'required|integer',
-            'task_repeat_type' => 'required|integer',
+            'task_repeat_value' => 'nullable|integer',
+            'task_repeat_type' => 'nullable|integer',
             'task_notification_value' => 'required|integer',
             'task_notification_type' => 'required|integer',
         ];

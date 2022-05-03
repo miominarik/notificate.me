@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'all_active_tasks' => 'Active Tasks',
+    'all_active_tasks' => 'Tasks',
     'task_name' => 'Task Name',
-    'task_note' => 'Description',
+    'task_note' => 'Note',
     'task_date' => 'Completion date',
     'task_repeat' => 'Repeat',
     'task_action' => 'Action',
@@ -12,7 +12,7 @@ return [
     'month' => '{1} month|[2,4] months|[5, *] months',
     'year' => '{1} year|[2,4] years|[5, *] years',
     'no_data' => 'No Tasks',
-    'none' => 'Unknown',
+    'none' => 'Not set',
     'add_new_task' => 'Add New Task',
     'task_next_date' => 'Completion date',
     'task_repeat_value' => 'Repeat after',
@@ -34,5 +34,8 @@ return [
     'edit_btn' => 'Edit',
     'complete_btn' => 'Complete',
     'history_header' => 'Last completed',
-    'history_btn' => 'View history'
+    'history_btn' => 'View history',
+    'task_type' => 'Task type',
+    'one_time' => 'Disposable',
+    'many_time' => 'Repetitive'
 ];

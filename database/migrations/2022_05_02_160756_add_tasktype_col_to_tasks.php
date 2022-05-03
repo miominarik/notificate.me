@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('google_id')->after('github_refresh_token')->unique()->nullable();
-            $table->string('google_token')->after('google_id')->unique()->nullable();
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->tinyInteger('task_type')->after('task_note')->default(1);
         });
     }
 
@@ -26,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['google_id', 'google_token']);
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->dropColumn('task_type');
         });
     }
 };

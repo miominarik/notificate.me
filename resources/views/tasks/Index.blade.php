@@ -51,7 +51,6 @@
                                                 <th>{{ __('tasks.task_note') }}</th>
                                                 <th>{{ __('tasks.task_date') }}</th>
                                                 <th>{{ __('tasks.task_repeat') }}</th>
-                                                <th>{{ __('tasks.task_action') }}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -72,15 +71,10 @@
                                                             {{ $item->task_repeat_value }}
                                                             {{ $item->task_repeat_type }}
                                                         </td>
-                                                        <td scope="row">
-                                                            <span data-bs-toggle="modal" data-bs-target="#completeModal"
-                                                                onclick="document.getElementById('form_complete_task').setAttribute('action', '{{ route('tasks.complete', $item->id) }}')"><i
-                                                                    class="fa-solid fa-check succes_icon"></i></span>
                                                     </tr>
                                                 @empty
                                                     <tr>
                                                         <td scope="row">{{ __('tasks.no_data') }}</td>
-                                                        <td scope="row"></td>
                                                         <td scope="row"></td>
                                                         <td scope="row"></td>
                                                         <td scope="row"></td>
@@ -109,11 +103,8 @@
                                                             {{ __('tasks.task_repeat') }}: {{ $item->task_repeat_value }}
                                                             {{ $item->task_repeat_type }}
                                                         </p>
-                                                        <span class="card-link" style="color: green;"
-                                                            data-bs-toggle="modal" data-bs-target="#completeModal"
-                                                            onclick="document.getElementById('form_complete_task').setAttribute('action', '{{ route('tasks.complete', $item->id) }}')">{{ __('tasks.complete_btn') }}</span>
-                                                        <span class="card-link" style="color: blue;"
-                                                            onclick="getDataToEditTaskForm({{ $item->id }})">{{ __('tasks.edit_btn') }}</span>
+                                                        <button type="button" class="btn btn-outline-primary btn-sm"
+                                                            onclick="getDataToEditTaskForm({{ $item->id }})">{{ __('tasks.edit_btn') }}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -142,7 +133,8 @@
 
     {{-- Offcanvas to add task --}}
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddTask" aria-labelledby="offcanvasAddTaskLabel" data-bs-keyboard="false">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddTask" aria-labelledby="offcanvasAddTaskLabel"
+        data-bs-keyboard="false">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">{{ __('tasks.add_new_task') }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -151,6 +143,21 @@
             <form method="POST" action="{{ route('tasks.store') }}" id="offcanvasAddTaskForm">
                 @csrf
                 @method('POST')
+                <div class="form-group row">
+                    <label for="task_type" class="col-sm-1-12 col-form-label">{{__('tasks.task_type')}}</label>
+                    <div class="col-sm-1-12">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="task_type" id="task_type0"
+                                onclick="NewTaskChangeType('one');" value="0" checked>
+                            <label class="form-check-label" for="inlineRadio1">{{__('tasks.one_time')}}</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="task_type" id="task_type1"
+                                onclick="NewTaskChangeType('reap');" value="1">
+                            <label class="form-check-label" for="inlineRadio2">{{__('tasks.many_time')}}</label>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="task_name" class="col-sm-1-12 col-form-label">{{ __('tasks.task_name') }}</label>
                     <div class="col-sm-1-12">
@@ -170,13 +177,13 @@
                         <input type="date" class="form-control" name="task_next_date" id="task_next_date" required>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row" id="add_task_repeat_group" style="display: none;">
                     <div class="col-6">
                         <label for="task_repeat_value"
                             class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_value') }}</label>
                         <div class="col-sm-1-12">
                             <input type="number" class="form-control" name="task_repeat_value" id="task_repeat_value"
-                                min="1" max="16777215" placeholder="{{ __('tasks.amount') }}" required>
+                                min="1" max="16777215" placeholder="{{ __('tasks.amount') }}">
                         </div>
                     </div>
                     <div class="col-6">
@@ -226,7 +233,8 @@
 
     {{-- Offcanvas to edit task --}}
 
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEditTask" aria-labelledby="offcanvasEditTaskLabel" data-bs-keyboard="false">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEditTask" aria-labelledby="offcanvasEditTaskLabel"
+        data-bs-keyboard="false">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">{{ __('tasks.edit_task') }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -235,6 +243,19 @@
             <form method="POST" action="" id="offcanvasEditForm">
                 @csrf
                 @method('PUT')
+                <div class="form-group row">
+                    <label for="task_type" class="col-sm-1-12 col-form-label">{{__('tasks.task_type')}}</label>
+                    <div class="col-sm-1-12">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="task_type_edit0" disabled>
+                            <label class="form-check-label" for="inlineRadio1">{{__('tasks.one_time')}}</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="task_type_edit1" disabled>
+                            <label class="form-check-label" for="inlineRadio2">{{__('tasks.many_time')}}</label>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <label for="task_name" class="col-sm-1-12 col-form-label">{{ __('tasks.task_name') }}</label>
                     <div class="col-sm-1-12">
@@ -254,13 +275,14 @@
                         <input type="date" class="form-control" id="task_next_date_edit" readonly>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row" id="add_task_repeat_group_edit" style="display: none;">
                     <div class="col-6">
                         <label for="task_repeat_value"
                             class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_value') }}</label>
                         <div class="col-sm-1-12">
-                            <input type="number" class="form-control" name="task_repeat_value" id="task_repeat_value_edit"
-                                min="1" max="16777215" placeholder="{{ __('tasks.amount') }}" required>
+                            <input type="number" class="form-control" name="task_repeat_value"
+                                id="task_repeat_value_edit" min="1" max="16777215" placeholder="{{ __('tasks.amount') }}"
+                                required>
                         </div>
                     </div>
                     <div class="col-6">
@@ -302,9 +324,12 @@
                 <div class="form-group row">
                     <div class="offset mt-3">
                         <button type="submit" class="btn btn-primary">{{ __('tasks.save_button') }}</button>
+                        <button type="button" class="btn btn-success" id="complete_btn" data-bs-toggle="modal"
+                            data-bs-target="#completeModal">{{ __('tasks.complete_btn') }}</button>
                         <button type="button" class="btn btn-danger"
                             onclick="delete_task();">{{ __('tasks.remove_button') }}</button>
-                        <button type="button" id="show_history_btn" class="btn btn-secondary">{{__('tasks.history_btn')}}</button>
+                        <button type="button" id="show_history_btn" class="btn btn-secondary"
+                            style="display: none;">{{ __('tasks.history_btn') }}</button>
                     </div>
                 </div>
             </form>
@@ -367,97 +392,25 @@
             today = yyyy + '-' + mm + '-' + dd;
             document.getElementById('complete_date').value = today
         });
-    </script>
 
-    {{-- Reset Add form if offcanvas is hidden --}}
-    <script>
         let offcanvasAddTask = document.getElementById('offcanvasAddTask')
         offcanvasAddTask.addEventListener('hidden.bs.offcanvas', function() {
             document.getElementById("offcanvasAddTaskForm").reset();
         })
-    </script>
 
-    {{-- Reset History if offcanvas is hidden --}}
-    <script>
         let offcanvasShowHistory = document.getElementById('offcanvasShowHistory')
         offcanvasShowHistory.addEventListener('hidden.bs.offcanvas', function() {
             document.getElementById('history_list').innerHTML = "";
         })
-    </script>
 
-    {{-- Ajax for editTaskForm --}}
-    <script>
-        function getDataToEditTaskForm(task_id) {
-            axios.post('/tasks/' + task_id + '/edit')
-                .then(function(response) {
-                    document.getElementById('task_name_edit').value = response.data[0].task_name;
-                    document.getElementById('task_note_edit').value = response.data[0].task_note;
-                    document.getElementById('task_next_date_edit').value = response.data[0].task_next_date;
-                    document.getElementById('task_repeat_value_edit').value = response.data[0].task_repeat_value;
-                    document.getElementById('task_repeat_type_edit').value = response.data[0].task_repeat_type;
-                    document.getElementById('task_notification_value_edit').value = response.data[0]
-                        .task_notification_value;
-                    document.getElementById('task_notification_type_edit').value = response.data[0]
-                        .task_notification_type;
-
-                    document.getElementById('delete_form').action = 'tasks/' + task_id;
-                    document.getElementById('offcanvasEditForm').action = 'tasks/' + task_id;
-                    document.getElementById('show_history_btn').setAttribute('onclick', 'ShowHistoryTask(' +
-                        task_id + ')')
-
-                    const offcanvasEditTask = new bootstrap.Offcanvas(document.getElementById(
-                        'offcanvasEditTask'));
-                    offcanvasEditTask.show();
-                })
-                .catch(function(error) {
-                    //console.log(error);
-                });
-        }
-    </script>
-
-    {{-- Ajax for showHistory --}}
-    <script>
-        function ShowHistoryTask(task_id) {
-            axios.post('/tasks/' + task_id + '/history')
-                .then(function(response) {
-                    if (response.data) {
-                        let container = document.querySelector('#history_list');
-                        let ul = document.createElement('ol');
-                        ul.classList.add('list-group');
-
-                        response.data.forEach(function(item) {
-                            let date = new Date(item.created_at);
-                            date = date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear();
-                            let li = document.createElement('li');
-                            li.classList.add('list-group-item');
-
-                            li.textContent = date;
-                            ul.appendChild(li);
-                        });
-
-                        container.appendChild(ul);
-
-                        const offcanvasShowHistory = new bootstrap.Offcanvas(document.getElementById(
-                            'offcanvasShowHistory'));
-                        offcanvasShowHistory.show();
-                    }
-                })
-                .catch(function(error) {
-                    //console.log(error);
-                });
-        }
-    </script>
-
-    {{-- Delete task --}}
-    <form method="POST" action="" id="delete_form">
-        @method('DELETE')
-        @csrf
-    </form>
-
-    <script>
         function delete_task() {
             event.preventDefault();
             document.getElementById('delete_form').submit();
         }
     </script>
+
+    <form method="POST" action="" id="delete_form">
+        @method('DELETE')
+        @csrf
+    </form>
 @endsection

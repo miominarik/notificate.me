@@ -78,12 +78,14 @@
                                         <span
                                             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                             {{ $notifications['count'] }}
-                                            <span class="visually-hidden">{{__('layout.notif_comming')}}</span>
+                                            <span class="visually-hidden">{{ __('layout.notif_comming') }}</span>
                                         </span>
                                     </button>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarNotificationMenu">
-                                    <li><h6 class="dropdown-header">{{__('layout.notif_comming')}}</h6></li>
+                                    <li>
+                                        <h6 class="dropdown-header">{{ __('layout.notif_comming') }}</h6>
+                                    </li>
                                     @forelse ($notifications['data'] as $one_notif)
                                         <li><span class="dropdown-item"
                                                 style="cursor: default">{{ $one_notif['task_name'] }} -
@@ -134,6 +136,7 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{ asset('js/main.js') }}" defer></script>
 </body>
 
 </html>
