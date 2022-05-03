@@ -144,17 +144,17 @@
                 @csrf
                 @method('POST')
                 <div class="form-group row">
-                    <label for="task_type" class="col-sm-1-12 col-form-label">Typ úlohy</label>
+                    <label for="task_type" class="col-sm-1-12 col-form-label">{{__('tasks.task_type')}}</label>
                     <div class="col-sm-1-12">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="task_type" id="task_type0"
                                 onclick="NewTaskChangeType('one');" value="0" checked>
-                            <label class="form-check-label" for="inlineRadio1">Jednorázová</label>
+                            <label class="form-check-label" for="inlineRadio1">{{__('tasks.one_time')}}</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="task_type" id="task_type1"
                                 onclick="NewTaskChangeType('reap');" value="1">
-                            <label class="form-check-label" for="inlineRadio2">Opakujúca sa</label>
+                            <label class="form-check-label" for="inlineRadio2">{{__('tasks.many_time')}}</label>
                         </div>
                     </div>
                 </div>
@@ -244,15 +244,15 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group row">
-                    <label for="task_type" class="col-sm-1-12 col-form-label">Typ úlohy</label>
+                    <label for="task_type" class="col-sm-1-12 col-form-label">{{__('tasks.task_type')}}</label>
                     <div class="col-sm-1-12">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" id="task_type_edit0" disabled>
-                            <label class="form-check-label" for="inlineRadio1">Jednorázová</label>
+                            <label class="form-check-label" for="inlineRadio1">{{__('tasks.one_time')}}</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" id="task_type_edit1" disabled>
-                            <label class="form-check-label" for="inlineRadio2">Opakujúca sa</label>
+                            <label class="form-check-label" for="inlineRadio2">{{__('tasks.many_time')}}</label>
                         </div>
                     </div>
                 </div>

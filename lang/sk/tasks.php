@@ -12,7 +12,7 @@ return [
     'month' => '{1} mesiac|[2,4] mesiace|[5,*] mesiacov',
     'year' => '{1} rok|[2,4] roky|[5,*] rokov',
     'no_data' => 'Žiadne úlohy',
-    'none' => 'Neznáme',
+    'none' => 'Nenastavené',
     'add_new_task' => 'Pridanie novej úlohy',
     'task_next_date' => 'Kontrolovaný dátum',
     'task_repeat_value' => 'Opakovať po',
@@ -34,5 +34,8 @@ return [
     'edit_btn' => 'Upraviť',
     'complete_btn' => 'Splniť úlohu',
     'history_header' => 'Naposledy splnené',
-    'history_btn' => 'Zobraziť históriu'
+    'history_btn' => 'Zobraziť históriu',
+    'task_type' => 'Typ úlohy',
+    'one_time' => 'Jednorázová',
+    'many_time' => 'Opakujúca'
 ];
