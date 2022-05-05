@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\TasksController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
@@ -16,7 +15,34 @@ use Laravel\Socialite\Facades\Socialite;
 |
 */
 
+/*
+Home Page Routes
+*/
+
 Route::get('/', function () {
+    return view('home.index');
+});
+
+Route::get('/gdpr', function () {
+    return view('home.index', [
+        'page' => 'gdpr'
+    ]);
+})->name('gdpr');
+
+Route::get('/cookies', function () {
+    return view('home.index', [
+        'page' => 'cookies'
+    ]);
+})->name('cookies');
+
+Route::post('/contact/mail/send', "App\Http\Controllers\HomeController@SendContactMail")->name('contact.send_mail');
+
+
+/*
+Main App Routes
+ */
+
+Route::get('/app', function () {
     if (Auth::check()) {
         return redirect('/tasks');
     } else {
