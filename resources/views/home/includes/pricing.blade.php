@@ -23,7 +23,8 @@
                                 <li class="na">{{ __('home_page.free_notif_sms') }}</li>
                             </ul>
                             <div class="btn-wrap">
-                                <a href="#" class="btn-buy">{{ __('home_page.free_activate') }}</a>
+                                <a href="{{ route('register') }}"
+                                    class="btn-buy">{{ __('home_page.free_activate') }}</a>
                             </div>
                         </div>
                     </div>
