@@ -30,6 +30,15 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description"
+        content="Notificate.me Vám pomôže s evidenciou Vaších úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy." />
+    <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vaších úloh">
+    <meta name="author" content="Miroslav Minárik" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="apple-mobile-web-app-title" content="Notificate.me">
+    <meta name="application-name" content="Notificate.me" />
+    <meta name="msapplication-tooltip" content="Notificate.me">
+    <meta name="msapplication-starturl" content="/" />
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -69,6 +78,11 @@
                         </ul>
                     @endauth
                     @guest
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/">{{ __('layout.menu_index') }}</a>
+                            </li>
+                        </ul>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"

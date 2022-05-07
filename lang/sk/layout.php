@@ -10,5 +10,6 @@ return [
     'menu_lang' => 'Jazyk',
     'lang_slovak' => 'Slovenčina',
     'lang_english' => 'Angličtina',
-    'notif_comming' => 'Blížiace sa úlohy'
+    'notif_comming' => 'Blížiace sa úlohy',
+    'menu_index' => 'Späť na úvodnú stránku'
 ];

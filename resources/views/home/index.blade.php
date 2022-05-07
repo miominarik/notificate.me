@@ -31,10 +31,18 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description"
+        content="Notificate.me Vám pomôže s evidenciou Vaších úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy." />
+    <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vaších úloh">
+    <meta name="author" content="Miroslav Minárik" />
+    <meta name="robots" content="index,follow" />
+    <meta name="apple-mobile-web-app-title" content="Notificate.me">
+    <meta name="application-name" content="Notificate.me" />
+    <meta name="msapplication-tooltip" content="Notificate.me">
+    <meta name="msapplication-starturl" content="/" />
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
+
 
     <!-- Google Fonts -->
     <link
