@@ -60,7 +60,7 @@
     <link href="{{ asset('home_page_assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="{{ asset('home_page_assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('home_page_assets/css/styles.mini.css') }}" rel="stylesheet">
 </head>
 
 <body>
