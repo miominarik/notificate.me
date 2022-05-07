@@ -6,6 +6,19 @@
     <script id="cookieyes" type="text/javascript"
         src="https://cdn-cookieyes.com/client_data/53022338a42204fb995da8b6/script.js"></script>
     <!-- End cookieyes banner -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0EK8WTBP0C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-0EK8WTBP0C');
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
