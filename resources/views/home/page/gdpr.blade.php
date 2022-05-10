@@ -1,172 +1,210 @@
 <div class="container">
-    <h3>1. Úvod</h3>
-    <p>1.1 Zaviazali sme sa chrániť súkromie návštevníkov našich stránok a používateľov našich služieb.</p>
-    <p>1.2 Tieto pravidlá platia všade tam, keď sme správcami osobných údajov návštevníkov našich webových stránok a
-        používateľov našich služieb, inými slovami, kde určujeme účel a význam spracovania týchto osobných údajov.</p>
-    <p>1.3 Pri prvej návšteve našej webovej stránky vás žiadame o súhlas s používaním súborov cookies v súlade s
-        podmienkami týchto pravidiel.</p>
-    <p>1.4 V týchto zásadach “my”, “nám” a “náš” sa označuje <em>Miroslav Minárik - Miucode</em> Pre viac informácii o
-        nás, si
-        pozrite Sekciu 12.</p>
-    <h3>2. Ako používame osobné dáta</h3>
-    <p>2.1 V tejto časti 2 sme stanovili:<br> (a)všeobecné kategórie osobných údajov, ktoré spracovávame;<br> (b) zdroj
-        a kategóriu údajov, v prípade dát, ktoré sme neobdržali priamo od Vás;<br> (c) účel, na ktorý osobné údaje
-        spracovávame;<br> (d) právne základy ich spracovania.</p>
-    <p>2.2 Môžeme spracovávať údaje o používaní našich webových stránok a služieb (<strong>údaje o používaní</strong>).
-        Údaje o používaní môžu obsahovať vašu IP adresu, geografickú polohu, webový prehliadač a jeho verziu, operačný
-        systém, referenčný zdroj, dĺžku návštevy, zobrazenia stránok a navigačné cesty stránok, rovnako aj informácie o
-        časovaní, frekvencii a vzorci používania našej služby. Zdrojom údajov o používaní je služba Google Analytics.
-        Tieto údaje o používaní môžu byť spracované na účely analýzy používania webových stránok a služieb. Právnym
-        základom tohto spracovania je súhlas a naše oprávnené záujmy, t. j. monitorovanie a zlepšovanie našich webových
-        stránok a služieb.</p>
-    <p>2.3 Môžeme spracovávať informácie, ktoré zverejňujete na našich webových stránkach alebo prostredníctvom údajov,
-        ktoré použijete pri využívaní našich služieb. Uverejnené údaje môžu byť spracované na účely ich uverejnenia a
-        spravovania našich webových stránok a služieb. Právnym základom tohto spracovania je súhlas.</p>
-    <p>2.4 Môžeme spracovávať informácie obsiahnuté v akomkoľvek dotazníku (<strong>údaje z dotazov</strong>), pokiaľ
-        ide o údaje ohľadne tovaru a / alebo služieb. Právnym základom tohto spracovania je súhlas.</p>
-    <p>2.5 Môžeme spracovávať informácie, ktoré nám poskytnete za účelom odberu našich e-mailových ponúk a / alebo
-        newslettru (<strong>oznamovacie údaje</strong>). Oznamovacie údaje môžu byť spracované na odosielanie
-        príslušných upozornení a / alebo newslettra. Právnym základom tohto spracovania je súhlas.</p>
-    <p>2.6 Môžeme spracovávať informácie (<strong>kontaktné údaje</strong>) obsiahnuté v alebo súvisiace s akoukoľvek
-        komunikáciou, v ktorej nám posielate kontaktné údaje. Dáta korešpondencie môžu obsahovať komunikačný obsah a
-        metaúdaje spojené s komunikáciou. Naše webové stránky vygenerujú metadáta súvisiace s komunikáciou
-        prostredníctvom kontaktných formulárov webových stránok. Údaje o korešpondencii môžu byť spracované na účely
-        komunikácie s vami a vedenia záznamov. Právnym základom tohto spracovania sú naše oprávnené záujmy, a to riadna
-        správa našich webových stránok a podnikania a komunikácia s používateľmi a / alebo plnenie zmluvy medzi vami a
-        nami a / alebo kroky vedúce k uzavretiu zmluvy.</p>
-    <p>2.7 Môžeme spracovať akékoľvek vaše osobné údaje uvedené v týchto pravidlách, ak je to potrebné na vytvorenie,
-        uplatnenie alebo obhajobu právnych nárokov, či už v súdnom konaní alebo v správnom alebo mimosúdnom konaní.
-        Právnym základom tohto spracovania sú naše legitímne záujmy, a to ochrana a presadzovanie našich zákonných práv,
-        vaše zákonné práva a zákonné práva iných.</p>
-    <p>2.8 Okrem špecifických účelov, na ktoré môžeme spracovať vaše osobné údaje stanovené v tejto časti 2, môžeme
-        spracovať aj akékoľvek vaše osobné údaje, ak je takéto spracovanie nevyhnutné pre splnenie zákonnej povinnosti,
-        ktorou podliehame alebo pre ochranu svojich životných záujmov alebo životných záujmy inej fyzickej osoby.</p>
-    <h3>3. Poskytovanie vašich osobných údajov iným osobám</h3>
-    <p>3.1 Okrem špecifických zverejnení osobných údajov uvedených v tejto časti 3, môžeme zverejniť vaše osobné údaje,
-        ak je takéto zverejnenie nevyhnutné na splnenie zákonnej povinnosti, ktorou sme vystavení, alebo na ochranu
-        vašich životne dôležitých záujmov alebo životne dôležitých záujmov inej fyzickej osoby. Vaše osobné údaje môžeme
-        zverejniť aj vtedy, ak je takéto zverejnenie nevyhnutné na zistenie, uplatnenie alebo obhajobu právnych nárokov,
-        či už v súdnom konaní alebo v správnom alebo mimosúdnom konaní.</p>
-    <h3>4. Medzinárodné prenosy vašich osobných údajov</h3>
-    <p>4.1 Beriete na vedomie, že osobné údaje, ktoré odošlete na zverejnenie prostredníctvom našich webových stránok
-        alebo služieb, môžu byť prístupné prostredníctvom internetu na celom svete. Nemôžeme zabrániť použitiu (alebo
-        zneužitiu) takýchto osobných údajov inými osobami.</p>
-    <h3>5. Uchovávanie a mazanie osobných údajov</h3>
-    <p>5.1 Táto časť 5 stanovuje naše zásady a postupy uchovávania údajov, ktoré sú navrhnuté tak, aby pomohli
-        zabezpečiť dodržiavanie našich zákonných povinností v súvislosti so zachovaním a vymazaním osobných údajov.</p>
-    <p>5.2 Osobné údaje, ktoré spracovávame na akýkoľvek účel alebo účely, sa nesmú uchovávať dlhšie, než je potrebné na
-        tento účel alebo na tieto účely.</p>
-    <p>5.3 Osobné údaje budeme uchovávať nasledovne:<br> (a) <strong>údaje o používaní, údaje o zverejňovaní, údaje z
-            dotazov, notifikačné údaje a údaje z korešpondencie</strong> sa uchovajú po dobu maximálne 10 rokov.</p>
-    <p>5.4 Bez ohľadu na ostatné ustanovenia tejto časti 5 si môžeme ponechať vaše osobné údaje, ak je takéto
-        uchovávanie nevyhnutné na splnenie zákonnej povinnosti, ktorou sme vystavení, alebo na ochranu vašich životne
-        dôležitých záujmov alebo životných záujmov inej fyzickej osoby.</p>
-    <h3>6. Zmeny</h3>
-    <p>6.1 Tieto pravidlá môžeme z času na čas aktualizovať zverejnením novej verzie na našich webových stránkach.</p>
-    <p>6.2 Príležitostne by ste mali túto stránku skontrolovať, aby ste boli spokojní s akýmikoľvek zmenami v týchto
-        pravidlách.</p>
-    <p>6.3 O zmenách týchto pravidiel vás môžeme informovať e-mailom.</p>
-    <h3>7. Vaše práva</h3>
-    <p>7.1 V tejto časti 7 sme zhrnuli práva, ktoré máte podľa zákona o ochrane údajov. Niektoré práva sú zložité a nie
-        všetky podrobnosti boli zahrnuté do našich súhrnov. Preto by ste si mali prečítať príslušné zákony a usmernenia
-        regulačných orgánov o úplnom vysvetlení týchto práv.</p>
-    <p>7.2 Vaše základné práva podľa zákona o ochrane údajov sú:<br> (a) právo na prístup;<br> (b) právo na opravu;<br>
-        (c) právo vymazanie;<br> (d) právo na obmedzenie spracovania;<br> (e) právo namietať proti spracovaniu;<br> (f)
-        právo na prenos údajov;<br> (g) právo sťažovať sa dozornému orgánu; a<br> (h) právo odobrať súhlas.</p>
-    <p>7.3 Máte právo potvrdiť, či môžeme spracovať vaše osobné údaje a kde k nim pristupujeme spolu s ďalšími
-        informáciami. Tieto doplňujúce informácie zahŕňajú podrobnosti o účeloch spracovania, kategóriách dotknutých
-        osobných údajov a osobách, ktoré sú príjemcami osobných údajov. Poskytovanie práv a slobôd ostatných nie je
-        ovplyvnené, poskytneme vám kópiu vašich osobných údajov. Prvá kópia bude poskytnutá bezplatne, ale ďalšie kópie
-        môžu byť spoplatnené primeraným poplatkom.</p>
-    <p>7.4 Máte právo na opravu akýchkoľvek nepresných osobných údajov a s ohľadom na účely spracovania, ak ste nám
-        poskytli nepresné alebo chybné údaje.</p>
-    <p>7.5 Za určitých okolností máte právo na vymazanie vašich osobných údajov bez zbytočného odkladu. Medzi tieto
-        okolnosti patrí: osobné údaje už nie sú potrebné k účelu, na ktoré boli zhromaždené alebo inak spracované;
-        odoberiete súhlas so spracovaním na základe súhlasu; máte námietky voči spracovaniu podľa určitých pravidiel
-        platného zákona o ochrane údajov; spracovanie je určené na účely priameho marketingu; a osobné údaje boli
-        neoprávnene spracované. Existujú však výnimky práva na vymazanie. Všeobecné výnimky platia tam, kde je potrebné
-        spracovanie: na uplatňovanie práva na slobodu prejavu a informácií; dodržiavanie zákonnej povinnosti; alebo na
-        vznik, výkon alebo obranu právnych nárokov.</p>
-    <p>7.6 Za určitých okolností máte právo obmedziť spracovanie vašich osobných údajov. Tieto okolnosti sú:
-        spochybňujete presnosť osobných údajov; spracovanie je nezákonné, ale vylučujete vymazanie; už nepotrebujeme
-        osobné údaje na účely nášho spracovania, ale požadujete osobné údaje na zriadenie, uplatnenie alebo obhajobu
-        právnych nárokov; a vy ste namietali proti spracovaniu, až do overenia tejto námietky. Ak je spracovanie na
-        tomto základe obmedzené, môžeme naďalej uchovávať vaše osobné údaje. Budeme ich však spracovávať inak: s vaším
-        súhlasom; na vznik, výkon alebo obranu právnych nárokov; na ochranu práv inej fyzickej alebo právnickej osoby;
-        alebo z dôvodov dôležitého verejného záujmu.</p>
-    <p>7.7 Máte právo vzniesť námietky voči spracovaniu vašich osobných údajov z dôvodu vašej konkrétnej situácie, ale
-        iba v rozsahu, v akom to právny základ povoľuje. Spracovanie je nevyhnutné pre: plnenie úlohy vykonávanej vo
-        verejnom záujme alebo pri výkone akéhokoľvek úradného orgánu, ktorý nám bol zverený; alebo na účely oprávnených
-        záujmov, ktoré sledujeme na základe našej alebo tretej strany. Ak takúto námietku urobíte a nemôžeme preukázať
-        presvedčivé oprávnené dôvody na spracovanie, ktoré prevyšujú vaše záujmy, práva a slobody, alebo spracovanie je
-        na vytvorenie, výkon alebo obranu právnych nárokov, prestaneme spracovávať osobné informácie.</p>
-    <p>7.8 Máte právo namietať proti spracovaniu vašich osobných údajov na účely priameho marketingu (vrátane
-        profilovania). Ak takúto námietku urobíte, prestaneme spracovávať vaše osobné údaje na tento účel.</p>
-    <p>7.9 Máte právo vzniesť námietky voči spracovaniu vašich osobných údajov na vedecké alebo historické výskumné
-        účely alebo na štatistické účely z dôvodov týkajúcich sa vašej konkrétnej situácie, pokiaľ nie je spracovanie
-        nevyhnutné na úlohy vykonané z dôvodov verejného záujmu.</p>
-    <p>7.10 Právny základ pre spracovanie vašich osobných údajov je:<br> (a) súhlas; alebo<br> (b) ak je spracovanie
-        nevyhnutné pre plnenie zmluvy, ktorej ste zmluvnou stranou, alebo na vykonanie krokov na základe vašej žiadosti
-        pred uzatvorením zmluvy,<br> (c) a takéto spracovanie sa uskutočňuje automatizovanými prostriedkami, máte právo
-        obdržať vaše osobné údaje v štruktúrovanom, bežne používanom a strojom čitateľnom formáte. Toto právo sa však
-        neuplatňuje, ak by nepriaznivo ovplyvnilo práva a slobody iných.</p>
-    <p>7.11 Ak sa domnievate, že naše spracovanie vašich osobných údajov porušuje zákony na ochranu údajov, máte zákonné
-        právo podať sťažnosť orgánu dohľadu zodpovednému za ochranu údajov. Môžete tak urobiť v členskom štáte EÚ vášho
-        obvyklého pobytu, miesta výkonu práce alebo miesta údajného porušenia.</p>
-    <p>7.12 V rozsahu, v akom je právny základ pre spracovanie vašich osobných údajov odsúhlasený, máte právo kedykoľvek
-        odobrať tento súhlas.</p>
-    <p>7.13 Môžete uplatniť akékoľvek vaše práva vo vzťahu k vašim osobným údajom prostredníctvom písomného oznámenia.
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:10.0pt;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        &nbsp;<strong><span style="font-size:16px;line-height:150%;">1. Prev&aacute;dzkovateľ</span></strong></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Miroslav Min&aacute;rik - Miucode, Pie&scaron;ťansk&aacute;
+            387/72, 92 221 Moravany nad V&aacute;hom, IČO: 50993917 ,<span style="color:red;">&nbsp;</span>(ďalej len
+            &bdquo;Prev&aacute;dzkovateľ&ldquo;) je spr&aacute;vcom osobn&yacute;ch &uacute;dajov podľa čl. 4 bod 7
+            nariadenia Eur&oacute;pskeho parlamentu a Rady (E&Uacute;) 2016/679 o ochrane fyzick&yacute;ch os&ocirc;b v
+            s&uacute;vislosti so spracovan&iacute;m osobn&yacute;ch &uacute;dajov a o voľnom pohybe t&yacute;chto
+            &uacute;dajov.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">&nbsp;</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <strong><span style="font-size:16px;line-height:150%;">2. Dotknut&aacute; osoba</span></strong></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Dotknutou osobou je N&aacute;v&scaron;tevn&iacute;k
+            str&aacute;nky alebo Použ&iacute;vateľ služby, pretože jeho osobn&eacute; &uacute;daje spoločnosť Miroslav
+            Min&aacute;rik - Miucode, Pie&scaron;ťansk&aacute; 387/72, 92 221 Moravany nad V&aacute;hom, IČO:
+            50993917,<span style="color:red;">&nbsp;</span>sprac&uacute;va.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <strong><span style="font-size:16px;line-height:150%;">&nbsp;</span></strong></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <strong><span style="font-size:16px;line-height:150%;">3. Osobn&eacute; &uacute;daje</span></strong></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Osobn&yacute;mi &uacute;dajmi s&uacute; ak&eacute;koľvek
+            &uacute;daje, na z&aacute;klade ktor&yacute;ch je dotknut&aacute; osoba identifikovan&aacute; alebo
+            identifikovateľn&aacute;. Rozsah osobn&yacute;ch &uacute;dajov, ktor&eacute; spoločnosť Miroslav
+            Min&aacute;rik - Miucode, Pie&scaron;ťansk&aacute; 387/72, 92 221 Moravany nad V&aacute;hom, IČO:
+            50993917,<span style="color:red;">&nbsp;</span>sprac&uacute;va, z&aacute;vis&iacute; od &uacute;čelu, pre
+            ktor&yacute; s&uacute; tieto osobn&eacute; &uacute;daje sprac&uacute;van&eacute;. Nesprac&uacute;vame
+            osobitn&eacute; kateg&oacute;rie osobn&yacute;ch &uacute;dajov, ktor&eacute; s&uacute;
+            obzvl&aacute;&scaron;ť citliv&eacute; (&uacute;daje odhaľuj&uacute;ce rasov&yacute; alebo etnick&yacute;
+            p&ocirc;vod (nie je možn&eacute; teda spracov&aacute;vať n&aacute;rodnosť, &uacute;daje odhaľuj&uacute;ce
+            politick&eacute; n&aacute;zory, &uacute;daje odhaľuj&uacute;ce n&aacute;božensk&uacute; vieru alebo
+            filozofick&eacute; presvedčenie, členstvo v odboroch / len za &uacute;čelom plnenia z&aacute;konn&yacute;ch
+            povinnost&iacute; podľa Z&aacute;konn&iacute;ka pr&aacute;ce, genetick&eacute; &uacute;daje,
+            biometrick&eacute; &uacute;daje, &uacute;daje t&yacute;kaj&uacute;ce sa zdravia a &uacute;daje
+            t&yacute;kaj&uacute;ce sa sexu&aacute;lneho života alebo sexu&aacute;lnej orient&aacute;cie).</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">&nbsp;</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <strong><span style="font-size:16px;line-height:150%;">4. Z&aacute;konn&yacute; d&ocirc;vod a &uacute;čel
+                spracovania osobn&yacute;ch &uacute;dajov</span></strong></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">N&aacute;v&scaron;tevn&iacute;k str&aacute;nky alebo
+            Použ&iacute;vateľ služby poskytuje svoje osobn&eacute; &uacute;daje Prev&aacute;dzkovateľovi,
+            predov&scaron;etk&yacute;m Kontaktn&eacute; &uacute;daje (Meno, Priezvisko, e-mail, telef&oacute;nny
+            kontakt, prihlasovacie meno, heslo). N&aacute;v&scaron;tevn&iacute;k str&aacute;nky alebo Použ&iacute;vateľ
+            služby poskytuje osobn&eacute; &uacute;daje Prev&aacute;dzkovateľovi dobrovoľne za &uacute;čelom
+            ďal&scaron;ej komunik&aacute;cie s n&iacute;m a za &uacute;čelom riadneho využ&iacute;vania služby
+            Prev&aacute;dzkovateľa. Bez ich poskytnutia Prev&aacute;dzkovateľ nem&ocirc;že riadne poskytn&uacute;ť
+            službu alebo plniť predzmluvn&eacute; vzťahy a/alebo zmluvu s N&aacute;v&scaron;tevn&iacute;kom
+            str&aacute;nky alebo Použ&iacute;vateľom služby a preto ju nebude možn&eacute; ani uzavrieť alebo
+            poskytn&uacute;ť. &Uacute;čelom sprac&uacute;vania t&yacute;chto osobn&yacute;ch &uacute;dajov je
+            komunik&aacute;cia s N&aacute;v&scaron;tevn&iacute;kom str&aacute;nky alebo Použ&iacute;vateľom služby,
+            identifik&aacute;cia N&aacute;v&scaron;tevn&iacute;ka str&aacute;nky alebo Použ&iacute;vateľa služby,
+            realizovanie marketingov&yacute;ch aktiv&iacute;t, informovanie o akci&aacute;ch, novink&aacute;ch a
+            zľav&aacute;ch.&nbsp;</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Ak N&aacute;v&scaron;tevn&iacute;k webovej str&aacute;nky požiada
+            o&nbsp;registr&aacute;ciu na webovej str&aacute;nke Prev&aacute;dzkovateľa, z&aacute;roveň t&yacute;m
+            udel&iacute; s&uacute;hlas so sprac&uacute;van&iacute;m svojich osobn&yacute;ch &uacute;dajov.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <strong><span style="font-size:16px;line-height:150%;">&nbsp;</span></strong></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <strong><span style="font-size:16px;line-height:150%;">5. Zdroje osobn&yacute;ch &uacute;dajov</span></strong>
     </p>
-    <h3>8. O cookies</h3>
-    <p>8.1 Cookie je súbor obsahujúci identifikátor (reťazec písmen a čísel), ktorý posiela webový server do webového
-        prehliadača a je uložený prehliadačom. Identifikátor sa potom odosiela späť na server vždy, keď prehliadač
-        požaduje od servera stránku.</p>
-    <p>8.2 Súbory cookies môžu byť buď “trvalé” súbory cookies alebo súbory “relácie”: trvalý súbor cookie bude uložený
-        vo webovom prehliadači a zostane platný až do stanoveného dátumu vypršania platnosti, pokiaľ nie je pred dátumom
-        vypršania platnosti vymazaný používateľom; cookies relácie vypršia na konci relácie používateľa, keď je webový
-        prehliadač zatvorený.</p>
-    <p>8.3 Súbory cookies zvyčajne neobsahujú žiadne informácie, ktoré osobne identifikujú používateľa, ale osobné
-        informácie, ktoré ukladáme, môžu byť prepojené s informáciami uloženými v cookies a získanými z nich.</p>
-    <h3>9. Cookies, ktoré používame</h3>
-    <p>9.1 Cookies používame na nasledujúce účely:<br> (a) overovanie – súbory cookies používame na vašu identifikáciu
-        pri návšteve našich webových stránok a počas navigácie na našich webových stránkach;<br> (b) analýza – používame
-        súbory cookies, ktoré nám pomáhajú analyzovať používanie a výkonnosť našich webových stránok a služieb; a<br>
-        (c) súhlas cookies – súbory cookies používame na ukladanie vašich preferencií k používaniu súborov cookies pri
-        prehľadání webovej stránky</p>
-    <h3>10. Cookies používané našimi poskytovateľmi služieb</h3>
-    <p>10.1 Naši poskytovatelia služieb používajú súbory cookies a tieto cookies môžu byť uložené vo vašom počítači pri
-        návšteve našich webových stránok.</p>
-    <p>10.2 Na analýzu používania našich webových stránok používame službu <em>Google Analytics</em>. Služba Google
-        Analytics zhromažďuje informácie o používaní webových stránok prostredníctvom súborov cookies. Zhromaždené
-        informácie týkajúce sa našich webových stránok sa používajú na vytváranie prehľadov o používaní našich webových
-        stránok. Pravidlá ochrany osobných údajov spoločnosti Google sú k dispozícii <a
-            href="https://policies.google.com/privacy?hl=sk" target="_blank" rel="noopener noreferrer">na tejto
-            stránke.</a></p>
-    <h3>11. Správa súborov cookies</h3>
-    <p>11.1 Väčšina prehliadačov vám umožňuje odmietnuť prijatie súborov cookies a odstrániť súbory cookies. Metódy na
-        ich správu sa líšia v závislosti od prehliadača a verzie prehliadača. Môžete však získať aktuálne informácie o
-        blokovaní a mazaní súborov cookies prostredníctvom týchto odkazov:<br> (a) <a
-            href="https://support.google.com/chrome/answer/95647?hl=sk" target="_blank"
-            rel="noopener noreferrer">Chrome</a><br> (b) <a
-            href="https://support.mozilla.org/sk/kb/povolenie-zakazanie-cookies" target="_blank"
-            rel="noopener noreferrer">Firefox</a><br> (c) <a
-            href="https://help.opera.com/cs/latest/security-and-privacy/" target="_blank"
-            rel="noopener noreferrer">Opera</a><br> (d) <a
-            href="https://support.microsoft.com/sk-sk/help/17442/windows-internet-explorer-delete-manage-cookies"
-            target="_blank" rel="noopener noreferrer">Internet Explorer</a><br> (e) <a
-            href="https://www.apple.com/legal/privacy/sk/cookies/" target="_blank"
-            rel="noopener noreferrer">Safari</a><br> (f) <a
-            href="https://privacy.microsoft.com/en-us/windows-10-microsoft-edge-and-privacy" target="_blank"
-            rel="noopener noreferrer">Edge</a></p>
-    <p>11.2 Blokovanie všetkých súborov cookies bude mať negatívny vplyv na použiteľnosť mnohých webových stránok.</p>
-    <p>11.3 Ak zablokujete cookies, nebudete môcť používať všetky funkcie našich webových stránok.</p>
-    <h3>12. Podrobnosti o nás</h3>
-    <p>12.1 Túto webovú stránku vlastní a prevádzkuje: <em>Miroslav Minárik - Miucode</em>, (IČO) <em>50 993 917</em>,
-        92221 Moravany nad Váhom, Piešťanská 387/72<br>
-        12.2 Môžete nás kontaktovať:<br> (a) vyplnením kontaktného formulára na našej webovej stránke;<br> (b) e-mailom,
-        použitím e-mailovej adresy uverejnenej na našej webovej stránke.
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">N&aacute;v&scaron;tevn&iacute;k str&aacute;nky alebo
+            Použ&iacute;vateľ služby prejav&iacute; svoj s&uacute;hlas so sprac&uacute;van&iacute;m osobn&yacute;ch
+            &uacute;dajov prostredn&iacute;ctvom webovej str&aacute;nky. N&aacute;v&scaron;tevn&iacute;k str&aacute;nky
+            alebo Použ&iacute;vateľ služby m&ocirc;že za&scaron;krtnut&iacute;m pr&iacute;slu&scaron;n&eacute;ho
+            pol&iacute;čka vyjadriť svoj s&uacute;hlas v zmysle z&aacute;kona o ochrane osobn&yacute;ch &uacute;dajov,
+            aby Prev&aacute;dzkovateľ spracoval a uschov&aacute;val jeho osobn&eacute; &uacute;daje, najm&auml; tie,
+            ktor&eacute; s&uacute; uveden&eacute; vy&scaron;&scaron;ie a/alebo ktor&eacute; s&uacute; potrebn&eacute;
+            pri činnosti Prev&aacute;dzkovateľa.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">&nbsp;</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <strong><span style="font-size:16px;line-height:150%;">6. Doba uchov&aacute;vania &uacute;dajov</span></strong>
     </p>
-    <h3>13. Zdroj</h3>
-    <p>13.1 Tento dokument bol vytvorený pomocou šablóny zo <a href="https://seqlegal.com" target="_blank"
-            rel="noopener noreferrer">SEQ Legal</a>.</p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">N&aacute;v&scaron;tevn&iacute;k str&aacute;nky alebo
+            Použ&iacute;vateľ služby udeľuje Prev&aacute;dzkovateľovi tento s&uacute;hlas:</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">- po dobu nevyhnutn&uacute; na v&yacute;kon pr&aacute;v a
+            povinnost&iacute; vypl&yacute;vaj&uacute;cich zo vzťahu medzi Prev&aacute;dzkovateľom
+            a&nbsp;N&aacute;v&scaron;tevn&iacute;kom str&aacute;nky alebo Použ&iacute;vateľom služby</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">- po dobu nevyhnutne nutn&uacute; pre plnenie služieb</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">- na dobu neurčit&uacute; alebo do odvolania p&iacute;somnou
+            formou.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">&nbsp;</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <strong><span style="font-size:16px;line-height:150%;">7. Odvolanie s&uacute;hlasu</span></strong></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">S&uacute;hlas so spracovan&iacute;m osobn&yacute;ch &uacute;dajov
+            m&ocirc;že N&aacute;v&scaron;tevn&iacute;k str&aacute;nky alebo Použ&iacute;vateľ služby odvolať kedykoľvek
+            p&iacute;somnou formou. S&uacute;hlas zanikne v lehote 1 mesiaca od doručenia odvolania s&uacute;hlasu
+            N&aacute;v&scaron;tevn&iacute;ka str&aacute;nky alebo Použ&iacute;vateľa služby str&aacute;nky
+            Prev&aacute;dzkovateľovi.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">&nbsp;</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <strong><span style="font-size:16px;line-height:150%;">8. Pr&iacute;jemcovia osobn&yacute;ch
+                &uacute;dajov</span></strong></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Miroslav Min&aacute;rik - Miucode, Pie&scaron;ťansk&aacute;
+            387/72, 92 221 Moravany nad V&aacute;hom, IČO: 50993917, sprac&uacute;va osobn&eacute; &uacute;daje
+            predov&scaron;etk&yacute;m pre vlastn&eacute; &uacute;čely.&nbsp;</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">&nbsp;</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <strong><span style="font-size:16px;line-height:150%;">9. Sp&ocirc;sob sprac&uacute;vania osobn&yacute;ch
+                &uacute;dajov</span></strong></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Prev&aacute;dzkovateľ sprac&uacute;va osobn&eacute; &uacute;daje
+            elektronicky.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;"><br> <strong>10. Podmienky zabezpečenia osobn&yacute;ch
+                &uacute;dajov</strong></span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Prev&aacute;dzkovateľ vyhlasuje, že osobn&eacute; &uacute;daje
+            bude z&iacute;skavať v&yacute;lučne na &uacute;čel spracovania osobn&yacute;ch &uacute;dajov.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Prev&aacute;dzkovateľ vyhlasuje, že osobn&eacute; &uacute;daje
+            tret&iacute;ch str&aacute;n, z&iacute;skan&eacute; prostredn&iacute;ctvom vzťahov
+            s&nbsp;N&aacute;v&scaron;tevn&iacute;kom str&aacute;nky alebo Použ&iacute;vateľa služby spadaj&uacute;
+            rovnako pod tieto pravidl&aacute; ochrany osobn&yacute;ch &uacute;dajov a&nbsp;s&uacute; použit&eacute;
+            v&yacute;lučne za &uacute;čelom poskytnutia služby.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Prev&aacute;dzkovateľ nezodpoved&aacute; za poru&scaron;enie
+            z&aacute;sad ochrany osobn&yacute;ch &uacute;dajov tret&iacute;ch str&aacute;n sp&ocirc;soben&eacute;
+            N&aacute;v&scaron;tevn&iacute;kom str&aacute;nky alebo Použ&iacute;vateľa služby.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Prev&aacute;dzkovateľ vyhlasuje, že zabezpeč&iacute;, aby sa
+            osobn&eacute; &uacute;daje sprac&uacute;vali a využ&iacute;vali v&yacute;lučne sp&ocirc;sobom, ktor&yacute;
+            zodpoved&aacute; &uacute;čelu, na ktor&yacute; boli zhromažden&eacute;.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Prev&aacute;dzkovateľ vyhlasuje, že bude sprac&uacute;vať
+            osobn&eacute; &uacute;daje v s&uacute;lade s dobr&yacute;mi mravmi a bude konať sp&ocirc;sobom, ktor&yacute;
+            neodporuje v&scaron;eobecne z&aacute;v&auml;zn&yacute;m pr&aacute;vnym
+            predpisom.<br>&nbsp;Prev&aacute;dzkovateľ vyhlasuje, že k osobn&yacute;m &uacute;dajom maj&uacute;
+            pr&iacute;stup len n&iacute;m poveren&eacute; osoby a osoby z&uacute;častňuj&uacute;ce na plnen&iacute;
+            služby Prev&aacute;dzkovateľa.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;"><br> <strong>11. Z&aacute;verečn&eacute;
+                ustanovenia</strong></span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">N&aacute;v&scaron;tevn&iacute;k str&aacute;nky alebo
+            Použ&iacute;vateľ služby svojou registr&aacute;ciou potvrdzuje, že vy&scaron;&scaron;ie uveden&eacute;
+            s&uacute;hlasy poskytol Prev&aacute;dzkovateľovi dobrovoľne a je opr&aacute;vnen&yacute; ich kedykoľvek
+            odvolať p&iacute;somnou formou. Ako N&aacute;v&scaron;tevn&iacute;k str&aacute;nky alebo Použ&iacute;vateľ
+            služby svojou registr&aacute;ciou prehlasuje, že bol informovan&yacute; o podmienkach sprac&uacute;vania
+            osobn&yacute;ch &uacute;dajov.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Prev&aacute;dzkovateľ je opr&aacute;vnen&yacute; tieto podmienky
+            zmeniť. Nov&uacute; verziu podmienok ochrany osobn&yacute;ch &uacute;dajov zverejn&iacute; na svojich
+            webov&yacute;ch str&aacute;nkach.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;">Tieto pravidl&aacute; boli vytvoren&eacute; za &uacute;čelom
+            vysvetlenia ochrany osobn&yacute;ch &uacute;dajov a posilnenia transparentnosti pri ich
+            sprac&uacute;van&iacute;.</span></p>
+    <p
+        style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:150%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>
+        <span style="font-size:16px;line-height:150%;"><br>&nbsp;Tieto pravidl&aacute; naberaj&uacute; platnosť dňom
+            01.05.2022.</span></p>
 </div>
