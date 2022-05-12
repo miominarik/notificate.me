@@ -2,6 +2,23 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
+    <!-- Start cookieyes banner -->
+    <script id="cookieyes" type="text/javascript"
+        src="https://cdn-cookieyes.com/client_data/53022338a42204fb995da8b6/script.js"></script>
+    <!-- End cookieyes banner -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0EK8WTBP0C"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-0EK8WTBP0C');
+    </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -13,6 +30,15 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description"
+        content="Notificate.me Vám pomôže s evidenciou Vaších úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy." />
+    <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vaších úloh">
+    <meta name="author" content="Miroslav Minárik" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="apple-mobile-web-app-title" content="Notificate.me">
+    <meta name="application-name" content="Notificate.me" />
+    <meta name="msapplication-tooltip" content="Notificate.me">
+    <meta name="msapplication-starturl" content="/" />
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -52,6 +78,11 @@
                         </ul>
                     @endauth
                     @guest
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/">{{ __('layout.menu_index') }}</a>
+                            </li>
+                        </ul>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"

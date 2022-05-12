@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Session\Session;
+use App\Http\Middleware\VerifyGoogleRecaptcha;
+use App\Http\Requests\ContactMailRequest;
+use App\Mail\ContactFormMail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+    public function SendContactMail(ContactMailRequest $request)
     {
-        return view('home');
+        $validated = $request->validated();
+
+        if (!empty($validated)) {
+            if ($validated['gdpr'] == 1) {
+                Mail::to('info@notificate.me', 'Notificate.me')->send(new ContactFormMail($validated['name'], $validated['email'], $validated['subject'], $validated['text_message']));
+                return redirect()->back()->with('emai_send', true);
+            };
+        }
     }
 }

@@ -130,6 +130,6 @@ class OauthController extends Controller
                 };
             };
         };
-        return redirect('/');
+        return redirect('/app');
     }
 }
