@@ -32,8 +32,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description"
-        content="Notificate.me Vám pomôže s evidenciou Vaších úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy." />
-    <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vaších úloh">
+        content="Notificate.me Vám pomôže s evidenciou Vašich úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy." />
+    <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vašich úloh">
     <meta name="author" content="Miroslav Minárik" />
     <meta name="robots" content="index,follow" />
     <meta name="apple-mobile-web-app-title" content="Notificate.me">

@@ -42,4 +42,10 @@ return [
         'redirect' => "https://notificate.me/auth/oauth/callback/google",
     ],
 
+    'microsoft' => [
+        'client_id' => env('MICROSOFT_CLIENT_ID'),
+        'client_secret' => env('MICROSOFT_CLIENT_SECRET'),
+        'redirect' => 'https://notificate.me/auth/oauth/callback/microsoft'
+    ],
+
 ];

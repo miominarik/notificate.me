@@ -28,6 +28,10 @@ class SettingsController extends Controller
             'google_oauth_status' => DB::table('users')
                 ->select('google_id')
                 ->where('id', Auth::id())
+                ->get(),
+            'microsoft_oauth_status' => DB::table('users')
+                ->select('microsoft_id')
+                ->where('id', Auth::id())
                 ->get()
         ]);
     }

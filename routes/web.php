@@ -81,5 +81,10 @@ Route::get('/auth/oauth/google', function () {
     return Socialite::driver('google')->redirect();
 })->name('oauth.google-login');
 
+Route::get('/auth/oauth/microsoft', function () {
+    return Socialite::driver('microsoft')->redirect();
+})->name('oauth.microsoft-login');
+
 Route::get('/auth/oauth/callback/github', "App\Http\Controllers\Auth\OauthController@GithubOauth");
 Route::get('/auth/oauth/callback/google', "App\Http\Controllers\Auth\OauthController@GoogleOauth");
+Route::get('/auth/oauth/callback/microsoft', "App\Http\Controllers\Auth\OauthController@MicrosoftOauth");
