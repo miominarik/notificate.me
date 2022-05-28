@@ -12,7 +12,8 @@
                     <li><a class="nav-link scrollto" href="/#services">{{ __('home_page.menu_services') }}</a></li>
                     <li><a class="nav-link scrollto" href="/#pricing">{{ __('home_page.menu_pricing') }}</a></li>
                     <li><a class="nav-link scrollto" href="/#contact">{{ __('home_page.menu_contact') }}</a></li>
-                    <li><a class="nav-link scrollto" href="/app">{{ __('home_page.menu_login') }}</a></li>
+                    <div class="vr me-2 ms-2" style="color: white;"></div>
+                    <li><a class="nav-link scrollto active" href="/app">{{ __('home_page.menu_login') }}</a></li>
                 </ul>
             @else
                 <ul>
@@ -20,7 +21,8 @@
                     <li><a class="nav-link scrollto" href="#services">{{ __('home_page.menu_services') }}</a></li>
                     <li><a class="nav-link scrollto" href="#pricing">{{ __('home_page.menu_pricing') }}</a></li>
                     <li><a class="nav-link scrollto" href="#contact">{{ __('home_page.menu_contact') }}</a></li>
-                    <li><a class="nav-link scrollto" href="/app">{{ __('home_page.menu_login') }}</a></li>
+                    <div class="vr me-2 ms-2" style="color: white;"></div>
+                    <li><a class="nav-link scrollto active" href="/app">{{ __('home_page.menu_login') }}</a></li>
                 </ul>
             @endif
 
