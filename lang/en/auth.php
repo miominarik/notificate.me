@@ -38,6 +38,8 @@ return [
     'github_settings_setted' => 'Github login set up',
     'login_google' => 'Sign in with Google',
     'register_google' => 'Sign up with Google',
-    'google_settings_setted' => 'Google login set up'
-
+    'google_settings_setted' => 'Google login set up',
+    'login_microsoft' => 'Sign in with Microsoft',
+    'register_microsoft' => 'Sign up with Microsoft',
+    'microsoft_settings_setted' => 'Microsoft login set up',
 ];

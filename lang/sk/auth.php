@@ -27,5 +27,8 @@ return [
     'github_settings_setted' => 'Github prihlásenie nastavené',
     'login_google' => 'Prihláste sa pomocou Google',
     'register_google' => 'Zaregistrujte sa pomocou Google',
-    'google_settings_setted' => 'Google prihlásenie nastavené'
+    'google_settings_setted' => 'Google prihlásenie nastavené',
+    'login_microsoft' => 'Prihláste sa pomocou Microsoftu',
+    'register_microsoft' => 'Zaregistrujte sa pomocou Microsoftu',
+    'microsoft_settings_setted' => 'Microsoft prihlásenie nastavené',
 ];
