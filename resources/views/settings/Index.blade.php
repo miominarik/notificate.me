@@ -59,6 +59,20 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            @if(isset($modules_status[0]->module_sms) && $modules_status[0]->module_sms == 1)
+                                                <div class="form-group row">
+                                                    <div class="col-12">
+                                                        <label
+                                                            for="enable_email_notif">Mobilné číslo na SMS
+                                                            notifikácie</label>
+                                                        <input type="tel"
+                                                               pattern="^(?:421|\(?\+421\)?\s?|421\s?)[1-79](?:[\.\-\s]?\d\d){4}$"
+                                                               id="mobile_number" name="mobile_number"
+                                                               class="form-control" placeholder="+421910123456"
+                                                               value="{{$settings_data[0]->mobile_number}}">
+                                                    </div>
+                                                </div>
+                                            @endif
                                             <div class="form-group row">
                                                 <div class="mt-2">
                                                     <label
@@ -72,10 +86,6 @@
                                                             </option>
                                                         @endfor
                                                     </select>
-
-                                                    {{-- <input type="time" class="form-control" name="notification_time"
-                                                        id="notification_time" aria-describedby="time_when_notif_help"
-                                                        value="{{ $settings_data[0]->notification_time }}" step="3600" required> --}}
                                                     <small id="time_when_notif_help"
                                                            class="form-text text-muted">{{ __('settings.time_when_notif_help') }}</small>
                                                 </div>

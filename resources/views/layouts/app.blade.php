@@ -72,6 +72,10 @@
                                     href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link {{ request()->is('modules*') ? 'active' : '' }}" aria-current="page"
+                                    href="{{ route('modules.index') }}">Moduly</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link {{ request()->is('settings*') ? 'active' : '' }}" aria-current="page"
                                     href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
                             </li>

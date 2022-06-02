@@ -27,6 +27,7 @@ class EditSettingsRequest extends FormRequest
         return [
             'enable_email_notif' => 'required|boolean',
             'notification_time' => 'required|numeric|min:0|max:24',
+            'mobile_number' => 'nullable|string|max:20',
         ];
     }
 }

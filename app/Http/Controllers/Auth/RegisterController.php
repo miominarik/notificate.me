@@ -78,6 +78,10 @@ class RegisterController extends Controller
             'user_id' => $query->id,
             'created_at' => Carbon::now()
         ]);
+        DB::table('modules')->insert([
+            'user_id' => $query->id,
+            'created_at' => Carbon::now()
+        ]);
 
         return $query;
     }
