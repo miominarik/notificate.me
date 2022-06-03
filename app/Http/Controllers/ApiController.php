@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use BulkGate\Sms\Sender;
 use BulkGate\Sms\SenderSettings;
 use Ramsey\Uuid\Type\Integer;
+use BulkGate\Sms\Country;
 
 class ApiController extends Controller
 {
@@ -133,7 +134,7 @@ class ApiController extends Controller
 
         if (!empty($notification_array)) {
             foreach ($notification_array as $one_task) {
-                $this->sendSMS($one_task['task_id'], $one_task['task_name'], $one_task['user_name'], $one_task['task_next_date'], $one_task['user_mobile_number']);
+                return $this->sendSMS($one_task['task_id'], $one_task['task_name'], $one_task['user_name'], $one_task['task_next_date'], $one_task['user_mobile_number']);
             }
         }
     }
@@ -151,30 +152,34 @@ class ApiController extends Controller
     public function sendSMS(int $task_id, string $task_name, string $name, string $checked_date, string $mobile_number)
     {
 
-        $checked_date = Carbon::createFromFormat('Y-m-d', $checked_date)->format('d.m.Y');
+        if (str_contains($mobile_number, '421')) {
+            $checked_date = Carbon::createFromFormat('Y-m-d', $checked_date)->format('d.m.Y');
 
-        $connection = new Connection(env('BULKGATE_APP_ID'), env('BULKGATE_AUTH_TOKEN'));
-        $sender = new Sender($connection);
+            $connection = new Connection(env('BULKGATE_APP_ID'), env('BULKGATE_AUTH_TOKEN'));
+            $sender = new Sender($connection);
 
-        $type = SenderSettings\Gate::GATE_TEXT_SENDER;
-        $value = 'Notificate';
+            $type = SenderSettings\Gate::GATE_TEXT_SENDER;
+            $value = 'Notificate';
 
-        $settings = new SenderSettings\StaticSenderSettings($type, $value);
-        $sender->setSenderSettings($settings);
-        $sender->unicode(true);
+            $settings = new SenderSettings\StaticSenderSettings($type, $value);
+            $sender->setSenderSettings($settings);
+            $sender->unicode(true);
+            $sender->setDefaultCountry(Country::SLOVAKIA);
 
-        $message_text = "Úloha: " . $task_name . ". Dátum splnenia: " . $checked_date;
+            $message_text = "Úloha: " . $task_name . ". Dátum splnenia: " . $checked_date;
 
-        $message = new Message($mobile_number, $message_text);
+            $message = new Message($mobile_number, $message_text);
 
-        $sender->send($message);
+            $sender->send($message);
 
-        //Uprav úlohu aby sa iž nikdy znova neposlala sms
-        DB::table('tasks')
-            ->where('id', $task_id)
-            ->update([
-                'sms_sent' => true
-            ]);
+            //Uprav úlohu aby sa iž nikdy znova neposlala sms
+            DB::table('tasks')
+                ->where('id', $task_id)
+                ->update([
+                    'sms_sent' => true
+                ]);
+        }
+
+
     }
-
 }
