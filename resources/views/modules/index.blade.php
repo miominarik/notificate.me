@@ -11,7 +11,7 @@
                                 @endif
                                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
                                     <div class="card-body p-5 text-center">
-                                        <h3 class="mb-5">Moduly</h3>
+                                        <h3 class="mb-5">{{__('modules.modules')}}</h3>
                                         @if (session('status_success'))
                                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                                 {{ session('status_success') }}
@@ -35,15 +35,14 @@
                                         @endif
                                         <div class="card" style="width: 100%;">
                                             <div class="card-body">
-                                                <h5 class="card-title">SMS notifikácie</h5>
-                                                <p class="card-text">Ak chcete byť informovaný aj pomocou SMS, tak tento
-                                                    modul je priamo pre Vás.</p>
+                                                <h5 class="card-title">{{__('modules.module_sms')}}</h5>
+                                                <p class="card-text">{{__('modules.module_sms_sub')}}</p>
                                                 @if(isset($modules_status[0]->module_sms) && $modules_status[0]->module_sms == 0)
                                                     <a href="{{route('modules.activate_modul', 'module_sms')}}"
-                                                       class="btn btn-primary">Aktivovať modul</a>
+                                                       class="btn btn-primary">{{__('modules.module_sms_activate')}}</a>
                                                 @else
                                                     <a href="{{route('modules.deactivate_modul', 'module_sms')}}"
-                                                       class="btn btn-danger">Deaktivovať modul</a>
+                                                       class="btn btn-danger">{{__('modules.module_sms_deactivate')}}</a>
                                                 @endif
                                             </div>
                                         </div>

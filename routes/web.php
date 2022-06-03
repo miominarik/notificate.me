@@ -94,23 +94,3 @@ Route::get('/auth/oauth/microsoft', function () {
 Route::get('/auth/oauth/callback/github', "App\Http\Controllers\Auth\OauthController@GithubOauth");
 Route::get('/auth/oauth/callback/google', "App\Http\Controllers\Auth\OauthController@GoogleOauth");
 Route::get('/auth/oauth/callback/microsoft', "App\Http\Controllers\Auth\OauthController@MicrosoftOauth");
-
-
-Route::get('/test', function () {
-
-    $connection = new BulkGate\Message\Connection('27115', 'GfHdLvLekhXCZEzdxVcBWmnebOAvCSp05y9g23yqScDJSr2zWH');
-    $sender = new BulkGate\Sms\Sender($connection);
-
-    $type = SenderSettings\Gate::GATE_TEXT_SENDER;
-    $value = 'Notifikácia';
-
-    $settings = new SenderSettings\StaticSenderSettings($type, $value);
-    $sender->setSenderSettings($settings);
-
-
-    $message = new BulkGate\Sms\Message('421918615335', 'test zprávy');
-
-    $sender->send($message);
-
-
-});

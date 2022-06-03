@@ -63,8 +63,7 @@
                                                 <div class="form-group row">
                                                     <div class="col-12">
                                                         <label
-                                                            for="enable_email_notif">Mobilné číslo na SMS
-                                                            notifikácie</label>
+                                                            for="enable_email_notif">{{__('settings.mobile_num')}}</label>
                                                         <input type="tel"
                                                                pattern="^(?:421|\(?\+421\)?\s?|421\s?)[1-79](?:[\.\-\s]?\d\d){4}$"
                                                                id="mobile_number" name="mobile_number"
