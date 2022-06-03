@@ -71,6 +71,11 @@ class OauthController extends Controller
                         'created_at' => Carbon::now()
                     ]);
 
+                    DB::table('modules')->insert([
+                        'user_id' => $user->id,
+                        'created_at' => Carbon::now()
+                    ]);
+
                     Auth::login($user);
                 };
             };
@@ -126,6 +131,11 @@ class OauthController extends Controller
                         'created_at' => Carbon::now()
                     ]);
 
+                    DB::table('modules')->insert([
+                        'user_id' => $user->id,
+                        'created_at' => Carbon::now()
+                    ]);
+
                     Auth::login($user);
                 };
             };
@@ -172,6 +182,11 @@ class OauthController extends Controller
                     $user->save();
 
                     DB::table('users_settings')->insert([
+                        'user_id' => $user->id,
+                        'created_at' => Carbon::now()
+                    ]);
+
+                    DB::table('modules')->insert([
                         'user_id' => $user->id,
                         'created_at' => Carbon::now()
                     ]);
