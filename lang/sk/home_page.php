@@ -40,5 +40,7 @@ return [
     'contact_message' => 'Správa',
     'contact_send' => 'Odoslať správu',
     'contact_sended' => 'Vaša správa bola odoslaná. Ďakujeme!',
-    'menu_login' => 'Prihlásiť sa'
+    'menu_login' => 'Prihlásiť sa',
+    'gdpr' => 'Zásady ochrany osobných údajov',
+    'cookies' => 'Zásady používania súborov cookies'
 ];

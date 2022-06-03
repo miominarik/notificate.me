@@ -2,6 +2,7 @@
 <html lang="sk">
 
 <head>
+    @if(env('APP_DEBUG') == false)
     <!-- Start cookieyes banner -->
     <script id="cookieyes" type="text/javascript"
         src="https://cdn-cookieyes.com/client_data/53022338a42204fb995da8b6/script.js"></script>
@@ -19,7 +20,7 @@
 
         gtag('config', 'G-0EK8WTBP0C');
     </script>
-
+    @endif
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -97,7 +98,6 @@
         @endif
 
 
-
     </main><!-- End #main -->
 
     <!-- ======= Footer ======= -->
@@ -106,16 +106,16 @@
             <h3>Notificate.me</h3>
             <div class="route">
                 <ul class="list-inline">
-                    <li class="list-inline-item"><a href="/">{{ __('home_page.menu_home') }}</a></li>
-                    <li class="list-inline-item"><a href="/gdpr">GDPR</a></li>
-                    <li class="list-inline-item"><a href="/cookies">Cookies</a></li>
+                    <li class="list-inline-item"><a href="/gdpr">{{__('home_page.gdpr')}}</a></li>
+                    <li class="list-inline-item"><a href="/cookies">{{__('home_page.cookies')}}</a></li>
                 </ul>
             </div>
             <div class="copyright">
                 &copy; Copyright @php
                     echo date('Y');
                 @endphp <strong><span><a href="https://miucode.com" target="_blank"
-                            style="text-decoration: none;">Miucode.com</a></span></strong>. All Rights Reserved
+                                         style="text-decoration: none;">Miucode.com</a></span></strong>. All Rights
+                Reserved
             </div>
         </div>
     </footer><!-- End Footer -->

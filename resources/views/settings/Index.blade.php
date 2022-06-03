@@ -9,7 +9,7 @@
         <div class="container-fluid py-5">
             <div class="row d-flex justify-content-center align-items-center">
                 @if ((new \Jenssegers\Agent\Agent())->isDesktop())
-                    <div class="col-12 col-md-9 col-lg-6 col-xl-6">
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-9">
                         @elseif((new \Jenssegers\Agent\Agent())->isMobile() || (new \Jenssegers\Agent\Agent())->isTablet())
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                                 @endif

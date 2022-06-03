@@ -7,7 +7,6 @@
                 <div class="col-12 col-md-12 col-lg-12 col-xl-9">
                     <div class="card shadow-2-strong" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">
-
                             <div class="d-flex justify-content-between bd-highlight mb-3">
                                 <div class="bd-highlight"></div>
                                 <div class="ps-5 bd-highlight">

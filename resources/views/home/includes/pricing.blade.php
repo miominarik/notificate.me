@@ -18,39 +18,18 @@
                             <ul>
                                 <li>{{ __('home_page.free_task') }}</li>
                                 <li>{{ __('home_page.free_notif') }}</li>
+                                <li>{{ __('home_page.free_notif_sms') }}</li>
                                 <li>{{ __('home_page.free_history') }}</li>
-                                <li>{{ __('home_page.free_export') }}</li>
-                                <li class="na">{{ __('home_page.free_notif_sms') }}</li>
+                                <li class="na">{{ __('home_page.free_export') }}</li>
                             </ul>
                             <div class="btn-wrap">
                                 <a href="{{ route('register') }}"
-                                    class="btn-buy">{{ __('home_page.free_activate') }}</a>
+                                   class="btn-buy">{{ __('home_page.free_activate') }}</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
-            {{-- <div class="col-lg-3 col-md-6 mt-4 mt-lg-0">
-                <div class="box" data-aos="zoom-in" data-aos-delay="300">
-                    <span class="advanced">Advanced</span>
-                    <h3>Ultimate</h3>
-                    <h4><sup>$</sup>49<span> / month</span></h4>
-                    <ul>
-                        <li>Aida dere</li>
-                        <li>Nec feugiat nisl</li>
-                        <li>Nulla at volutpat dola</li>
-                        <li>Pharetra massa</li>
-                        <li>Massa ultricies mi</li>
-                    </ul>
-                    <div class="btn-wrap">
-                        <a href="#" class="btn-buy">Buy Now</a>
-                    </div>
-                </div>
-            </div> --}}
-
         </div>
-
     </div>
 </section>

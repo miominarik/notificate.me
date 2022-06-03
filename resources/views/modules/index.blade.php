@@ -5,7 +5,7 @@
         <div class="container-fluid py-5">
             <div class="row d-flex justify-content-center align-items-center">
                 @if ((new \Jenssegers\Agent\Agent())->isDesktop())
-                    <div class="col-12 col-md-9 col-lg-6 col-xl-6">
+                    <div class="col-12 col-md-12 col-lg-12 col-xl-9">
                         @elseif((new \Jenssegers\Agent\Agent())->isMobile() || (new \Jenssegers\Agent\Agent())->isTablet())
                             <div class="col-12 col-md-12 col-lg-12 col-xl-12">
                                 @endif
@@ -33,10 +33,10 @@
                                                         aria-label="Close"></button>
                                             </div>
                                         @endif
-                                        <div class="card" style="width: 100%;">
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{__('modules.module_sms')}}</h5>
-                                                <p class="card-text">{{__('modules.module_sms_sub')}}</p>
+                                        <div class="card card-sub" style="width: 100%;">
+                                            <div class="card-body card-sub-body">
+                                                <h5 class="card-title card-sub-card-title">{{__('modules.module_sms')}}</h5>
+                                                <p class="card-text card-sub-card-text">{{__('modules.module_sms_sub')}}</p>
                                                 @if(isset($modules_status[0]->module_sms) && $modules_status[0]->module_sms == 0)
                                                     <a href="{{route('modules.activate_modul', 'module_sms')}}"
                                                        class="btn btn-primary">{{__('modules.module_sms_activate')}}</a>
