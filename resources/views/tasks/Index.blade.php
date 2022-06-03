@@ -161,7 +161,7 @@
                 <div class="form-group row">
                     <label for="task_name" class="col-sm-1-12 col-form-label">{{ __('tasks.task_name') }}</label>
                     <div class="col-sm-1-12">
-                        <input type="text" class="form-control" name="task_name" id="task_name" required max="50">
+                        <input type="text" class="form-control" name="task_name" id="task_name" required max="36">
                     </div>
                 </div>
                 <div class="form-group row">
