@@ -21,8 +21,8 @@ class SettingsController extends Controller
             'settings_data' => DB::table('users_settings')
                 ->where('user_id', Auth::id())
                 ->get(),
-            'github_oauth_status' => DB::table('users')
-                ->select('github_id')
+            'apple_oauth_status' => DB::table('users')
+                ->select('apple_id')
                 ->where('id', Auth::id())
                 ->get(),
             'google_oauth_status' => DB::table('users')

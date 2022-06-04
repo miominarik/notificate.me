@@ -79,9 +79,9 @@ Route::get('language/{locale}', function ($locale) {
     return redirect()->back();
 });
 
-Route::get('/auth/oauth/github', function () {
-    return Socialite::driver('github')->redirect();
-})->name('oauth.github-login');
+Route::get('/auth/oauth/apple', function () {
+    return Socialite::driver('apple')->redirect();
+})->name('oauth.apple-login');
 
 Route::get('/auth/oauth/google', function () {
     return Socialite::driver('google')->redirect();
@@ -91,6 +91,6 @@ Route::get('/auth/oauth/microsoft', function () {
     return Socialite::driver('microsoft')->redirect();
 })->name('oauth.microsoft-login');
 
-Route::get('/auth/oauth/callback/github', "App\Http\Controllers\Auth\OauthController@GithubOauth");
+Route::post('/auth/oauth/callback/apple', "App\Http\Controllers\Auth\OauthController@AppleOauth");
 Route::get('/auth/oauth/callback/google', "App\Http\Controllers\Auth\OauthController@GoogleOauth");
 Route::get('/auth/oauth/callback/microsoft', "App\Http\Controllers\Auth\OauthController@MicrosoftOauth");

@@ -98,6 +98,26 @@
                                         </form>
                                         <hr class="my-4">
                                         <div class="d-grid gap-2 mb-2">
+                                            @if ($apple_oauth_status[0]->apple_id == null)
+                                                <a href="javascript:void(0)">
+                                                    <button type="button"
+                                                            disabled
+                                                            class="btn btn-block btn-social"
+                                                            style="background-color: #050708; color: white; width: 100%;">
+                                                        <span class="fa-brands fa-apple"></span>
+                                                        {{ __('auth.login_apple') }}
+                                                    </button>
+                                                </a>
+                                            @else
+                                                <a href="javascript:void(0)">
+                                                    <button type="button" class="btn btn-block btn-social"
+                                                            disabled
+                                                            style="background-color: #050708; color: white; width: 100%;">
+                                                        <span
+                                                            class="fa-brands fa-apple"></span>{{ __('auth.apple_settings_setted') }}
+                                                    </button>
+                                                </a>
+                                            @endif
                                             @if ($microsoft_oauth_status[0]->microsoft_id == null)
                                                 <a href="{{ route('oauth.microsoft-login') }}">
                                                     <button type="button"
@@ -132,25 +152,6 @@
                                                             disabled style="width: 100%">
                                                         <span
                                                             class="fa-brands fa-github"></span>{{ __('auth.google_settings_setted') }}
-                                                    </button>
-                                                </a>
-                                            @endif
-                                        </div>
-                                        <div class="d-grid gap-2 mb-2">
-                                            @if ($github_oauth_status[0]->github_id == null)
-                                                <a href="{{ route('oauth.github-login') }}">
-                                                    <button type="button" class="btn btn-block btn-social btn-github"
-                                                            style="width: 100%">
-                                                        <span class="fa-brands fa-github"></span>
-                                                        {{ __('auth.login_github') }}
-                                                    </button>
-                                                </a>
-                                            @else
-                                                <a href="javascript:void(0)">
-                                                    <button type="button" class="btn btn-block btn-social btn-github"
-                                                            disabled style="width: 100%">
-                                                        <span
-                                                            class="fa-brands fa-github"></span>{{ __('auth.github_settings_setted') }}
                                                     </button>
                                                 </a>
                                             @endif

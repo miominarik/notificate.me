@@ -27,37 +27,29 @@ class OauthController extends Controller
     }
 
     /**
-     * GithubOauth
+     * AppleOath
      *
      * @param mixed $request
      * @return void
      */
-    public function GithubOauth(Request $request)
+    public function AppleOauth(Request $request)
     {
-        if (empty($request->query('error')) && $request->query('error') != 'access_denied') {
-            $githubUser = Socialite::driver('github')->stateless()->user();
+        if (!empty($request->state) && $request->state != '' && !empty($request->code) && $request->code != '') {
+            $appleUser = Socialite::driver('apple')->stateless()->user();
 
-            $check = User::where('github_id', $githubUser->id)->count();
+            $check = User::where('apple_id', $appleUser->id)->count();
 
             if ($check) {
-                $user = User::where('github_id', $githubUser->id)->first();
+                $user = User::where('apple_id', $appleUser->id)->first();
                 Auth::login($user);
             } else {
-                if (Auth::check() == true) {
-                    User::where('id', Auth::id())
-                        ->update([
-                            'github_id' => $githubUser->id,
-                            'github_token' => $githubUser->token,
-                            'updated_at' => Carbon::now()
-                        ]);
-                    return redirect(route('settings.index'));
-                } else {
+                $check_if_email_exits = User::where('email', $appleUser->email)->count();
+                if ($check_if_email_exits == 0) {
                     $user = new User;
 
-                    $user->email = $githubUser->email;
+                    $user->email = $appleUser->email;
                     $user->password = Hash::make(Str::random(30));
-                    $user->github_id = $githubUser->id;
-                    $user->github_token = $githubUser->token;
+                    $user->apple_id = $appleUser->id;
                     $user->email_verified_at = Carbon::now();
                     $user->created_at = Carbon::now();
 
@@ -74,7 +66,7 @@ class OauthController extends Controller
                     ]);
 
                     Auth::login($user);
-                };
+                }
             };
         };
         return redirect('/app');
@@ -95,18 +87,12 @@ class OauthController extends Controller
 
             if ($check) {
                 $user = User::where('google_id', $googleUser->id)->first();
-                User::where('google_id', $googleUser->id)
-                    ->update([
-                        'google_token' => $googleUser->token,
-                        'updated_at' => Carbon::now()
-                    ]);
                 Auth::login($user);
             } else {
                 if (Auth::check() == true) {
                     User::where('id', Auth::id())
                         ->update([
                             'google_id' => $googleUser->id,
-                            'google_token' => $googleUser->token,
                             'updated_at' => Carbon::now()
                         ]);
                     return redirect(route('settings.index'));
@@ -116,7 +102,6 @@ class OauthController extends Controller
                     $user->email = $googleUser->email;
                     $user->password = Hash::make(Str::random(30));
                     $user->google_id = $googleUser->id;
-                    $user->google_token = $googleUser->token;
                     $user->email_verified_at = Carbon::now();
                     $user->created_at = Carbon::now();
 
@@ -140,7 +125,7 @@ class OauthController extends Controller
     }
 
     /**
-     * GoogleOauth
+     * Microsoft oAuth
      *
      * @param mixed $request
      * @return void
