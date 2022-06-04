@@ -27,7 +27,7 @@ class ApiController extends Controller
         $data = DB::table('tasks')
             ->join('users', 'tasks.user_id', '=', 'users.id')
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
-            ->select('tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users.email', 'users.name', 'users_settings.enable_email_notification', 'users_settings.notification_time')
+            ->select('tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users.email', 'users_settings.enable_email_notification', 'users_settings.notification_time')
             ->where([
                 'task_enabled' => true
             ])
@@ -65,7 +65,6 @@ class ApiController extends Controller
                             'task_name' => $item->task_name,
                             'task_next_date' => $item->task_next_date,
                             'user_email' => $item->email,
-                            'user_name' => $item->name
                         ]);
                     }
                 }
@@ -74,7 +73,7 @@ class ApiController extends Controller
 
         if (!empty($notification_array)) {
             foreach ($notification_array as $one_task) {
-                Mail::to($one_task['user_email'], $one_task['user_name'])->send(new NotificationMail($one_task['task_name'], $one_task['task_next_date']));
+                Mail::to($one_task['user_email'], $one_task['user_email'])->send(new NotificationMail($one_task['task_name'], $one_task['task_next_date']));
             }
         };
 
@@ -91,10 +90,9 @@ class ApiController extends Controller
         $notification_array = array();
 
         $data = DB::table('tasks')
-            ->join('users', 'tasks.user_id', '=', 'users.id')
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
             ->join('modules', 'tasks.user_id', '=', 'modules.user_id')
-            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_type', 'users.name', 'users_settings.mobile_number', 'users_settings.notification_time', 'modules.module_sms')
+            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_type', 'users_settings.mobile_number', 'users_settings.notification_time', 'modules.module_sms')
             ->where([
                 'tasks.task_enabled' => true,
                 'tasks.sms_sent' => false,
@@ -125,7 +123,6 @@ class ApiController extends Controller
                             'task_name' => $item->task_name,
                             'task_next_date' => $item->task_next_date,
                             'user_mobile_number' => $item->mobile_number,
-                            'user_name' => $item->name
                         ]);
                     }
                 }
@@ -134,7 +131,7 @@ class ApiController extends Controller
 
         if (!empty($notification_array)) {
             foreach ($notification_array as $one_task) {
-                return $this->sendSMS($one_task['task_id'], $one_task['task_name'], $one_task['user_name'], $one_task['task_next_date'], $one_task['user_mobile_number']);
+                return $this->sendSMS($one_task['task_id'], $one_task['task_name'], $one_task['task_next_date'], $one_task['user_mobile_number']);
             }
         }
     }
@@ -143,13 +140,12 @@ class ApiController extends Controller
      * Odosielanie sms na uvedené čísla
      * @param int $task_id
      * @param string $task_name
-     * @param string $name
      * @param string $checked_date
      * @param string $mobile_number
      * @return void
      * @throws SenderSettings\InvalidSenderException
      */
-    public function sendSMS(int $task_id, string $task_name, string $name, string $checked_date, string $mobile_number)
+    public function sendSMS(int $task_id, string $task_name, string $checked_date, string $mobile_number)
     {
 
         if (str_contains($mobile_number, '421')) {

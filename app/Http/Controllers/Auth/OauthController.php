@@ -48,19 +48,16 @@ class OauthController extends Controller
                         ->update([
                             'github_id' => $githubUser->id,
                             'github_token' => $githubUser->token,
-                            'github_refresh_token' => $githubUser->refreshToken,
                             'updated_at' => Carbon::now()
                         ]);
                     return redirect(route('settings.index'));
                 } else {
                     $user = new User;
 
-                    $user->name = $githubUser->name;
                     $user->email = $githubUser->email;
                     $user->password = Hash::make(Str::random(30));
                     $user->github_id = $githubUser->id;
                     $user->github_token = $githubUser->token;
-                    $user->github_refresh_token = $githubUser->refreshToken;
                     $user->email_verified_at = Carbon::now();
                     $user->created_at = Carbon::now();
 
@@ -80,7 +77,7 @@ class OauthController extends Controller
                 };
             };
         };
-        return redirect('/');
+        return redirect('/app');
     }
 
     /**
@@ -116,7 +113,6 @@ class OauthController extends Controller
                 } else {
                     $user = new User;
 
-                    $user->name = $googleUser->name;
                     $user->email = $googleUser->email;
                     $user->password = Hash::make(Str::random(30));
                     $user->google_id = $googleUser->id;
@@ -157,7 +153,6 @@ class OauthController extends Controller
 
             $check = User::where('microsoft_id', $microsoftUser->id)->count();
 
-
             if ($check) {
                 $user = User::where('microsoft_id', $microsoftUser->id)->first();
                 Auth::login($user);
@@ -172,7 +167,6 @@ class OauthController extends Controller
                 } else {
                     $user = new User;
 
-                    $user->name = $microsoftUser->name;
                     $user->email = $microsoftUser->email;
                     $user->password = Hash::make(Str::random(30));
                     $user->microsoft_id = $microsoftUser->id;
