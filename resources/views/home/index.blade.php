@@ -112,6 +112,7 @@
                 <li class="list-inline-item"><a href="/cookies">{{__('home_page.cookies')}}</a></li>
             </ul>
         </div>
+        <hr>
         <div class="copyright">
             &copy; Copyright @php
                 echo date('Y');
@@ -119,6 +120,12 @@
                                      style="text-decoration: none;">Miucode.com</a></span></strong>. All Rights
             Reserved
         </div>
+        <hr>
+        <small>
+            This site is protected by reCAPTCHA and the Google
+            <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+            <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+        </small>
     </div>
 </footer><!-- End Footer -->
 
