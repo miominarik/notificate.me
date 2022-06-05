@@ -8,30 +8,36 @@ use TimeHunter\LaravelGoogleReCaptchaV3\Facades\GoogleReCaptchaV3;
 
 class VerifyGoogleRecaptcha
 {
+    public function __construct()
+    {
+        $this->allowed_requset = [
+            'login', 'register'
+        ];
+    }
+
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
-
         $method = $request->method();
 
-        if ($request->isMethod('post') && $request->is('login')) {
+        if (($request->isMethod('post')) && ($request->is('login') || $request->is('register') || $request->routeIs('password.email') || $request->routeIs('password.update') || $request->routeIs('contact.send_mail'))) {
             $status = GoogleReCaptchaV3::setAction('verify')
                 ->verifyResponse(
                     $request->input('g-recaptcha-response'),
                     $request->getClientIp()
                 )
                 ->isSuccess();
-
             if ($status != true) {
-                return redirect(route('login'));
+                return redirect()->back();
+            } else {
+                return $next($request);
             };
-            return $next($request);
         } else {
             return $next($request);
         }

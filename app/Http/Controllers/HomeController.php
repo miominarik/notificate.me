@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Mail;
 class HomeController extends Controller
 {
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(VerifyGoogleRecaptcha::class);
+    }
+
     public function SendContactMail(ContactMailRequest $request)
     {
         $validated = $request->validated();
