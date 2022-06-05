@@ -8,13 +8,6 @@ use TimeHunter\LaravelGoogleReCaptchaV3\Facades\GoogleReCaptchaV3;
 
 class VerifyGoogleRecaptcha
 {
-    public function __construct()
-    {
-        $this->allowed_requset = [
-            'login', 'register'
-        ];
-    }
-
     /**
      * Handle an incoming request.
      *
