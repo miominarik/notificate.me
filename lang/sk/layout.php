@@ -3,7 +3,7 @@
 return [
     'menu_dashboard' => 'Dashboard',
     'menu_settings' => 'Nastavenia',
-    'menu_tasks' => 'Dashboard',
+    'menu_tasks' => 'Nástenka',
     'menu_login' => 'Prihlásiť sa',
     'menu_register' => 'Registrácia',
     'menu_logout' => 'Odhlásiť sa',
