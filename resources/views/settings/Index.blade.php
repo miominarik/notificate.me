@@ -38,62 +38,54 @@
                                             </div>
                                         @endif
 
+
                                         <form method="POST" action="{{ route('settings.update', 1) }}"
-                                              id="settings_form">
+                                              id="settings_form" class="row row-cols-lg-auto g-3 align-items-center">
                                             @csrf
                                             @method('PUT')
-                                            <div class="form-group row">
-                                                <div class="col-12">
-                                                    <label
-                                                        for="enable_email_notif">{{ __('settings.enable_email_notif') }}</label>
-                                                    <select class="form-control" name="enable_email_notif"
-                                                            id="enable_email_notif">
-                                                        <option
-                                                            @if ($settings_data[0]->enable_email_notification == 1) selected
-                                                            @endif value="1">
-                                                            {{ __('settings.yes') }}</option>
-                                                        <option
-                                                            @if ($settings_data[0]->enable_email_notification == 0) selected
-                                                            @endif value="0">
-                                                            {{ __('settings.no') }}</option>
-                                                    </select>
-                                                </div>
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                                <label
+                                                    for="enable_email_notif">{{ __('settings.enable_email_notif') }}</label>
+                                                <select class="form-select" name="enable_email_notif"
+                                                        id="enable_email_notif">
+                                                    <option
+                                                        @if ($settings_data[0]->enable_email_notification == 1) selected
+                                                        @endif value="1">
+                                                        {{ __('settings.yes') }}</option>
+                                                    <option
+                                                        @if ($settings_data[0]->enable_email_notification == 0) selected
+                                                        @endif value="0">
+                                                        {{ __('settings.no') }}</option>
+                                                </select>
                                             </div>
-                                            @if(isset($modules_status[0]->module_sms) && $modules_status[0]->module_sms == 1)
-                                                <div class="form-group row">
-                                                    <div class="col-12">
-                                                        <label
-                                                            for="enable_email_notif">{{__('settings.mobile_num')}}</label>
-                                                        <input type="tel"
-                                                               pattern="^(?:421|\(?\+421\)?\s?|421\s?)[1-79](?:[\.\-\s]?\d\d){4}$"
-                                                               id="mobile_number" name="mobile_number"
-                                                               class="form-control" placeholder="+421910123456"
-                                                               value="{{$settings_data[0]->mobile_number}}">
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            <div class="form-group row">
-                                                <div class="mt-2">
-                                                    <label
-                                                        for="notification_time">{{ __('settings.time_when_notif') }}</label>
-                                                    <select class="form-control" name="notification_time"
-                                                            id="notification_time" required>
-                                                        @for ($i = 00; $i <= 23; $i++)
-                                                            <option @if ($selected_time == $i) selected @endif
-                                                            value="{{ $i }}">
-                                                                {{ $i }}:00
-                                                            </option>
-                                                        @endfor
-                                                    </select>
-                                                    <small id="time_when_notif_help"
-                                                           class="form-text text-muted">{{ __('settings.time_when_notif_help') }}</small>
-                                                </div>
+
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                                <label
+                                                    for="enable_email_notif">{{__('settings.mobile_num')}}</label>
+                                                <input type="tel"
+                                                       pattern="^(?:421|\(?\+421\)?\s?|421\s?)[1-79](?:[\.\-\s]?\d\d){4}$"
+                                                       id="mobile_number" name="mobile_number"
+                                                       class="form-control" placeholder="+421910123456"
+                                                       value="{{$settings_data[0]->mobile_number}}">
                                             </div>
-                                            <div class="form-group row mt-2">
-                                                <div class="col-3">
-                                                    <button type="submit"
-                                                            class="btn btn-primary">{{ __('settings.send_btn') }}</button>
-                                                </div>
+
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                                <label
+                                                    for="notification_time">{{ __('settings.time_when_notif') }}</label>
+                                                <select class="form-select" name="notification_time"
+                                                        id="notification_time" required>
+                                                    @for ($i = 00; $i <= 23; $i++)
+                                                        <option @if ($selected_time == $i) selected @endif
+                                                        value="{{ $i }}">
+                                                            {{ $i }}:00
+                                                        </option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <button type="submit"
+                                                        class="btn btn-primary">{{ __('settings.send_btn') }}</button>
                                             </div>
                                         </form>
                                         <hr class="my-4">
