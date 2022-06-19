@@ -11,5 +11,6 @@ return [
     'lang_slovak' => 'Slovak',
     'lang_english' => 'English',
     'notif_comming' => 'Upcoming tasks',
-    'menu_index' => 'Back to home page'
+    'menu_index' => 'Back to home page',
+    'menu_modules' => 'Modules'
 ];

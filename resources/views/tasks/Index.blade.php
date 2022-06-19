@@ -123,6 +123,7 @@
                                     @endforelse
                                 @endisset
                             @endif
+                            {{ $all_enabled_tasks->links() }}
                         </div>
                     </div>
                 </div>

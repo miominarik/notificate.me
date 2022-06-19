@@ -62,9 +62,10 @@
 <div id="app">
 
     @if((new \Jenssegers\Agent\Agent())->isMobile() || (new \Jenssegers\Agent\Agent())->isTablet())
-        <nav class="navbar navbar-expand-lg fixed-top navbar-dark shadow-sm" style="background-color: #343A40;">
+        <nav class="navbar navbar-expand-lg fixed-top bg-primary navbar-dark shadow-sm"
+             style="background-color: #343A40;">
             @else
-                <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: #343A40;">
+                <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm">
                     @endif
                     <div class="container-fluid">
                         <a class="navbar-brand" href="/app">{{ config('app.name', 'Laravel') }}</a>
@@ -75,19 +76,19 @@
                         </button>
                         <div class="collapse navbar-collapse" id="mainNavbar">
                             @auth
-                                <ul class="navbar-nav">
+                                <ul class="nav nav-pills">
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->is('tasks*') ? 'active' : '' }}"
+                                        <a class="nav-link text-white {{ request()->is('tasks*') ? 'active bg-dark' : '' }}"
                                            aria-current="page"
                                            href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->is('modules*') ? 'active' : '' }}"
+                                        <a class="nav-link text-white {{ request()->is('modules*') ? 'active bg-dark' : '' }}"
                                            aria-current="page"
-                                           href="{{ route('modules.index') }}">Moduly</a>
+                                           href="{{ route('modules.index') }}">{{ __('layout.menu_modules') }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link {{ request()->is('settings*') ? 'active' : '' }}"
+                                        <a class="nav-link text-white {{ request()->is('settings*') ? 'active bg-dark' : '' }}"
                                            aria-current="page"
                                            href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
                                     </li>
@@ -96,7 +97,7 @@
                             @guest
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" aria-current="page"
+                                        <a class="nav-link text-white" aria-current="page"
                                            href="/">{{ __('layout.menu_index') }}</a>
                                     </li>
                                 </ul>
@@ -122,7 +123,8 @@
                             @auth
                                 <ul class="navbar-nav ms-auto">
                                     <li class="nav-item dropdown pe-4">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarNotificationMenu"
+                                        <a class="nav-link dropdown-toggle text-white" href="#"
+                                           id="navbarNotificationMenu"
                                            role="button"
                                            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                                             <button type="button" class="btn btn-link btn-sm position-relative">
@@ -151,7 +153,8 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                        <a class="nav-link dropdown-toggle text-white" href="#"
+                                           id="navbarDropdownMenuLink"
                                            role="button"
                                            data-bs-toggle="dropdown" aria-expanded="false">
                                             {{ __('layout.menu_lang') }}
@@ -167,12 +170,13 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#"
+                                           role="button"
                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                             {{ Auth::user()->email }}
                                         </a>
 
-                                        <div class="dropdown-menu dropdown-menu-dark dropdown-menu-end"
+                                        <div class="dropdown-menu dropdown-menu-end"
                                              aria-labelledby="navbarDropdown">
                                             <a class="dropdown-item" href="{{ route('logout') }}"
                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

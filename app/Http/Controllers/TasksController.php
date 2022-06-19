@@ -26,7 +26,7 @@ class TasksController extends Controller
                 ->where('user_id', Auth::id())
                 ->where('task_enabled', true)
                 ->orderBy('task_next_date', 'ASC')
-                ->get()
+                ->paginate(10)
         ]);
     }
 
