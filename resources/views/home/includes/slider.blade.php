@@ -6,15 +6,15 @@
             <div class="carousel-container">
                 @if (isset($page))
                     @if ($page == 'gdpr')
-                        <h2 class="animate__animated animate__fadeInDown">Zásady ochrany osobných údajov</h2>
+                        <h2 class="animate__animated animate__fadeInDown">{{__('home_page.gdpr')}}</h2>
                     @elseif($page == 'cookies')
-                    <h2 class="animate__animated animate__fadeInDown">Pravidlá cookies</h2>
+                        <h2 class="animate__animated animate__fadeInDown">{{__('home_page.cookies')}}</h2>
                     @endif
                 @else
                     <h2 class="animate__animated animate__fadeInDown">{{ __('home_page.header') }}</h2>
                     <p class="animate__animated fanimate__adeInUp">{{ __('home_page.sub_header') }}</p>
                     <a href="#services"
-                        class="btn-get-started animate__animated animate__fadeInUp scrollto">{{ __('home_page.more_info') }}</a>
+                       class="btn-get-started animate__animated animate__fadeInUp scrollto">{{ __('home_page.more_info') }}</a>
                 @endif
 
             </div>

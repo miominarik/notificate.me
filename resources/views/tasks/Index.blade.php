@@ -7,7 +7,6 @@
                 <div class="col-12 col-md-12 col-lg-12 col-xl-9">
                     <div class="card shadow-2-strong" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">
-
                             <div class="d-flex justify-content-between bd-highlight mb-3">
                                 <div class="bd-highlight"></div>
                                 <div class="ps-5 bd-highlight">
@@ -124,6 +123,7 @@
                                     @endforelse
                                 @endisset
                             @endif
+                            {{ $all_enabled_tasks->links() }}
                         </div>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                 <div class="form-group row">
                     <label for="task_name" class="col-sm-1-12 col-form-label">{{ __('tasks.task_name') }}</label>
                     <div class="col-sm-1-12">
-                        <input type="text" class="form-control" name="task_name" id="task_name" required max="50">
+                        <input type="text" class="form-control" name="task_name" id="task_name" required max="36">
                     </div>
                 </div>
                 <div class="form-group row">

@@ -60,10 +60,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('tasks/{task}', 'App\Http\Controllers\TasksController@update')->name('tasks.update');
     Route::delete('tasks/{task}', 'App\Http\Controllers\TasksController@destroy')->name('tasks.destroy');
     Route::put('tasks/complete/{task}', "App\Http\Controllers\TasksController@complete")->name('tasks.complete');
+    Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');
+    Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
+    //Modules
+    Route::get('modules', "App\Http\Controllers\ModulesController@index")->name('modules.index');
+    Route::get('modules/activate/{module_name}', "App\Http\Controllers\ModulesController@activate_modul")->name('modules.activate_modul');
+    Route::get('modules/deactivate/{module_name}', "App\Http\Controllers\ModulesController@deactivate_modul")->name('modules.deactivate_modul');
+
+
 });
 
-Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');
-Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
 
 Route::get('language/{locale}', function ($locale) {
     if (in_array($locale, ['en', 'sk'])) {
@@ -73,9 +79,9 @@ Route::get('language/{locale}', function ($locale) {
     return redirect()->back();
 });
 
-Route::get('/auth/oauth/github', function () {
-    return Socialite::driver('github')->redirect();
-})->name('oauth.github-login');
+Route::get('/auth/oauth/apple', function () {
+    return Socialite::driver('apple')->redirect();
+})->name('oauth.apple-login');
 
 Route::get('/auth/oauth/google', function () {
     return Socialite::driver('google')->redirect();
@@ -85,6 +91,6 @@ Route::get('/auth/oauth/microsoft', function () {
     return Socialite::driver('microsoft')->redirect();
 })->name('oauth.microsoft-login');
 
-Route::get('/auth/oauth/callback/github', "App\Http\Controllers\Auth\OauthController@GithubOauth");
+Route::post('/auth/oauth/callback/apple', "App\Http\Controllers\Auth\OauthController@AppleOauth");
 Route::get('/auth/oauth/callback/google', "App\Http\Controllers\Auth\OauthController@GoogleOauth");
 Route::get('/auth/oauth/callback/microsoft', "App\Http\Controllers\Auth\OauthController@MicrosoftOauth");

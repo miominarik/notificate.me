@@ -21,8 +21,8 @@ class SettingsController extends Controller
             'settings_data' => DB::table('users_settings')
                 ->where('user_id', Auth::id())
                 ->get(),
-            'github_oauth_status' => DB::table('users')
-                ->select('github_id')
+            'apple_oauth_status' => DB::table('users')
+                ->select('apple_id')
                 ->where('id', Auth::id())
                 ->get(),
             'google_oauth_status' => DB::table('users')
@@ -32,6 +32,10 @@ class SettingsController extends Controller
             'microsoft_oauth_status' => DB::table('users')
                 ->select('microsoft_id')
                 ->where('id', Auth::id())
+                ->get(),
+            'modules_status' => DB::table('modules')
+                ->select('module_sms')
+                ->where('user_id', Auth::id())
                 ->get()
         ]);
     }
@@ -39,8 +43,8 @@ class SettingsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(EditSettingsRequest $request)
@@ -49,12 +53,14 @@ class SettingsController extends Controller
         $validated = $request->validated();
 
         $validated['notification_time'] = $validated['notification_time'] . ":00";
+        $validated['mobile_number'] = trim(str_replace(array("'", "\"", ";", "\\", "?", "&", "@", ":", "/", "#", "$", "=", ">", "<", "+", " "), "", $validated['mobile_number']));
 
         DB::table('users_settings')
             ->where('user_id', Auth::id())
             ->update([
                 'enable_email_notification' => $validated['enable_email_notif'],
                 'notification_time' => $validated['notification_time'],
+                'mobile_number' => $validated['mobile_number'],
                 'updated_at' => Carbon::now()
             ]);
         return redirect(route('settings.index'))->with('status_success', 'Nastavenia boli uložené');

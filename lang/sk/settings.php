@@ -7,5 +7,6 @@ return [
     'time_when_notif_help' => 'Čas kedy sa má odoslať notifikácia daný deň',
     'yes' => 'Áno',
     'no' => 'Nie',
-    'send_btn' => 'Uložiť'
+    'send_btn' => 'Uložiť',
+    'mobile_num' => 'Telefónne číslo'
 ];

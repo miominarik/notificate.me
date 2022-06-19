@@ -7,5 +7,6 @@ return [
     'time_when_notif_help' => 'The time when the notification should be sent that day',
     'yes' => 'Yes',
     'no' => 'No',
-    'send_btn' => 'Save'
+    'send_btn' => 'Save',
+    'mobile_num' => 'Mobile number'
 ];

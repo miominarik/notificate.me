@@ -14,4 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/main_check_agent', "App\Http\Controllers\ApiController@AgentCheckDates")->middleware(WhiteListIpAddressessMiddleware::class);
+Route::get('/main_check_agent_email', "App\Http\Controllers\ApiController@AgentCheckDates")->middleware(WhiteListIpAddressessMiddleware::class);
+Route::get('/main_check_agent_sms', "App\Http\Controllers\ApiController@AgentCheckDatesSMS")->middleware(WhiteListIpAddressessMiddleware::class);

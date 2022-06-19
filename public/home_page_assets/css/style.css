@@ -781,12 +781,18 @@ section {
 }
 #footer .social-links a:hover {
   background: #bd5102;
-  color: #fff;
-  text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
+
 #footer .copyright {
-  margin: 0 0 5px 0;
+    margin: 0 0 5px 0;
 }
+
 #footer .credits {
-  font-size: 13px;
+    font-size: 13px;
+}
+
+.grecaptcha-badge {
+    visibility: hidden;
 }
