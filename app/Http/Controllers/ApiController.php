@@ -92,7 +92,7 @@ class ApiController extends Controller
         $data = DB::table('tasks')
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
             ->join('modules', 'tasks.user_id', '=', 'modules.user_id')
-            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_type', 'users_settings.mobile_number', 'users_settings.notification_time', 'modules.module_sms')
+            ->select('tasks.id', 'tasks.task_name', 'tasks.user_id', 'tasks.task_next_date', 'tasks.task_notification_type', 'users_settings.mobile_number', 'users_settings.notification_time', 'modules.module_sms')
             ->where([
                 'tasks.task_enabled' => true,
                 'tasks.sms_sent' => false,
@@ -123,6 +123,7 @@ class ApiController extends Controller
                             'task_name' => $item->task_name,
                             'task_next_date' => $item->task_next_date,
                             'user_mobile_number' => $item->mobile_number,
+                            'user_id' => $item->user_id,
                         ]);
                     }
                 }
@@ -130,52 +131,57 @@ class ApiController extends Controller
         }
 
         if (!empty($notification_array)) {
-            foreach ($notification_array as $one_task) {
-                return $this->sendSMS($one_task['task_id'], $one_task['task_name'], $one_task['task_next_date'], $one_task['user_mobile_number']);
-            }
-        }
-    }
-
-    /**
-     * Odosielanie sms na uvedené čísla
-     * @param int $task_id
-     * @param string $task_name
-     * @param string $checked_date
-     * @param string $mobile_number
-     * @return void
-     * @throws SenderSettings\InvalidSenderException
-     */
-    public function sendSMS(int $task_id, string $task_name, string $checked_date, string $mobile_number)
-    {
-
-        if (str_contains($mobile_number, '421')) {
-            $checked_date = Carbon::createFromFormat('Y-m-d', $checked_date)->format('d.m.Y');
 
             $connection = new Connection(env('BULKGATE_APP_ID'), env('BULKGATE_AUTH_TOKEN'));
             $sender = new Sender($connection);
-
             $type = SenderSettings\Gate::GATE_TEXT_SENDER;
             $value = 'Notificate';
-
             $settings = new SenderSettings\StaticSenderSettings($type, $value);
             $sender->setSenderSettings($settings);
             $sender->unicode(true);
             $sender->setDefaultCountry(Country::SLOVAKIA);
 
-            $message_text = "Úloha: " . $task_name . ". Dátum splnenia: " . $checked_date;
+            foreach ($notification_array as $one_task) {
+                if (str_contains($one_task['user_mobile_number'], '421')) {
+                    $checked_date = Carbon::createFromFormat('Y-m-d', $one_task['task_next_date'])->format('d.m.Y');
+                    $message_text = "Úloha: " . $one_task['task_name'] . ". Dátum splnenia: " . $checked_date;
+                    $message = new Message($one_task['user_mobile_number'], $message_text);
+                    $sender->send($message);
 
-            $message = new Message($mobile_number, $message_text);
+                    //Uprav úlohu aby sa iž nikdy znova neposlala sms
+                    DB::table('tasks')
+                        ->where('id', $one_task['task_id'])
+                        ->update([
+                            'sms_sent' => true
+                        ]);
 
-            $sender->send($message);
+                    //Pridal riadok do logov
+                    $this->save_sms_log($one_task['task_id'], $one_task['user_id'], $one_task['user_mobile_number']);
 
-            //Uprav úlohu aby sa iž nikdy znova neposlala sms
-            DB::table('tasks')
-                ->where('id', $task_id)
-                ->update([
-                    'sms_sent' => true
+                    unset($checked_date, $message_text, $message);
+                }
+            }
+        }
+    }
+
+    /**
+     * Ulož nový log o odoslaní sms
+     * @param $task_id
+     * @param $user_id
+     * @param $mobile_number
+     * @return void
+     */
+    protected function save_sms_log($task_id, $user_id, $mobile_number)
+    {
+        if (isset($task_id) && isset($user_id) && isset($mobile_number) && !empty($task_id) && !empty($user_id) && !empty($mobile_number)) {
+            DB::table('sms_history')
+                ->insert([
+                    'task_id' => $task_id,
+                    'user_id' => $user_id,
+                    'mobile_number' => $mobile_number,
+                    'created_at' => Carbon::now()
                 ]);
         }
-
 
     }
 }
