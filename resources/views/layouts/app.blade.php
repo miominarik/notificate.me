@@ -53,19 +53,21 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="https://lipis.github.io/bootstrap-social/bootstrap-social.css" rel="stylesheet">
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="https://lipis.github.io/bootstrap-social/bootstrap-social.css" rel="stylesheet">
 </head>
 
 <body>
 <div id="app">
 
     @if((new \Jenssegers\Agent\Agent())->isMobile() || (new \Jenssegers\Agent\Agent())->isTablet())
-        <nav class="navbar navbar-expand-lg fixed-top bg-primary navbar-dark shadow-sm"
-             style="background-color: #343A40;">
+        <nav
+            class="navbar navbar-expand-lg fixed-top @auth bg-{{session()->get('color_palette')?session()->get('color_palette'):'primary'}} {{session()->get('color_scheme')?session()->get('color_scheme'):'navbar-dark'}} @endauth @guest bg-primary navbar-dark @endguest shadow-sm"
+            style="background-color: #343A40;">
             @else
-                <nav class="navbar navbar-expand-lg bg-primary navbar-dark shadow-sm">
+                <nav
+                    class="navbar navbar-expand-lg @auth bg-{{session()->get('color_palette')?session()->get('color_palette'):'primary'}} {{session()->get('color_scheme')?session()->get('color_scheme'):'navbar-dark'}} @endauth @guest bg-primary navbar-dark @endguest shadow-sm">
                     @endif
                     <div class="container-fluid">
                         <a class="navbar-brand" href="/app">{{ config('app.name', 'Laravel') }}</a>
@@ -78,17 +80,17 @@
                             @auth
                                 <ul class="nav nav-pills">
                                     <li class="nav-item">
-                                        <a class="nav-link text-white {{ request()->is('tasks*') ? 'active bg-dark' : '' }}"
+                                        <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('tasks*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
                                            aria-current="page"
                                            href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-white {{ request()->is('modules*') ? 'active bg-dark' : '' }}"
+                                        <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('modules*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
                                            aria-current="page"
                                            href="{{ route('modules.index') }}">{{ __('layout.menu_modules') }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link text-white {{ request()->is('settings*') ? 'active bg-dark' : '' }}"
+                                        <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('settings*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
                                            aria-current="page"
                                            href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
                                     </li>
@@ -123,7 +125,8 @@
                             @auth
                                 <ul class="navbar-nav ms-auto">
                                     <li class="nav-item dropdown pe-4">
-                                        <a class="nav-link dropdown-toggle text-white" href="#"
+                                        <a class="nav-link dropdown-toggle @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif"
+                                           href="#"
                                            id="navbarNotificationMenu"
                                            role="button"
                                            data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
@@ -153,7 +156,8 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle text-white" href="#"
+                                        <a class="nav-link dropdown-toggle @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif"
+                                           href="#"
                                            id="navbarDropdownMenuLink"
                                            role="button"
                                            data-bs-toggle="dropdown" aria-expanded="false">
@@ -170,7 +174,9 @@
                                         </ul>
                                     </li>
                                     <li class="nav-item dropdown">
-                                        <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#"
+                                        <a id="navbarDropdown"
+                                           class="nav-link dropdown-toggle @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif"
+                                           href="#"
                                            role="button"
                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                             {{ Auth::user()->email }}

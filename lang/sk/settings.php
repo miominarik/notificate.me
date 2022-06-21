@@ -8,5 +8,13 @@ return [
     'yes' => 'Áno',
     'no' => 'Nie',
     'send_btn' => 'Uložiť',
-    'mobile_num' => 'Telefónne číslo'
+    'mobile_num' => 'Telefónne číslo',
+    'color_palette' => 'Farebná téma',
+    'color_blue' => 'Modrá',
+    'color_green' => 'Zelená',
+    'color_yellow' => 'Žltá',
+    'color_red' => 'Červená',
+    'color_black' => 'Čierna',
+    'color_white' => 'Biela',
+    'color_gray' => 'Šedá',
 ];
