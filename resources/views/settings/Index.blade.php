@@ -58,7 +58,6 @@
                                                         {{ __('settings.no') }}</option>
                                                 </select>
                                             </div>
-
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                                                 <label
                                                     for="enable_email_notif">{{__('settings.mobile_num')}}</label>
@@ -80,6 +79,36 @@
                                                             {{ $i }}:00
                                                         </option>
                                                     @endfor
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                                <label
+                                                    for="color_palette">{{ __('settings.color_palette') }}</label>
+                                                <select class="form-select" name="color_palette"
+                                                        id="color_palette">
+
+                                                    <option
+                                                        @if ($settings_data[0]->color_palette == 1) selected
+                                                        @endif value="1">{{__('settings.color_blue')}}
+                                                    </option>
+                                                    <option @if ($settings_data[0]->color_palette == 2) selected
+                                                            @endif value="2">{{__('settings.color_green')}}
+                                                    </option>
+                                                    <option @if ($settings_data[0]->color_palette == 3) selected
+                                                            @endif value="3">{{__('settings.color_yellow')}}
+                                                    </option>
+                                                    <option @if ($settings_data[0]->color_palette == 4) selected
+                                                            @endif value="4">{{__('settings.color_red')}}
+                                                    </option>
+                                                    <option @if ($settings_data[0]->color_palette == 5) selected
+                                                            @endif value="5">{{__('settings.color_black')}}
+                                                    </option>
+                                                    <option @if ($settings_data[0]->color_palette == 6) selected
+                                                            @endif value="6">{{__('settings.color_white')}}
+                                                    </option>
+                                                    <option @if ($settings_data[0]->color_palette == 7) selected
+                                                            @endif value="7">{{__('settings.color_gray')}}
+                                                    </option>
                                                 </select>
                                             </div>
 

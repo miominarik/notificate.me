@@ -110,9 +110,10 @@
             <ul class="list-inline">
                 <li class="list-inline-item"><a href="/gdpr">{{__('home_page.gdpr')}}</a></li>
                 <li class="list-inline-item"><a href="/cookies">{{__('home_page.cookies')}}</a></li>
+                <li class="list-inline-item"><a href="https://status.miucode.com/" target="_blank">System status</a>
+                </li>
             </ul>
         </div>
-        <hr>
         <div class="copyright">
             &copy; Copyright @php
                 echo date('Y');
