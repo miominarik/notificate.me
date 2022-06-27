@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\CheckBlockedStatusUser;
 use App\Http\Middleware\VerifyGoogleRecaptcha;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -44,5 +46,51 @@ class LoginController extends Controller
     protected function loggedOut(Request $request)
     {
         return redirect('/app');
+    }
+
+    public function login(Request $request)
+    {
+
+        $get_status = DB::table('users')
+            ->select('blocked')
+            ->where('email', $request->email)
+            ->get();
+
+        if (isset($get_status[0]->blocked)) {
+            if ($get_status[0]->blocked === 0) {
+                $this->validateLogin($request);
+
+                // If the class is using the ThrottlesLogins trait, we can automatically throttle
+                // the login attempts for this application. We'll key this by the username and
+                // the IP address of the client making these requests into this application.
+                if (method_exists($this, 'hasTooManyLoginAttempts') &&
+                    $this->hasTooManyLoginAttempts($request)) {
+                    $this->fireLockoutEvent($request);
+
+                    return $this->sendLockoutResponse($request);
+                }
+
+                if ($this->attemptLogin($request)) {
+                    if ($request->hasSession()) {
+                        $request->session()->put('auth.password_confirmed_at', time());
+                    }
+
+                    return $this->sendLoginResponse($request);
+                }
+
+                // If the login attempt was unsuccessful we will increment the number of attempts
+                // to login and redirect the user back to the login form. Of course, when this
+                // user surpasses their maximum number of attempts they will get locked out.
+                $this->incrementLoginAttempts($request);
+
+                return $this->sendFailedLoginResponse($request);
+            } else {
+                return redirect(route('login'));
+            };
+        } else {
+            return redirect(route('login'));
+        };
+
+
     }
 }

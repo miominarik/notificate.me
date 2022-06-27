@@ -17,6 +17,10 @@ class VerifyGoogleRecaptcha
      */
     public function handle(Request $request, Closure $next)
     {
+        if (env('APP_DEBUG') == true) {
+            return $next($request);
+        };
+
         $method = $request->method();
 
         if (($request->isMethod('post')) && ($request->is('login') || $request->is('register') || $request->routeIs('password.email') || $request->routeIs('password.update') || $request->routeIs('contact.send_mail'))) {

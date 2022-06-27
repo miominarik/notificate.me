@@ -6,6 +6,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class AddToSessionAfterLogin
 {
@@ -28,6 +29,7 @@ class AddToSessionAfterLogin
     public function handle($event)
     {
 
+        //Uloženie farby témy do session pri boote
         $user_data = DB::table('users_settings')
             ->select('color_palette')
             ->where('user_id', Auth::id())
@@ -65,6 +67,32 @@ class AddToSessionAfterLogin
             'color_scheme' => isset($color_scheme) ? $color_scheme : 'navbar-dark'
         ]);
 
+        //Uloženie práv do session pri boote
 
+        $superadmin_get = DB::table('users')
+            ->select('superadmin')
+            ->where('id', Auth::id())
+            ->get();
+
+        if (isset($superadmin_get[0]->superadmin)) {
+
+            if ($superadmin_get[0]->superadmin == 0 || $superadmin_get[0]->superadmin == 1) {
+                switch ($superadmin_get[0]->superadmin) {
+                    case 0:
+                        Session::put('user_superadmin', 0);
+                        break;
+                    case 1:
+                        Session::put('user_superadmin', 1);
+                        break;
+                    default:
+                        Session::put('user_superadmin', 0);
+                        break;
+                };
+            } else {
+                Session::put('user_superadmin', 0);
+            };
+        } else {
+            Session::put('user_superadmin', 0);
+        };
     }
 }

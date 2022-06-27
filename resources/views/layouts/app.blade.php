@@ -44,14 +44,14 @@
     <meta name="msapplication-tooltip" content="Notificate.me">
     <meta name="msapplication-starturl" content="/"/>
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+        <!-- Scripts -->
+        <script src="{{ asset('js/app.js') }}" defer></script>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+        <!-- Fonts -->
+        <link rel="dns-prefetch" href="//fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -60,6 +60,7 @@
 
 <body>
 <div id="app">
+
 
     @if((new \Jenssegers\Agent\Agent())->isMobile() || (new \Jenssegers\Agent\Agent())->isTablet())
         <nav
@@ -94,6 +95,13 @@
                                            aria-current="page"
                                            href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
                                     </li>
+                                    @if(session()->get('user_superadmin') === 1)
+                                        <li class="nav-item">
+                                            <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('superadmin*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
+                                               aria-current="page"
+                                               href="{{ route('superadmin.index') }}">Administrácia</a>
+                                        </li>
+                                    @endif
                                 </ul>
                             @endauth
                             @guest
