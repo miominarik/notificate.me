@@ -52,7 +52,7 @@ Route::get('/app', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::middleware(['auth', 'verified', 'blockedstatus'])->group(function () {
+Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(function () {
     Route::get('tasks', 'App\Http\Controllers\TasksController@index')->name('tasks.index');
     Route::post('tasks', 'App\Http\Controllers\TasksController@store')->name('tasks.store');
     Route::post('tasks/{task}/edit', 'App\Http\Controllers\TasksController@edit')->name('tasks.edit');
@@ -62,6 +62,7 @@ Route::middleware(['auth', 'verified', 'blockedstatus'])->group(function () {
     Route::put('tasks/complete/{task}', "App\Http\Controllers\TasksController@complete")->name('tasks.complete');
     Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');
     Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
+    Route::post('settings/change_password', "App\Http\Controllers\SettingsController@change_password")->name('settings.change_password');
     //Modules
     Route::get('modules', "App\Http\Controllers\ModulesController@index")->name('modules.index');
     Route::get('modules/activate/{module_name}', "App\Http\Controllers\ModulesController@activate_modul")->name('modules.activate_modul');

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\EditSettingsRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 class SettingsController extends Controller
@@ -98,5 +100,59 @@ class SettingsController extends Controller
 
 
         return redirect(route('settings.index'))->with('status_success', 'Nastavenia boli uložené');
+    }
+
+    public function change_password(ChangePasswordRequest $request)
+    {
+        $validated = $request->validated();
+
+        $oldpass = $validated['oldpass'];
+        $newpass1 = $validated['newpass1'];
+        $newpass2 = $validated['newpass2'];
+        $logout_everywhere = isset($validated['logout_everywhere']) || !empty($validated['logout_everywhere']) ? $validated['logout_everywhere'] : NULL;
+
+
+        if (isset($oldpass) && isset($newpass1) && isset($newpass2)) {
+            //Získanie aktuálneho hesla z DB
+            $actual_pass_db = DB::table('users')
+                ->select('password')
+                ->where('id', Auth::id())
+                ->get();
+
+            if (isset($actual_pass_db[0]->password)) {
+                //Porovnaj stare heslo z formu a db
+                if (Hash::check($oldpass, $actual_pass_db[0]->password) == true) {
+                    //Skontroluj či nové hesla sú rovnaké
+                    if ($newpass2 === $newpass1) {
+                        if (strlen($newpass1) >= 8) {
+                            DB::table('users')
+                                ->where('id', Auth::id())
+                                ->update([
+                                    'password' => Hash::make($newpass1),
+                                    'updated_at' => Carbon::now()
+                                ]);
+
+                            //Kontrola či sa chceme aj odhlasiť na ostatných zariadeniach
+                            if (isset($logout_everywhere) && $logout_everywhere != NULL && $logout_everywhere == 'on') {
+                                Auth::logoutOtherDevices($newpass1);
+                            };
+
+                            return redirect()->back()->with('status_success', 'Heslo bolo úspešne zmenené');
+
+                        } else {
+                            return redirect()->back()->with('status_warning', 'Heslo musí obsahovať viac ako 8 znakov');
+                        };
+                    } else {
+                        return redirect()->back()->with('status_warning', 'Nové heslá sa nezhodujú');
+                    };
+                } else {
+                    return redirect()->back()->with('status_warning', 'Pôvodné heslá sa nezhodujú');
+                };
+            } else {
+                return redirect()->back()->with('status_danger', 'Nastala chyba pri zmene hesla');
+            };
+        } else {
+            return redirect()->back()->with('status_danger', 'Nastala chyba pri zmene hesla');
+        };
     }
 }

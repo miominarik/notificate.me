@@ -115,6 +115,9 @@
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <button type="submit"
                                                         class="btn btn-primary">{{ __('settings.send_btn') }}</button>
+                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                                        data-bs-target="#changepassModal">Zmena hesla
+                                                </button>
                                             </div>
                                         </form>
                                         <hr class="my-4">
@@ -184,4 +187,6 @@
             </div>
         </div>
     </section>
+
+    @include('settings.inc.change_pass_modal')
 @endsection
