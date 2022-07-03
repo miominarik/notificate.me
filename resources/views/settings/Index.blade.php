@@ -116,7 +116,7 @@
                                                 <button type="submit"
                                                         class="btn btn-primary">{{ __('settings.send_btn') }}</button>
                                                 <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                        data-bs-target="#changepassModal">Zmena hesla
+                                                        data-bs-target="#changepassModal">{{__('settings.change_pass_btn')}}
                                                 </button>
                                             </div>
                                         </form>

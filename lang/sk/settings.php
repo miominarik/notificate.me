@@ -17,4 +17,12 @@ return [
     'color_black' => 'Čierna',
     'color_white' => 'Biela',
     'color_gray' => 'Šedá',
+    'change_pass_btn' => 'Zmena hesla',
+    'old_pass' => 'Pôvodne heslo',
+    'new_pass' => 'Nové heslo',
+    'new_pass_help' => 'Heslo musí obsahovať minimálne 8 znakov',
+    'new_pass2' => 'Zopakujte nové heslo',
+    'log_out_everywhere' => 'Odhlásiť ma na všetkých zariadeniach',
+    'close' => 'Zavrieť',
+    'change_it' => 'Zmeniť heslo',
 ];
