@@ -53,7 +53,7 @@ Route::get('/app', function () {
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(function () {
-    Route::get('tasks', 'App\Http\Controllers\TasksController@index')->name('tasks.index');
+    Route::get('tasks/{task_id?}', 'App\Http\Controllers\TasksController@index')->name('tasks.index');
     Route::post('tasks', 'App\Http\Controllers\TasksController@store')->name('tasks.store');
     Route::post('tasks/{task}/edit', 'App\Http\Controllers\TasksController@edit')->name('tasks.edit');
     Route::post('tasks/{task}/history', 'App\Http\Controllers\TasksController@ShowHistory')->name('tasks.history');
@@ -63,6 +63,14 @@ Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(
     Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');
     Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
     Route::post('settings/change_password', "App\Http\Controllers\SettingsController@change_password")->name('settings.change_password');
+
+    //Calendar
+    Route::middleware('check_module:module_calendar')->group(function () {
+        Route::get('calendar', "App\Http\Controllers\CalendarController@index")->name('calendar.index');
+        Route::get('calendar/data_feed', "App\Http\Controllers\CalendarController@data_feed")->name('calendar.data_feed');
+        Route::post('calendar/update_task_time/{task_id}', "App\Http\Controllers\CalendarController@update_task_time")->name('calendar.update_task_time');
+    });
+
     //Modules
     Route::get('modules', "App\Http\Controllers\ModulesController@index")->name('modules.index');
     Route::get('modules/activate/{module_name}', "App\Http\Controllers\ModulesController@activate_modul")->name('modules.activate_modul');

@@ -34,15 +34,15 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description"
-          content="Notificate.me Vám pomôže s evidenciou Vaších úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy."/>
-    <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vaších úloh">
-    <meta name="author" content="Miroslav Minárik"/>
-    <meta name="robots" content="noindex, nofollow"/>
-    <meta name="apple-mobile-web-app-title" content="Notificate.me">
-    <meta name="application-name" content="Notificate.me"/>
-    <meta name="msapplication-tooltip" content="Notificate.me">
-    <meta name="msapplication-starturl" content="/"/>
+        <meta name="description"
+              content="Notificate.me Vám pomôže s evidenciou Vaších úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy."/>
+        <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vaších úloh">
+        <meta name="author" content="Miroslav Minárik"/>
+        <meta name="robots" content="noindex, nofollow"/>
+        <meta name="apple-mobile-web-app-title" content="Notificate.me">
+        <meta name="application-name" content="Notificate.me"/>
+        <meta name="msapplication-tooltip" content="Notificate.me">
+        <meta name="msapplication-starturl" content="/"/>
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -56,6 +56,15 @@
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="https://lipis.github.io/bootstrap-social/bootstrap-social.css" rel="stylesheet">
+
+        @if(request()->is('calendar*'))
+            <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
+            <link href='{{asset('css/fullcalendar.css')}}' rel='stylesheet'/>
+            <script src='{{asset('js/fullcalendar.js')}}'></script>
+            <script src='{{asset('js/fullcalendar-sk.js')}}'></script>
+            <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+            <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
+        @endif
 </head>
 
 <body>
@@ -85,6 +94,13 @@
                                            aria-current="page"
                                            href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
                                     </li>
+                                    @if($activated_modules->module_calendar)
+                                        <li class="nav-item">
+                                            <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('calendar*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
+                                               aria-current="page"
+                                               href="{{ route('calendar.index') }}">{{__('layout.menu_calendar')}}</a>
+                                        </li>
+                                    @endif
                                     <li class="nav-item">
                                         <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('modules*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
                                            aria-current="page"

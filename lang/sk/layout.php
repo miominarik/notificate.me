@@ -12,5 +12,6 @@ return [
     'lang_english' => 'Angličtina',
     'notif_comming' => 'Blížiace sa úlohy',
     'menu_index' => 'Späť na úvodnú stránku',
-    'menu_modules' => 'Moduly'
+    'menu_modules' => 'Moduly',
+    'menu_calendar' => 'Kalendár'
 ];

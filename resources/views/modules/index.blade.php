@@ -46,6 +46,19 @@
                                                 @endif
                                             </div>
                                         </div>
+                                        <div class="card card-sub mt-2" style="width: 100%;">
+                                            <div class="card-body card-sub-body">
+                                                <h5 class="card-title card-sub-card-title">{{__('modules.module_calendar')}}</h5>
+                                                <p class="card-text card-sub-card-text">{{__('modules.module_calendar_sub')}}</p>
+                                                @if(isset($modules_status[0]->module_calendar) && $modules_status[0]->module_calendar == 0)
+                                                    <a href="{{route('modules.activate_modul', 'module_calendar')}}"
+                                                       class="btn btn-primary">{{__('modules.module_calendar_activate')}}</a>
+                                                @else
+                                                    <a href="{{route('modules.deactivate_modul', 'module_calendar')}}"
+                                                       class="btn btn-danger">{{__('modules.module_calendar_deactivate')}}</a>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

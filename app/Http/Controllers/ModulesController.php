@@ -8,11 +8,26 @@ use Illuminate\Support\Facades\DB;
 
 class ModulesController extends Controller
 {
+    public function Users_modules()
+    {
+        $data = DB::table('modules')
+            ->select('module_sms', 'module_calendar')
+            ->where('user_id', Auth::id())
+            ->get();
+
+        if (isset($data[0])) {
+            return $data[0];
+        } else {
+            return NULL;
+        };
+
+    }
+
     public function index()
     {
         return view('modules.index', [
             'modules_status' => DB::table('modules')
-                ->select('module_sms')
+                ->select('module_sms', 'module_calendar')
                 ->where('user_id', Auth::id())
                 ->get()
         ]);
@@ -21,7 +36,7 @@ class ModulesController extends Controller
     public function activate_modul(Request $request)
     {
         $allowed_modules = [
-            'module_sms'
+            'module_sms', 'module_calendar'
         ];
 
         if (isset($request->module_name) && !empty($request->module_name)) {
@@ -55,7 +70,7 @@ class ModulesController extends Controller
     public function deactivate_modul(Request $request)
     {
         $allowed_modules = [
-            'module_sms'
+            'module_sms', 'module_calendar'
         ];
 
         if (isset($request->module_name) && !empty($request->module_name)) {

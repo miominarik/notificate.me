@@ -18,22 +18,39 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($task_id = null)
     {
-        return view('tasks.Index', [
-            'all_enabled_tasks' => DB::table('tasks')
+
+        if (isset($task_id) && !empty($task_id)) {
+
+            $task_id = base64_decode($task_id);
+            $task_id = explode(':', $task_id);
+            $task_id = $task_id[1];
+
+            $task_pick = DB::table('tasks')
+                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type')
+                ->where('user_id', Auth::id())
+                ->where('task_enabled', true)
+                ->where('id', $task_id)
+                ->paginate(10);
+        } else {
+            $task_pick = DB::table('tasks')
                 ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type')
                 ->where('user_id', Auth::id())
                 ->where('task_enabled', true)
                 ->orderBy('task_next_date', 'ASC')
-                ->paginate(10)
+                ->paginate(10);
+        };
+
+        return view('tasks.Index', [
+            'all_enabled_tasks' => $task_pick
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreTaskRequest $request)
@@ -77,7 +94,7 @@ class TasksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Task  $task
+     * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
     public function edit($task)
@@ -95,8 +112,8 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Task  $task
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
     public function update(EditTaskRequest $request, $task)
@@ -140,7 +157,7 @@ class TasksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Task  $task
+     * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
     public function destroy($task)
@@ -160,7 +177,7 @@ class TasksController extends Controller
     /**
      * Check the specified resource as complete
      *
-     * @param  \App\Models\Task  $task
+     * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
     public function complete(CompleteTaskRequest $request, $task)
@@ -214,10 +231,10 @@ class TasksController extends Controller
     /**
      * AddNewActionToHistory
      *
-     * @param  mixed $task_id
-     * @param  mixed $user_id
-     * @param  mixed $action
-     * @param  mixed $date
+     * @param mixed $task_id
+     * @param mixed $user_id
+     * @param mixed $action
+     * @param mixed $date
      * @return void
      */
     public function AddNewActionToHistory($task_id, $action)
@@ -236,10 +253,10 @@ class TasksController extends Controller
     /**
      * AddNewCompleteToHistory
      *
-     * @param  mixed $task_id
-     * @param  mixed $user_id
-     * @param  mixed $action
-     * @param  mixed $date
+     * @param mixed $task_id
+     * @param mixed $user_id
+     * @param mixed $action
+     * @param mixed $date
      * @return void
      */
     public function AddNewCompleteToHistory($task_id, $date)
