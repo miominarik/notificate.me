@@ -43,7 +43,7 @@
                 },
                 eventClick: function (info) {
                     if (info.event.id) {
-                        let hash_id = btoa(Date.now() + ":" + info.event.id);
+                        let hash_id = info.event.id;
                         window.location.href = "/tasks/" + hash_id;
                     }
                 },

@@ -16,7 +16,6 @@ class CalendarController extends Controller
 
     public function data_feed(Request $request)
     {
-
         $DB_data = DB::table('tasks')
             ->select('id', 'task_name', 'task_note', 'task_next_date')
             ->where('user_id', Auth::id())
@@ -37,7 +36,7 @@ class CalendarController extends Controller
         if (isset($DB_data)) {
             foreach ($DB_data as $one_data) {
                 array_push($response_data, [
-                    'id' => $one_data->id,
+                    'id' => $this->JWT_encode($one_data->id),
                     'title' => $one_data->task_name,
                     'start' => $one_data->task_next_date,
                     'end' => $one_data->task_next_date,
@@ -53,6 +52,10 @@ class CalendarController extends Controller
     public function update_task_time($task_id, Request $request)
     {
         if (isset($task_id) && !empty($task_id) && isset($request) && !empty($request)) {
+
+            $task_id = $this->JWT_decode($task_id);
+            $task_id = $task_id[0];
+
             DB::table('tasks')
                 ->where('id', $task_id)
                 ->update([

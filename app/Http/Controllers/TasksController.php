@@ -22,9 +22,8 @@ class TasksController extends Controller
     {
         if (isset($task_id) && !empty($task_id)) {
 
-            $task_id = base64_decode($task_id);
-            $task_id = explode(':', $task_id);
-            $task_id = $task_id[1];
+            $task_id = $this->JWT_decode($task_id);
+            $task_id = $task_id[0];
 
             $task_pick = DB::table('tasks')
                 ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type')
