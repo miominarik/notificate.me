@@ -20,4 +20,8 @@ return [
     'modules_deactivated_error' => 'Modul sa nepodarilo deaktivovaný',
     'modules_deactivated_already' => 'Modul už je deaktivovaný',
     'modules_deactivated_missing' => 'Uvedený modul neexistuje',
+    'mfa_generate_codes' => 'Nové záložné kódy boli vygenerované',
+    'mfa_activated' => 'Dvojfaktorová autentifikácia bola nastavená',
+    'mfa_deactivated' => 'Dvojfaktorová autentifikácia bola deaktivovaná',
+    'mfa_activated_error_code' => 'Dvojfaktorovú autentifikáciu sa nepodarilo nastaviť. Nesprávny kód',
 ];

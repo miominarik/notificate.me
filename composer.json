@@ -11,6 +11,7 @@
         "firebase/php-jwt": "^6.2",
         "guzzlehttp/guzzle": "^7.2",
         "jenssegers/agent": "^2.6",
+        "laragear/two-factor": "^1.1",
         "laravel/framework": "^9.2",
         "laravel/sanctum": "^2.14.1",
         "laravel/socialite": "^5.5",

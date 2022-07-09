@@ -9,6 +9,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Laragear\TwoFactor\Facades\Auth2FA;
 
 class LoginController extends Controller
 {
@@ -50,6 +51,15 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        // If the user is trying for the first time, ensure both email and the password are
+        // required to log in. If it's not, then he would issue its 2FA code. This ensures
+        // the credentials are not required again when is just issuing his 2FA code alone.
+        if ($request->isNotFilled('2fa_code')) {
+            $request->validate([
+                'email' => 'required|email',
+                'password' => 'required|string'
+            ]);
+        }
 
         $get_status = DB::table('users')
             ->select('blocked')
@@ -57,40 +67,43 @@ class LoginController extends Controller
             ->get();
 
         if (isset($get_status[0]->blocked)) {
-            if ($get_status[0]->blocked === 0) {
-                $this->validateLogin($request);
-
-                // If the class is using the ThrottlesLogins trait, we can automatically throttle
-                // the login attempts for this application. We'll key this by the username and
-                // the IP address of the client making these requests into this application.
-                if (method_exists($this, 'hasTooManyLoginAttempts') &&
-                    $this->hasTooManyLoginAttempts($request)) {
-                    $this->fireLockoutEvent($request);
-
-                    return $this->sendLockoutResponse($request);
-                }
-
-                if ($this->attemptLogin($request)) {
-                    if ($request->hasSession()) {
-                        $request->session()->put('auth.password_confirmed_at', time());
-                    }
-
-                    return $this->sendLoginResponse($request);
-                }
-
-                // If the login attempt was unsuccessful we will increment the number of attempts
-                // to login and redirect the user back to the login form. Of course, when this
-                // user surpasses their maximum number of attempts they will get locked out.
-                $this->incrementLoginAttempts($request);
-
-                return $this->sendFailedLoginResponse($request);
-            } else {
+            if ($get_status[0]->blocked === 1) {
                 return redirect(route('login'));
             };
+        };
+
+        $attempt = Auth2FA::attempt($request->only('email', 'password'), $request->filled('remember'));
+
+        if ($attempt) {
+            return redirect(route('tasks.index'));
         } else {
             return redirect(route('login'));
         };
 
 
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        if ($this->attemptLogin($request)) {
+            if ($request->hasSession()) {
+                $request->session()->put('auth.password_confirmed_at', time());
+            }
+
+            return $this->sendLoginResponse($request);
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
     }
 }

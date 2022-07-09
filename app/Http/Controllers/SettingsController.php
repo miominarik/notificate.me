@@ -18,8 +18,30 @@ class SettingsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $mfa_status = DB::table('users')
+            ->select('mfa')
+            ->where('id', Auth::id())
+            ->get();
+
+        if (isset($mfa_status[0]->mfa)) {
+            if ($mfa_status[0]->mfa == 0) {
+                $secret = $request->user()->createTwoFactorAuth();
+                $mfa_qr_code = $secret->toQr();
+                $mfa_string = $secret->toString();
+                $recovery_codes = NULL;
+            } else {
+                $mfa_qr_code = NULL;
+                $mfa_string = NULL;
+                $recovery_codes = $request->user()->getRecoveryCodes();
+            };
+        } else {
+            $mfa_qr_code = NULL;
+            $mfa_string = NULL;
+            $recovery_codes = NULL;
+        };
+
         return view('settings.Index', [
             'settings_data' => DB::table('users_settings')
                 ->where('user_id', Auth::id())
@@ -39,7 +61,10 @@ class SettingsController extends Controller
             'modules_status' => DB::table('modules')
                 ->select('module_sms')
                 ->where('user_id', Auth::id())
-                ->get()
+                ->get(),
+            'qr_code' => $mfa_qr_code,
+            'string' => $mfa_string,
+            'recovery_codes' => $recovery_codes
         ]);
     }
 
@@ -155,4 +180,45 @@ class SettingsController extends Controller
             return redirect()->back()->with('status_danger', __('alerts.settings_change_pass_error'));
         };
     }
+
+    public function confirmTwoFactor(Request $request)
+    {
+        $request->validate([
+            'mfacode' => 'required|numeric'
+        ]);
+        $activated = $request->user()->confirmTwoFactorAuth($request->mfacode);
+
+        if ($activated) {
+            DB::table('users')
+                ->where('id', Auth::id())
+                ->update([
+                    'mfa' => true
+                ]);
+            return redirect()->back()->with('status_success', __('alerts.mfa_activated'));
+        };
+
+        return redirect()->back()->with('status_danger', __('alerts.mfa_activated_error_code'));
+
+    }
+
+    public function disableTwoFactorAuth(Request $request)
+    {
+        $request->user()->disableTwoFactorAuth();
+
+        DB::table('users')
+            ->where('id', Auth::id())
+            ->update([
+                'mfa' => false
+            ]);
+        return redirect()->back()->with('status_success', __('alerts.mfa_deactivated'));
+    }
+
+    public function generateNewCodesTwoFactorAuth(Request $request)
+    {
+        $request->user()->generateRecoveryCodes();
+
+        return redirect()->back()->with('status_success', __('alerts.mfa_generate_codes'));
+    }
+
+
 }
