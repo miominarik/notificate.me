@@ -52,18 +52,18 @@ class ModulesController extends Controller
                             $request->module_name => 1
                         ]);
                     if ($activate_status) {
-                        return redirect(route('modules.index'))->with('status_success', 'Modul bol úspešné aktivovaný');
+                        return redirect(route('modules.index'))->with('status_success', __('alerts.modules_activated'));
                     } else {
-                        return redirect(route('modules.index'))->with('status_danger', 'Modul sa nepodarilo aktivovať');
+                        return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_activated_error'));
                     };
                 } else {
-                    return redirect(route('modules.index'))->with('status_warning', 'Modul už je aktivovaný');
+                    return redirect(route('modules.index'))->with('status_warning', __('alerts.modules_activated_already'));
                 };
             } else {
-                return redirect(route('modules.index'))->with('status_danger', 'Uvedený modul neexistuje');
+                return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_activated_missing'));
             };
         } else {
-            return redirect(route('modules.index'))->with('status_danger', 'Modul sa nepodarilo aktivovať');
+            return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_activated_error'));
         };
     }
 
@@ -86,18 +86,18 @@ class ModulesController extends Controller
                             $request->module_name => 0
                         ]);
                     if ($activate_status) {
-                        return redirect(route('modules.index'))->with('status_success', 'Modul bol úspešné deaktivovaný');
+                        return redirect(route('modules.index'))->with('status_success', __('alerts.modules_deactivated'));
                     } else {
-                        return redirect(route('modules.index'))->with('status_danger', 'Modul sa nepodarilo deaktivovať');
+                        return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_deactivated_error'));
                     };
                 } else {
-                    return redirect(route('modules.index'))->with('status_warning', 'Modul už je deaktivovaný');
+                    return redirect(route('modules.index'))->with('status_warning', __('alerts.modules_deactivated_already'));
                 };
             } else {
-                return redirect(route('modules.index'))->with('status_danger', 'Uvedený modul neexistuje');
+                return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_deactivated_missing'));
             };
         } else {
-            return redirect(route('modules.index'))->with('status_danger', 'Modul sa nepodarilo deaktivovať');
+            return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_deactivated_error'));
         };
     }
 }

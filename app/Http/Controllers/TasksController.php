@@ -20,7 +20,6 @@ class TasksController extends Controller
      */
     public function index($task_id = null)
     {
-
         if (isset($task_id) && !empty($task_id)) {
 
             $task_id = base64_decode($task_id);
@@ -84,10 +83,10 @@ class TasksController extends Controller
 
                 $this->AddNewActionToHistory($task, 2);
 
-                return redirect(route('tasks.index'))->with('status_success', 'Úloha bola pridaná');
+                return redirect(route('tasks.index'))->with('status_success', __('alerts.task_added'));
             }
         } else {
-            return redirect(route('tasks.index'))->with('status_warning', 'Úloha nebola pridaná. Dátum bol zadaný do minulosti');
+            return redirect(route('tasks.index'))->with('status_warning', __('alerts.task_added_wrong'));
         };
     }
 
@@ -151,7 +150,7 @@ class TasksController extends Controller
 
         $this->AddNewActionToHistory($task, 1);
 
-        return redirect(route('tasks.index'))->with('status_success', 'Úloha bola upravená');
+        return redirect(route('tasks.index'))->with('status_success', __('alerts.task_edited'));
     }
 
     /**
@@ -171,7 +170,7 @@ class TasksController extends Controller
 
         $this->AddNewActionToHistory($task, 3);
 
-        return redirect(route('tasks.index'))->with('status_success', 'Úloha bola vymazaná');
+        return redirect(route('tasks.index'))->with('status_success', __('alerts.task_removed'));
     }
 
     /**
@@ -223,7 +222,7 @@ class TasksController extends Controller
                     ]);
 
                 $this->AddNewCompleteToHistory($task, Carbon::createFromFormat('Y-m-d', $validated['complete_date'])->format('Y-m-d H:i:s'));
-                return redirect(route('tasks.index'))->with('status_success', 'Úloha bola splnená. Dátum nasledujúceho splnenia bol posunutý.');
+                return redirect(route('tasks.index'))->with('status_success', __('alerts.task_completed'));
             }
         }
     }

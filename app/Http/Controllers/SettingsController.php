@@ -99,7 +99,7 @@ class SettingsController extends Controller
         Session::put('color_scheme', $color_scheme);
 
 
-        return redirect(route('settings.index'))->with('status_success', 'Nastavenia boli uložené');
+        return redirect(route('settings.index'))->with('status_success', __('alerts.settings_updated'));
     }
 
     public function change_password(ChangePasswordRequest $request)
@@ -137,22 +137,22 @@ class SettingsController extends Controller
                                 Auth::logoutOtherDevices($newpass1);
                             };
 
-                            return redirect()->back()->with('status_success', 'Heslo bolo úspešne zmenené');
+                            return redirect()->back()->with('status_success', __('alerts.settings_change_pass_succ'));
 
                         } else {
-                            return redirect()->back()->with('status_warning', 'Heslo musí obsahovať viac ako 8 znakov');
+                            return redirect()->back()->with('status_warning', __('alerts.settings_change_pass_8'));
                         };
                     } else {
-                        return redirect()->back()->with('status_warning', 'Nové heslá sa nezhodujú');
+                        return redirect()->back()->with('status_warning', __('alerts.settings_change_pass_nerovna'));
                     };
                 } else {
-                    return redirect()->back()->with('status_warning', 'Pôvodné heslá sa nezhodujú');
+                    return redirect()->back()->with('status_warning', __('alerts.settings_change_pass_nerovna_old'));
                 };
             } else {
-                return redirect()->back()->with('status_danger', 'Nastala chyba pri zmene hesla');
+                return redirect()->back()->with('status_danger', __('alerts.settings_change_pass_error'));
             };
         } else {
-            return redirect()->back()->with('status_danger', 'Nastala chyba pri zmene hesla');
+            return redirect()->back()->with('status_danger', __('alerts.settings_change_pass_error'));
         };
     }
 }
