@@ -75,21 +75,10 @@ Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(
     Route::get('modules', "App\Http\Controllers\ModulesController@index")->name('modules.index');
     Route::get('modules/activate/{module_name}', "App\Http\Controllers\ModulesController@activate_modul")->name('modules.activate_modul');
     Route::get('modules/deactivate/{module_name}', "App\Http\Controllers\ModulesController@deactivate_modul")->name('modules.deactivate_modul');
-
-    //MFA
-    Route::post('mfa/checkcode', "App\Http\Controllers\SettingsController@confirmTwoFactor")->name('mfa.checkcode');
-    Route::get('mfa/disablemfa', "App\Http\Controllers\SettingsController@disableTwoFactorAuth")->name('mfa.disablemfa');
-    Route::get('mfa/generatenewcodes', "App\Http\Controllers\SettingsController@generateNewCodesTwoFactorAuth")->name('mfa.generatenewcodes');
-    Route::view('2fa-required', 'two-factor::notice', [
-        'url' => url('settings')
-    ])->name('2fa.notice');
-    Route::get('2fa-confirm', [\Laragear\TwoFactor\Http\Controllers\ConfirmTwoFactorCodeController::class, 'form'])
-        ->name('2fa.confirm');
-    Route::post('2fa-confirm', [\Laragear\TwoFactor\Http\Controllers\ConfirmTwoFactorCodeController::class, 'confirm']);
 });
 
 //superadmin routes
-Route::middleware(['auth', 'verified', 'superadmin', '2fa.enabled', '2fa.confirm'])->group(function () {
+Route::middleware(['auth', 'verified', 'superadmin'])->group(function () {
     Route::get('superadmin', function () {
         return redirect(route('superadmin.users'));
     })->name('superadmin.index');
