@@ -97,14 +97,8 @@
                                                     <option @if ($settings_data[0]->color_palette == 3) selected
                                                             @endif value="3">{{__('settings.color_yellow')}}
                                                     </option>
-                                                    <option @if ($settings_data[0]->color_palette == 4) selected
-                                                            @endif value="4">{{__('settings.color_red')}}
-                                                    </option>
                                                     <option @if ($settings_data[0]->color_palette == 5) selected
                                                             @endif value="5">{{__('settings.color_black')}}
-                                                    </option>
-                                                    <option @if ($settings_data[0]->color_palette == 6) selected
-                                                            @endif value="6">{{__('settings.color_white')}}
                                                     </option>
                                                     <option @if ($settings_data[0]->color_palette == 7) selected
                                                             @endif value="7">{{__('settings.color_gray')}}
