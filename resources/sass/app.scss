@@ -1,14 +1,12 @@
-// Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
-// Variables
-@import 'variables';
+// Body
+$body-bg: #f8fafc;
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-@import "~@fortawesome/fontawesome-free/scss/fontawesome";
-@import "~@fortawesome/fontawesome-free/scss/solid";
-@import "~@fortawesome/fontawesome-free/scss/brands";
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
 
 .succes_icon {
     color: rgb(34, 185, 34);

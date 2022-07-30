@@ -1,3 +1,9 @@
+var glower = document.getElementById('notif_bell');
+window.setInterval(function () {
+    glower.classList.toggle('active');
+}, 1000);
+
+
 function ShowHistoryTask(task_id) {
     axios.post('/tasks/' + task_id + '/history')
         .then(function (response) {
