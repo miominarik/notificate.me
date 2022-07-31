@@ -13,7 +13,11 @@
             let calendar = new FullCalendar.Calendar(calendarEl, {
                 timeZone: 'Europe/Bratislava',
                 firstDay: 1,
+                @if((new \Jenssegers\Agent\Agent())->isMobile())
+                initialView: 'listWeek',
+                @else
                 initialView: 'dayGridMonth',
+                @endif
                 nowIndicator: true,
                 dayMaxEvents: true,
                 editable: true,
@@ -52,4 +56,5 @@
             calendar.render();
         });
     </script>
+
 @endsection

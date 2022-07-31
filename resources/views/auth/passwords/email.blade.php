@@ -29,19 +29,14 @@
                                 </div>
 
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-primary btn-lg"
-                                        type="submit">{{ __('auth.send_link') }}</button>
+                                    <button class="btn btn-own-primary btn-lg"
+                                            type="submit">{{ __('auth.send_link') }}</button>
                                 </div>
                             </form>
                             <div class="d-flex justify-content-center bd-highlight mb-3 mt-2">
                                 <div class="p-2 bd-highlight"><a
                                         href="{{ route('login') }}">{{ __('layout.menu_login') }}</a></div>
                             </div>
-                            <small>
-                                This site is protected by reCAPTCHA and the Google
-                                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
-                                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
-                            </small>
                         </div>
                     </div>
                 </div>

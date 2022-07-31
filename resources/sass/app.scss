@@ -1,10 +1,135 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
+
+$background: rgb(244 241 235 / 30%);
+$inline: rgba(223, 229, 229, 0.61);
+$primary: #3f5b87;
+$success: #3f8749;
+$danger: #992f2f;
+$secondary: #565656;
+$active: rgb(96 126 170 / 45%);
+$menu: #1C3879;
+@import "iosmenu";
+
+
 body {
-    background-color: #f8fafc;
+    background-color: $background;
     font-family: 'Nunito', sans-serif;
     font-size: 0.9rem;
     line-height: 1.6;
+}
+
+.navbar {
+    background-color: $menu;
+}
+
+.btn-own-primary {
+    color: white;
+    background-color: $primary;
+
+    &:hover, &:active {
+        color: white;
+        background-color: $primary;
+    }
+
+    padding: 10px;
+    border: 0px;
+}
+
+.btn-own-success {
+    color: white;
+    background-color: $success;
+
+    &:hover, &:active {
+        color: white;
+        background-color: $success;
+    }
+
+    padding: 10px;
+    border: 0px;
+}
+
+.btn-own-danger {
+    color: white;
+    background-color: $danger;
+
+    &:hover, &:active {
+        color: white;
+        background-color: $danger;
+    }
+
+    padding: 10px;
+    border: 0px;
+}
+
+.btn-own-secondary {
+    color: white;
+    background-color: $secondary;
+
+    &:hover, &:active {
+        color: white;
+        background-color: $secondary;
+    }
+
+    padding: 10px;
+    border: 0px;
+}
+
+.page-item.active .page-link {
+    background-color: $primary;
+    border-color: $primary;
+}
+
+.nav-pills .nav-link.active {
+    color: white;
+    background-color: $active
+}
+
+.fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start {
+    background-color: $primary;
+    border-color: $primary;
+}
+
+.fc-today-button, .fc-next-button, .fc-prev-button {
+    background-color: $primary;
+    border-color: $primary;
+
+    &:hover, &:active, &:disabled {
+        background-color: $primary;
+        border-color: $primary;
+    }
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: $inline;
+}
+
+.fc .fc-list-empty {
+    background-color: transparent;
+}
+
+.fc-theme-bootstrap5 .fc-list, .fc-theme-bootstrap5 .fc-scrollgrid, .fc-theme-bootstrap5 td, .fc-theme-bootstrap5 th {
+    border: 0px;
+}
+
+.fc-theme-bootstrap5-shaded {
+    background-color: $primary;
+    color: white;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: $primary;
+    border-color: $primary;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: $primary;
+    color: white;
+}
+
+.fc .fc-scrollgrid-section-header.fc-scrollgrid-section-sticky > * {
+    background-color: $primary;
+    color: white;
 }
 
 .succes_icon {
@@ -71,8 +196,3 @@ body {
     background-size: 80px;
 }
 
-@media (max-width: 990px) {
-    .card-sub {
-        margin: 20px;
-    }
-}

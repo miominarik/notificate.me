@@ -54,7 +54,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
               crossorigin="anonymous">
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
               integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
               crossorigin="anonymous" referrerpolicy="no-referrer"/>
@@ -68,169 +67,172 @@
             <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
             <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
         @endif
+
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
 </head>
 
 <body>
 <div id="app">
-
-
-    @if((new \Jenssegers\Agent\Agent())->isMobile() || (new \Jenssegers\Agent\Agent())->isTablet())
-        <nav
-            class="navbar navbar-expand-lg fixed-top @auth bg-{{session()->get('color_palette')?session()->get('color_palette'):'primary'}} {{session()->get('color_scheme')?session()->get('color_scheme'):'navbar-dark'}} @endauth @guest bg-primary navbar-dark @endguest shadow-sm"
-            style="background-color: #343A40;">
-            @else
-                <nav
-                    class="navbar navbar-expand-lg @auth bg-{{session()->get('color_palette')?session()->get('color_palette'):'primary'}} {{session()->get('color_scheme')?session()->get('color_scheme'):'navbar-dark'}} @endauth @guest bg-primary navbar-dark @endguest shadow-sm">
-                    @endif
-                    <div class="container-fluid">
-                        <a class="navbar-brand" href="/app">{{ config('app.name', 'Laravel') }}</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#mainNavbar"
-                                aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="mainNavbar">
-                            @auth
-                                <ul class="nav nav-pills">
-                                    <li class="nav-item">
-                                        <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('tasks*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
-                                           aria-current="page"
-                                           href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
+    @if((new \Jenssegers\Agent\Agent())->isDesktop())
+        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/app">{{ config('app.name', 'Laravel') }}</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    @auth
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link text-white {{ request()->is('tasks*') ? 'active' : '' }}"
+                                   aria-current="page"
+                                   href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
+                            </li>
+                            @if($activated_modules->module_calendar)
+                                <li class="nav-item">
+                                    <a class="nav-link text-white {{ request()->is('calendar*') ? 'active' : '' }}"
+                                       aria-current="page"
+                                       href="{{ route('calendar.index') }}">{{__('layout.menu_calendar')}}</a>
+                                </li>
+                            @endif
+                            <li class="nav-item">
+                                <a class="nav-link text-white {{ request()->is('modules*') ? 'active' : '' }}"
+                                   aria-current="page"
+                                   href="{{ route('modules.index') }}">{{ __('layout.menu_modules') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white {{ request()->is('settings*') ? 'active' : '' }}"
+                                   aria-current="page"
+                                   href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
+                            </li>
+                            @if(session()->get('user_superadmin') === 1)
+                                <li class="nav-item">
+                                    <a class="nav-link text-white {{ request()->is('superadmin*') ? 'active' : '' }}"
+                                       aria-current="page"
+                                       href="{{ route('superadmin.index') }}">Administrácia</a>
+                                </li>
+                            @endif
+                        </ul>
+                    @endauth
+                    @guest
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link text-white" aria-current="page"
+                                   href="/">{{ __('layout.menu_index') }}</a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                   role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ __('layout.menu_lang') }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end"
+                                    aria-labelledby="navbarDropdownMenuLink">
+                                    <li><a class="dropdown-item"
+                                           href="/language/sk">{{ __('layout.lang_slovak') }}</a>
                                     </li>
-                                    @if($activated_modules->module_calendar)
-                                        <li class="nav-item">
-                                            <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('calendar*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
-                                               aria-current="page"
-                                               href="{{ route('calendar.index') }}">{{__('layout.menu_calendar')}}</a>
-                                        </li>
-                                    @endif
-                                    <li class="nav-item">
-                                        <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('modules*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
-                                           aria-current="page"
-                                           href="{{ route('modules.index') }}">{{ __('layout.menu_modules') }}</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('settings*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
-                                           aria-current="page"
-                                           href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
-                                    </li>
-                                    @if(session()->get('user_superadmin') === 1)
-                                        <li class="nav-item">
-                                            <a class="nav-link @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif {{ request()->is('superadmin*') ? (session()->get('color_scheme') == 'navbar-light' || session()->get('color_palette') == 'dark')?'active bg-primary':'active bg-dark' : '' }}"
-                                               aria-current="page"
-                                               href="{{ route('superadmin.index') }}">Administrácia</a>
-                                        </li>
-                                    @endif
-                                </ul>
-                            @endauth
-                            @guest
-                                <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                        <a class="nav-link text-white" aria-current="page"
-                                           href="/">{{ __('layout.menu_index') }}</a>
-                                    </li>
-                                </ul>
-                                <ul class="navbar-nav ms-auto">
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                                           role="button"
-                                           data-bs-toggle="dropdown" aria-expanded="false">
-                                            {{ __('layout.menu_lang') }}
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="navbarDropdownMenuLink">
-                                            <li><a class="dropdown-item"
-                                                   href="/language/sk">{{ __('layout.lang_slovak') }}</a>
-                                            </li>
-                                            <li><a class="dropdown-item"
-                                                   href="/language/en">{{ __('layout.lang_english') }}</a>
-                                            </li>
-                                        </ul>
+                                    <li><a class="dropdown-item"
+                                           href="/language/en">{{ __('layout.lang_english') }}</a>
                                     </li>
                                 </ul>
-                            @endguest
-                            @auth
-                                <ul class="navbar-nav ms-auto">
-                                    <li class="nav-item dropdown pe-4">
-                                        <a class="nav-link dropdown-toggle @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif"
-                                           href="#"
-                                           id="navbarNotificationMenu"
-                                           role="button"
-                                           data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
-                                            <button type="button" class="btn btn-link btn-sm position-relative">
-                                                <i class="fa-solid fa-bell fs-5 @if ($notifications['count'] < 1) text-white @endif "
-                                                   id="notif_bell"></i>
-                                                <span
-                                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            </li>
+                        </ul>
+                    @endguest
+                    @auth
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item dropdown pe-4">
+                                <a class="nav-link dropdown-toggle text-white"
+                                   href="#"
+                                   id="navbarNotificationMenu"
+                                   role="button"
+                                   data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                    <button type="button" class="btn btn-link btn-sm position-relative">
+                                        <i class="fa-solid fa-bell fs-5 @if ($notifications['count'] < 1) text-white @endif "
+                                           id="notif_bell"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                             {{ $notifications['count'] }}
                                             <span class="visually-hidden">{{ __('layout.notif_comming') }}</span>
                                         </span>
-                                            </button>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="navbarNotificationMenu">
-                                            <li>
-                                                <h6 class="dropdown-header">{{ __('layout.notif_comming') }}</h6>
-                                            </li>
-                                            @forelse ($notifications['data'] as $one_notif)
-                                                <li><span class="dropdown-item"
-                                                          style="cursor: default">{{ $one_notif['task_name'] }} -
+                                    </button>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end"
+                                    aria-labelledby="navbarNotificationMenu">
+                                    <li>
+                                        <h6 class="dropdown-header">{{ __('layout.notif_comming') }}</h6>
+                                    </li>
+                                    @forelse ($notifications['data'] as $one_notif)
+                                        <li><span class="dropdown-item"
+                                                  style="cursor: default">{{ $one_notif['task_name'] }} -
                                                 {{ $one_notif['task_next_date'] }}</span></li>
-                                            @empty
-                                                <li><span class="dropdown-item"
-                                                          style="cursor: default">{{ __('tasks.no_data') }}</span></li>
-                                            @endforelse
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif"
-                                           href="#"
-                                           id="navbarDropdownMenuLink"
-                                           role="button"
-                                           data-bs-toggle="dropdown" aria-expanded="false">
-                                            {{ __('layout.menu_lang') }}
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-menu-end"
-                                            aria-labelledby="navbarDropdownMenuLink">
-                                            <li><a class="dropdown-item"
-                                                   href="/language/sk">{{ __('layout.lang_slovak') }}</a>
-                                            </li>
-                                            <li><a class="dropdown-item"
-                                                   href="/language/en">{{ __('layout.lang_english') }}</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item dropdown">
-                                        <a id="navbarDropdown"
-                                           class="nav-link dropdown-toggle @if(session()->get('color_scheme') == 'navbar-light') text-black @else text-white @endif"
-                                           href="#"
-                                           role="button"
-                                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                            {{ Auth::user()->email }}
-                                        </a>
-
-                                        <div class="dropdown-menu dropdown-menu-end"
-                                             aria-labelledby="navbarDropdown">
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                {{ __('layout.menu_logout') }}
-                                            </a>
-
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                  class="d-none">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    </li>
+                                    @empty
+                                        <li><span class="dropdown-item"
+                                                  style="cursor: default">{{ __('tasks.no_data') }}</span></li>
+                                    @endforelse
                                 </ul>
-                            @endauth
-                        </div>
-                    </div>
-                </nav>
-                <main class="py-4">
-                    @yield('content')
-                </main>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown"
+                                   class="nav-link dropdown-toggle text-white"
+                                   href="#"
+                                   role="button"
+                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->email }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end"
+                                     aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('layout.menu_logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                          class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    @endauth
+                </div>
+            </div>
+        </nav>
+    @endif
+    <main>
+        @yield('content')
+    </main>
+    @if((new \Jenssegers\Agent\Agent())->isMobile() ||(new \Jenssegers\Agent\Agent())->isTablet())
+        <div class="sticky-footer">
+            <a href="{{ route('tasks.index') }}"
+               class="sticky-footer item {{ request()->is('tasks*') ? 'active' : '' }}">
+                <i class="fa-solid fa-house"></i>
+                {{ __('layout.menu_tasks') }}
+            </a>
+            <a href="{{ route('calendar.index') }}"
+               class="sticky-footer item {{ request()->is('calendar*') ? 'active' : '' }}">
+                <i class="fa-solid fa-calendar-days"></i>
+                {{__('layout.menu_calendar')}}
+            </a>
+            <a href="{{ route('modules.index') }}"
+               class="sticky-footer item {{ request()->is('modules*') ? 'active' : '' }}">
+                <i class="fa-solid fa-puzzle-piece"></i>
+                {{ __('layout.menu_modules') }}
+            </a>
+            <a href="{{ route('settings.index') }}"
+               class="sticky-footer item {{ request()->is('settings*') ? 'active' : '' }}">
+                <i class="fa-solid fa-gear"></i>
+                {{ __('layout.menu_settings') }}
+            </a>
+        </div>
+    @endif
 </div>
+
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

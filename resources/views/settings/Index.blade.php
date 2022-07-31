@@ -81,34 +81,21 @@
                                                     @endfor
                                                 </select>
                                             </div>
+
                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                 <label
-                                                    for="color_palette">{{ __('settings.color_palette') }}</label>
-                                                <select class="form-select" name="color_palette"
-                                                        id="color_palette">
-
-                                                    <option
-                                                        @if ($settings_data[0]->color_palette == 1) selected
-                                                        @endif value="1">{{__('settings.color_blue')}}
-                                                    </option>
-                                                    <option @if ($settings_data[0]->color_palette == 2) selected
-                                                            @endif value="2">{{__('settings.color_green')}}
-                                                    </option>
-                                                    <option @if ($settings_data[0]->color_palette == 3) selected
-                                                            @endif value="3">{{__('settings.color_yellow')}}
-                                                    </option>
-                                                    <option @if ($settings_data[0]->color_palette == 5) selected
-                                                            @endif value="5">{{__('settings.color_black')}}
-                                                    </option>
-                                                    <option @if ($settings_data[0]->color_palette == 7) selected
-                                                            @endif value="7">{{__('settings.color_gray')}}
-                                                    </option>
+                                                    for="language">{{ __('layout.menu_lang') }}</label>
+                                                <select class="form-select" name="language"
+                                                        id="language" required>
+                                                    <option value="en"
+                                                            @if (session('locale') == 'en') selected @endif>{{ __('layout.lang_english') }}</option>
+                                                    <option value="sk"
+                                                            @if (session('locale') == 'sk') selected @endif>{{ __('layout.lang_slovak') }}</option>
                                                 </select>
                                             </div>
-
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <button type="submit"
-                                                        class="btn btn-primary">{{ __('settings.send_btn') }}</button>
+                                                        class="btn btn-own-primary">{{ __('settings.send_btn') }}</button>
                                             </div>
                                         </form>
                                         <hr class="my-4">
@@ -173,17 +160,17 @@
                                         </div>
                                         <hr>
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-own-danger" data-bs-toggle="modal"
                                                     data-bs-target="#changepassModal">{{__('settings.change_pass_btn')}}
                                             </button>
                                             @if(isset($qr_code) && $qr_code != NULL)
-                                                <button type="button" class="btn btn-outline-dark"
+                                                <button type="button" class="btn btn-own-secondary"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#activate_two_factorModal">{{__('settings.mfa_activate_btn')}}
                                                 </button>
                                             @endif
                                             @if(isset($recovery_codes) && $recovery_codes != NULL)
-                                                <button type="button" class="btn btn-outline-dark"
+                                                <button type="button" class="btn btn-own-secondary"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#show_recocery_codesModal">{{__('settings.mfa_activated_btn')}}
                                                 </button>

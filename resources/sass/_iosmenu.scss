@@ -1,0 +1,27 @@
+.sticky-footer {
+    align-items: center;
+    background: $menu;
+    bottom: 0px;
+    display: flex;
+    justify-content: space-evenly;
+    padding: .5rem 0;
+    padding-bottom: calc(.5rem + env(safe-area-inset-bottom));
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+
+    .item {
+        align-items: center;
+        color: white;
+        flex-direction: column;
+        position: relative;
+        text-decoration: none;
+        border-right: 1px solid $active;
+
+
+    }
+
+    .active {
+        color: $inline;
+    }
+}

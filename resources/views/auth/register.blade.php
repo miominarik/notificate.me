@@ -43,7 +43,7 @@
                                 </div>
 
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-primary btn-lg"
+                                    <button class="btn btn-own-primary btn-lg"
                                             type="submit">{{ __('auth.register_btn') }}</button>
                                 </div>
                             </form>
@@ -78,11 +78,6 @@
                                 Registráciou súhlasíte so
                                 <a href="{{ route('gdpr') }}" target="_blank">spracovaním osobných údajov</a>.
                             </small><br>
-                            <small>
-                                This site is protected by reCAPTCHA and the Google
-                                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
-                                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
-                            </small>
                         </div>
                     </div>
                 </div>

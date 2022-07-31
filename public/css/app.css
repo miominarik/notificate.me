@@ -1,76 +1,183 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
+.sticky-footer {
+    align-items: center;
+    background: #1c3879;
+    bottom: 0;
+    display: flex;
+    justify-content: space-evenly;
+    padding: .5rem 0 calc(.5rem + env(safe-area-inset-bottom));
+    position: fixed;
+    width: 100%;
+    z-index: 1
+}
+
+.sticky-footer .item {
+    align-items: center;
+    border-right: 1px solid rgba(96, 126, 170, .45);
+    color: #fff;
+    flex-direction: column;
+    position: relative;
+    text-decoration: none
+}
+
+.sticky-footer .active {
+    color: rgba(223, 229, 229, .61)
+}
+
 body {
-    background-color: #f8fafc;
-    font-family: "Nunito", sans-serif;
-    font-size: 0.9rem;
-    line-height: 1.6;
+    background-color: hsla(40, 29%, 94%, .3);
+    font-family: Nunito, sans-serif;
+    font-size: .9rem;
+    line-height: 1.6
+}
+
+.navbar {
+    background-color: #1c3879
+}
+
+.btn-own-primary {
+    border: 0;
+    padding: 10px
+}
+
+.btn-own-primary, .btn-own-primary:active, .btn-own-primary:hover {
+    background-color: #3f5b87;
+    color: #fff
+}
+
+.btn-own-success {
+    border: 0;
+    padding: 10px
+}
+
+.btn-own-success, .btn-own-success:active, .btn-own-success:hover {
+    background-color: #3f8749;
+    color: #fff
+}
+
+.btn-own-danger {
+    border: 0;
+    padding: 10px
+}
+
+.btn-own-danger, .btn-own-danger:active, .btn-own-danger:hover {
+    background-color: #992f2f;
+    color: #fff
+}
+
+.btn-own-secondary {
+    border: 0;
+    padding: 10px
+}
+
+.btn-own-secondary, .btn-own-secondary:active, .btn-own-secondary:hover {
+    background-color: #565656;
+    color: #fff
+}
+
+.page-item.active .page-link {
+    background-color: #3f5b87;
+    border-color: #3f5b87
+}
+
+.nav-pills .nav-link.active {
+    background-color: rgba(96, 126, 170, .45);
+    color: #fff
+}
+
+.fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start, .fc-next-button, .fc-next-button:active, .fc-next-button:disabled, .fc-next-button:hover, .fc-prev-button, .fc-prev-button:active, .fc-prev-button:disabled, .fc-prev-button:hover, .fc-today-button, .fc-today-button:active, .fc-today-button:disabled, .fc-today-button:hover {
+    background-color: #3f5b87;
+    border-color: #3f5b87
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: rgba(223, 229, 229, .61)
+}
+
+.fc .fc-list-empty {
+    background-color: transparent
+}
+
+.fc-theme-bootstrap5 .fc-list, .fc-theme-bootstrap5 .fc-scrollgrid, .fc-theme-bootstrap5 td, .fc-theme-bootstrap5 th {
+    border: 0
+}
+
+.fc-theme-bootstrap5-shaded {
+    background-color: #3f5b87;
+    color: #fff
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #3f5b87;
+    border-color: #3f5b87
+}
+
+.fc .fc-scrollgrid-section-header.fc-scrollgrid-section-sticky > *, .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #3f5b87;
+    color: #fff
 }
 
 .succes_icon {
     color: #22b922;
-    cursor: pointer;
+    cursor: pointer
 }
 
 .btn-dark {
-    background-color: #343A40;
+    background-color: #343a40
 }
 
 .card-header {
-    background-color: #343A3F;
-    color: white;
+    background-color: #343a3f;
+    color: #fff
 }
 
 .grecaptcha-badge {
-    visibility: hidden;
     display: none;
+    visibility: hidden
 }
 
 #notif_bell {
-    color: white;
+    color: #fff
 }
 
 #notif_bell.active {
-    color: #DC3545;
+    color: #dc3545
 }
 
 .offcanvas-end {
-    width: 600px;
+    width: 600px
 }
 
 .card-sub {
-    border-radius: 4px;
     background: #fff;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
-    transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12), 0.3s box-shadow;
-    padding: 14px 80px 18px 36px;
+    border-radius: 4px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
     cursor: pointer;
+    padding: 14px 80px 18px 36px;
+    transition: transform .3s cubic-bezier(.155, 1.105, .295, 1.12), box-shadow .3s
 }
 
 .card-sub:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+    transform: scale(1.05)
 }
 
 .card-sub h3 {
-    font-weight: 600;
+    font-weight: 600
 }
 
 .card-sub img {
-    position: absolute;
-    top: 20px;
-    right: 15px;
     max-height: 120px;
+    position: absolute;
+    right: 15px;
+    top: 20px
 }
 
 .card-sub {
     background-image: url(https://notificate.me/images/components-card.png);
+    background-position: 100%;
     background-repeat: no-repeat;
-    background-position: right;
-    background-size: 80px;
+    background-size: 80px
 }
 
-@media (max-width: 990px) {
-    .card-sub {
-        margin: 20px;
-    }
-}
+/*# sourceMappingURL=app.css.map*/
