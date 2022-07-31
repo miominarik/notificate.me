@@ -92,7 +92,7 @@ class ApiController extends Controller
         $data = DB::table('tasks')
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
             ->join('modules', 'tasks.user_id', '=', 'modules.user_id')
-            ->select('tasks.id', 'tasks.task_name', 'tasks.user_id', 'tasks.task_next_date', 'tasks.task_notification_type', 'users_settings.mobile_number', 'users_settings.notification_time', 'modules.module_sms')
+            ->select('tasks.id', 'tasks.task_name', 'tasks.user_id', 'tasks.task_next_date', 'tasks.task_notification_type', 'users_settings.mobile_number', 'users_settings.notification_time', 'modules.module_sms', 'tasks.task_notification_value')
             ->where([
                 'tasks.task_enabled' => true,
                 'tasks.sms_sent' => false,
@@ -109,7 +109,17 @@ class ApiController extends Controller
                 };
 
                 $checked_date = Carbon::createFromFormat('Y-m-d', $item->task_next_date);
-                $new_date = $checked_date->subDay();
+
+                if ($item->task_notification_type == 1) { //Add x days
+                    $new_date = $checked_date->subDays($item->task_notification_value);
+                } elseif ($item->task_notification_type == 2) { //Add x weeks
+                    $new_date = $checked_date->subWeeks($item->task_notification_value);
+                } elseif ($item->task_notification_type == 3) { //Add x months
+                    $new_date = $checked_date->subMonths($item->task_notification_value);
+                } elseif ($item->task_notification_type == 4) { //Add x months
+                    $new_date = $checked_date->subYears($item->task_notification_value);
+                };
+
                 $new_date = $new_date->format('Y-m-d');
 
                 //check whether the current time is the same as set by the user
@@ -117,7 +127,7 @@ class ApiController extends Controller
                 $date2 = Carbon::createFromFormat('H:i:s', $item->notification_time)->format('H');
 
                 if ($now == $date2) {
-                    if ($new_date == Carbon::now()->format('Y-m-d')) {
+                    if ($new_date <= Carbon::now()->format('Y-m-d')) {
                         array_push($notification_array, [
                             'task_id' => $item->id,
                             'task_name' => $item->task_name,
