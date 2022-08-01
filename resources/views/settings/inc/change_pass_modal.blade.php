@@ -31,9 +31,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="reset" class="btn btn-secondary"
+                    <button type="reset" class="btn btn-own-secondary"
                             data-bs-dismiss="modal">{{__('settings.close')}}</button>
-                    <button type="submit" class="btn btn-primary">{{__('settings.change_it')}}</button>
+                    <button type="submit" class="btn btn-own-primary">{{__('settings.change_it')}}</button>
                 </div>
             </form>
 

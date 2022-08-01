@@ -45,7 +45,7 @@
                                 </div>
 
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-primary btn-lg"
+                                    <button class="btn btn-own-primary btn-lg"
                                             type="submit">{{ __('auth.login_btn') }}</button>
                                 </div>
                             </form>
@@ -74,11 +74,6 @@
                                     <span class="fa-brands fa-google"></span> {{__('auth.login_google')}}
                                 </a>
                             </div>
-                            <small>
-                                This site is protected by reCAPTCHA and the Google
-                                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
-                                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
-                            </small>
                         </div>
                     </div>
                 </div>

@@ -39,10 +39,10 @@
                                                 <p class="card-text card-sub-card-text">{{__('modules.module_sms_sub')}}</p>
                                                 @if(isset($modules_status[0]->module_sms) && $modules_status[0]->module_sms == 0)
                                                     <a href="{{route('modules.activate_modul', 'module_sms')}}"
-                                                       class="btn btn-primary">{{__('modules.module_sms_activate')}}</a>
+                                                       class="btn btn-own-primary">{{__('modules.module_sms_activate')}}</a>
                                                 @else
                                                     <a href="{{route('modules.deactivate_modul', 'module_sms')}}"
-                                                       class="btn btn-danger">{{__('modules.module_sms_deactivate')}}</a>
+                                                       class="btn btn-own-danger">{{__('modules.module_sms_deactivate')}}</a>
                                                 @endif
                                             </div>
                                         </div>
@@ -52,10 +52,10 @@
                                                 <p class="card-text card-sub-card-text">{{__('modules.module_calendar_sub')}}</p>
                                                 @if(isset($modules_status[0]->module_calendar) && $modules_status[0]->module_calendar == 0)
                                                     <a href="{{route('modules.activate_modul', 'module_calendar')}}"
-                                                       class="btn btn-primary">{{__('modules.module_calendar_activate')}}</a>
+                                                       class="btn btn-own-primary">{{__('modules.module_calendar_activate')}}</a>
                                                 @else
                                                     <a href="{{route('modules.deactivate_modul', 'module_calendar')}}"
-                                                       class="btn btn-danger">{{__('modules.module_calendar_deactivate')}}</a>
+                                                       class="btn btn-own-danger">{{__('modules.module_calendar_deactivate')}}</a>
                                                 @endif
                                             </div>
                                         </div>

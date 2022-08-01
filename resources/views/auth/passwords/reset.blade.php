@@ -14,11 +14,11 @@
                                 <input type="hidden" name="token" value="{{ $token }}">
                                 <div class="form-outline mb-4">
                                     <input type="email" id="email" name="email"
-                                        class="form-control form-control-lg @error('email') is-invalid @enderror"
-                                        placeholder="{{ __('auth.email') }}" value="{{ $email ?? old('email') }}"
-                                        required autocomplete="email" />
+                                           class="form-control form-control-lg @error('email') is-invalid @enderror"
+                                           placeholder="{{ __('auth.email') }}" value="{{ $email ?? old('email') }}"
+                                           required autocomplete="email"/>
                                     @error('email')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -26,10 +26,11 @@
 
                                 <div class="form-outline mb-4">
                                     <input type="password" id="password" name="password"
-                                        class="form-control form-control-lg @error('password') is-invalid @enderror"
-                                        placeholder="{{ __('auth.password') }}" required autocomplete="new-password" />
+                                           class="form-control form-control-lg @error('password') is-invalid @enderror"
+                                           placeholder="{{ __('auth.password') }}" required
+                                           autocomplete="new-password"/>
                                     @error('password')
-                                        <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
@@ -37,14 +38,14 @@
 
                                 <div class="form-outline mb-4">
                                     <input type="password" id="password_confirmation" name="password_confirmation"
-                                        class="form-control form-control-lg"
-                                        placeholder="{{ __('auth.password_second') }}" required
-                                        autocomplete="new-password" />
+                                           class="form-control form-control-lg"
+                                           placeholder="{{ __('auth.password_second') }}" required
+                                           autocomplete="new-password"/>
                                 </div>
 
                                 <div class="d-grid gap-2">
-                                    <button class="btn btn-primary btn-lg"
-                                        type="submit">{{ __('auth.reset_password') }}</button>
+                                    <button class="btn btn-own-primary btn-lg"
+                                            type="submit">{{ __('auth.reset_password') }}</button>
                                 </div>
                             </form>
 
@@ -55,12 +56,6 @@
                                 <div class="p-2 bd-highlight"><a
                                         href="{{ route('register') }}">{{ __('layout.menu_register') }}</a></div>
                             </div>
-
-                            <small>
-                                This site is protected by reCAPTCHA and the Google
-                                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
-                                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
-                            </small>
                         </div>
                     </div>
                 </div>

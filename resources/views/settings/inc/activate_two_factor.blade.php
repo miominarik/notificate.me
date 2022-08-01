@@ -39,7 +39,7 @@
                             </div>
                             <div class="form-group mt-2">
                                 <button type="submit"
-                                        class="btn btn-primary">{{__('settings.mfa_activate_save_btn')}}</button>
+                                        class="btn btn-own-primary">{{__('settings.mfa_activate_save_btn')}}</button>
                             </div>
                         </form>
                     </li>

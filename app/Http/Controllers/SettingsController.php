@@ -89,40 +89,13 @@ class SettingsController extends Controller
                 'enable_email_notification' => $validated['enable_email_notif'],
                 'notification_time' => $validated['notification_time'],
                 'mobile_number' => $validated['mobile_number'],
-                'color_palette' => isset($validated['color_palette']) ? $validated['color_palette'] : 1,
                 'updated_at' => Carbon::now()
             ]);
 
-        if (isset($validated['color_palette']) && !empty($validated['color_palette'])) {
-            $color_palette = match ($validated['color_palette']) {
-                '1' => 'primary',
-                '2' => 'success',
-                '3' => 'warning',
-                '4' => 'danger',
-                '5' => 'dark',
-                '6' => 'light',
-                '7' => 'secondary',
-                default => 'primary'
-            };
-
-            $color_scheme = match ($validated['color_palette']) {
-                '1' => 'navbar-dark',
-                '2' => 'navbar-dark',
-                '3' => 'navbar-dark',
-                '4' => 'navbar-dark',
-                '5' => 'navbar-dark',
-                '6' => 'navbar-light',
-                '7' => 'navbar-dark',
-                default => 'navbar-dark'
-            };
-        } else {
-            $color_palette = 'primary';
-            $color_scheme = 'navbar-dark';
+        if (in_array($validated['language'], ['en', 'sk'])) {
+            app()->setLocale($validated['language']);
+            session()->put('locale', $validated['language']);
         };
-
-        Session::put('color_palette', $color_palette);
-        Session::put('color_scheme', $color_scheme);
-
 
         return redirect(route('settings.index'))->with('status_success', __('alerts.settings_updated'));
     }

@@ -32,7 +32,7 @@
 
                             <div class="row mb-0">
                                 <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-own-primary">
                                         {{ __('Confirm Password') }}
                                     </button>
 
@@ -42,11 +42,6 @@
                                         </a>
                                     @endif
                                 </div>
-                                <small>
-                                    This site is protected by reCAPTCHA and the Google
-                                    <a href="https://policies.google.com/privacy">Privacy Policy</a> and
-                                    <a href="https://policies.google.com/terms">Terms of Service</a> apply.
-                                </small>
                             </div>
                         </form>
                     </div>

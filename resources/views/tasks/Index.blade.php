@@ -13,7 +13,7 @@
                                     <h3 class="mb-5">{{ __('tasks.all_active_tasks') }}</h3>
                                 </div>
                                 <div class="bd-highlight">
-                                    <button class="btn btn-dark btn-sm" type="button" data-bs-toggle="offcanvas"
+                                    <button class="btn btn-own-primary btn-sm" type="button" data-bs-toggle="offcanvas"
                                             data-bs-target="#offcanvasAddTask"
                                             aria-controls="offcanvasWithBackdrop">{{ __('tasks.menu_task_create') }}</button>
                                 </div>
@@ -225,7 +225,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="offset mt-3">
-                        <button type="submit" class="btn btn-primary">{{ __('tasks.save_button') }}</button>
+                        <button type="submit" class="btn btn-own-primary">{{ __('tasks.save_button') }}</button>
                     </div>
                 </div>
             </form>
@@ -326,12 +326,12 @@
                 @if ((new \Jenssegers\Agent\Agent())->isDesktop())
                     <div class="form-group row">
                         <div class="offset mt-3">
-                            <button type="submit" class="btn btn-primary">{{ __('tasks.save_button') }}</button>
-                            <button type="button" class="btn btn-success" id="complete_btn" data-bs-toggle="modal"
+                            <button type="submit" class="btn btn-own-primary">{{ __('tasks.save_button') }}</button>
+                            <button type="button" class="btn btn-own-success" id="complete_btn" data-bs-toggle="modal"
                                     data-bs-target="#completeModal">{{ __('tasks.complete_btn') }}</button>
-                            <button type="button" class="btn btn-danger"
+                            <button type="button" class="btn btn-own-danger"
                                     onclick="delete_task();">{{ __('tasks.remove_button') }}</button>
-                            <button type="button" id="show_history_btn" class="btn btn-secondary"
+                            <button type="button" id="show_history_btn" class="btn btn-own-secondary"
                                     style="display: none;">{{ __('tasks.history_btn') }}</button>
                         </div>
                     </div>
@@ -340,18 +340,19 @@
                         <div class="offset mt-3">
                             <div class="d-grid gap-2">
                                 <button type="submit"
-                                        class="btn btn-primary btn-block">{{ __('tasks.save_button') }}</button>
+                                        class="btn btn-own-primary btn-block">{{ __('tasks.save_button') }}</button>
                             </div>
                             <div class="d-grid gap-2 mt-2">
-                                <button type="button" class="btn btn-success" id="complete_btn" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-own-success" id="complete_btn"
+                                        data-bs-toggle="modal"
                                         data-bs-target="#completeModal">{{ __('tasks.complete_btn') }}</button>
                             </div>
                             <div class="d-grid gap-2 mt-2">
-                                <button type="button" class="btn btn-danger"
+                                <button type="button" class="btn btn-own-danger"
                                         onclick="delete_task();">{{ __('tasks.remove_button') }}</button>
                             </div>
                             <div class="d-grid gap-2 mt-2">
-                                <button type="button" id="show_history_btn" class="btn btn-secondary"
+                                <button type="button" id="show_history_btn" class="btn btn-own-secondary"
                                         style="display: none;">{{ __('tasks.history_btn') }}</button>
                             </div>
                         </div>
@@ -399,9 +400,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
+                    <button type="button" class="btn btn-own-secondary"
                             data-bs-dismiss="modal">{{ __('tasks.close_button') }}</button>
-                    <button type="button" class="btn btn-success"
+                    <button type="button" class="btn btn-own-success"
                             onclick="document.getElementById('form_complete_task').submit();">{{ __('tasks.save_button') }}</button>
                 </div>
             </div>
