@@ -152,7 +152,7 @@ class SuperAdminController extends Controller
     public function users_modules()
     {
         $users_modules = DB::table('modules')
-            ->select('users.email', 'discount_percent', 'module_sms')
+            ->select('users.email', 'discount_percent', 'module_sms', 'module_calendar')
             ->join('users', 'modules.user_id', '=', 'users.id')
             ->orderByDesc('users.id')
             ->paginate(10);

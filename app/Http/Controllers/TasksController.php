@@ -18,22 +18,37 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($task_id = null)
     {
-        return view('tasks.Index', [
-            'all_enabled_tasks' => DB::table('tasks')
+        if (isset($task_id) && !empty($task_id)) {
+
+            $task_id = $this->JWT_decode($task_id);
+            $task_id = $task_id[0];
+
+            $task_pick = DB::table('tasks')
+                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type')
+                ->where('user_id', Auth::id())
+                ->where('task_enabled', true)
+                ->where('id', $task_id)
+                ->paginate(10);
+        } else {
+            $task_pick = DB::table('tasks')
                 ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type')
                 ->where('user_id', Auth::id())
                 ->where('task_enabled', true)
                 ->orderBy('task_next_date', 'ASC')
-                ->paginate(10)
+                ->paginate(10);
+        };
+
+        return view('tasks.Index', [
+            'all_enabled_tasks' => $task_pick
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreTaskRequest $request)
@@ -67,17 +82,17 @@ class TasksController extends Controller
 
                 $this->AddNewActionToHistory($task, 2);
 
-                return redirect(route('tasks.index'))->with('status_success', 'Úloha bola pridaná');
+                return redirect(route('tasks.index'))->with('status_success', __('alerts.task_added'));
             }
         } else {
-            return redirect(route('tasks.index'))->with('status_warning', 'Úloha nebola pridaná. Dátum bol zadaný do minulosti');
+            return redirect(route('tasks.index'))->with('status_warning', __('alerts.task_added_wrong'));
         };
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Task  $task
+     * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
     public function edit($task)
@@ -95,8 +110,8 @@ class TasksController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Task  $task
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
     public function update(EditTaskRequest $request, $task)
@@ -134,13 +149,13 @@ class TasksController extends Controller
 
         $this->AddNewActionToHistory($task, 1);
 
-        return redirect(route('tasks.index'))->with('status_success', 'Úloha bola upravená');
+        return redirect(route('tasks.index'))->with('status_success', __('alerts.task_edited'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Task  $task
+     * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
     public function destroy($task)
@@ -154,13 +169,13 @@ class TasksController extends Controller
 
         $this->AddNewActionToHistory($task, 3);
 
-        return redirect(route('tasks.index'))->with('status_success', 'Úloha bola vymazaná');
+        return redirect(route('tasks.index'))->with('status_success', __('alerts.task_removed'));
     }
 
     /**
      * Check the specified resource as complete
      *
-     * @param  \App\Models\Task  $task
+     * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
     public function complete(CompleteTaskRequest $request, $task)
@@ -206,7 +221,7 @@ class TasksController extends Controller
                     ]);
 
                 $this->AddNewCompleteToHistory($task, Carbon::createFromFormat('Y-m-d', $validated['complete_date'])->format('Y-m-d H:i:s'));
-                return redirect(route('tasks.index'))->with('status_success', 'Úloha bola splnená. Dátum nasledujúceho splnenia bol posunutý.');
+                return redirect(route('tasks.index'))->with('status_success', __('alerts.task_completed'));
             }
         }
     }
@@ -214,10 +229,10 @@ class TasksController extends Controller
     /**
      * AddNewActionToHistory
      *
-     * @param  mixed $task_id
-     * @param  mixed $user_id
-     * @param  mixed $action
-     * @param  mixed $date
+     * @param mixed $task_id
+     * @param mixed $user_id
+     * @param mixed $action
+     * @param mixed $date
      * @return void
      */
     public function AddNewActionToHistory($task_id, $action)
@@ -236,10 +251,10 @@ class TasksController extends Controller
     /**
      * AddNewCompleteToHistory
      *
-     * @param  mixed $task_id
-     * @param  mixed $user_id
-     * @param  mixed $action
-     * @param  mixed $date
+     * @param mixed $task_id
+     * @param mixed $user_id
+     * @param mixed $action
+     * @param mixed $date
      * @return void
      */
     public function AddNewCompleteToHistory($task_id, $date)

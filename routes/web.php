@@ -52,8 +52,8 @@ Route::get('/app', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::middleware(['auth', 'verified', 'blockedstatus'])->group(function () {
-    Route::get('tasks', 'App\Http\Controllers\TasksController@index')->name('tasks.index');
+Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(function () {
+    Route::get('tasks/{task_id?}', 'App\Http\Controllers\TasksController@index')->name('tasks.index');
     Route::post('tasks', 'App\Http\Controllers\TasksController@store')->name('tasks.store');
     Route::post('tasks/{task}/edit', 'App\Http\Controllers\TasksController@edit')->name('tasks.edit');
     Route::post('tasks/{task}/history', 'App\Http\Controllers\TasksController@ShowHistory')->name('tasks.history');
@@ -62,14 +62,34 @@ Route::middleware(['auth', 'verified', 'blockedstatus'])->group(function () {
     Route::put('tasks/complete/{task}', "App\Http\Controllers\TasksController@complete")->name('tasks.complete');
     Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');
     Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
+    Route::post('settings/change_password', "App\Http\Controllers\SettingsController@change_password")->name('settings.change_password');
+
+    //Calendar
+    Route::middleware('check_module:module_calendar')->group(function () {
+        Route::get('calendar', "App\Http\Controllers\CalendarController@index")->name('calendar.index');
+        Route::get('calendar/data_feed', "App\Http\Controllers\CalendarController@data_feed")->name('calendar.data_feed');
+        Route::post('calendar/update_task_time/{task_id}', "App\Http\Controllers\CalendarController@update_task_time")->name('calendar.update_task_time');
+    });
+
     //Modules
     Route::get('modules', "App\Http\Controllers\ModulesController@index")->name('modules.index');
     Route::get('modules/activate/{module_name}', "App\Http\Controllers\ModulesController@activate_modul")->name('modules.activate_modul');
     Route::get('modules/deactivate/{module_name}', "App\Http\Controllers\ModulesController@deactivate_modul")->name('modules.deactivate_modul');
+
+    //MFA
+    Route::post('mfa/checkcode', "App\Http\Controllers\SettingsController@confirmTwoFactor")->name('mfa.checkcode');
+    Route::get('mfa/disablemfa', "App\Http\Controllers\SettingsController@disableTwoFactorAuth")->name('mfa.disablemfa');
+    Route::get('mfa/generatenewcodes', "App\Http\Controllers\SettingsController@generateNewCodesTwoFactorAuth")->name('mfa.generatenewcodes');
+    Route::view('2fa-required', 'two-factor::notice', [
+        'url' => url('settings')
+    ])->name('2fa.notice');
+    Route::get('2fa-confirm', [\Laragear\TwoFactor\Http\Controllers\ConfirmTwoFactorCodeController::class, 'form'])
+        ->name('2fa.confirm');
+    Route::post('2fa-confirm', [\Laragear\TwoFactor\Http\Controllers\ConfirmTwoFactorCodeController::class, 'confirm']);
 });
 
 //superadmin routes
-Route::middleware(['auth', 'verified', 'superadmin'])->group(function () {
+Route::middleware(['auth', 'verified', 'superadmin', '2fa.enabled', '2fa.confirm'])->group(function () {
     Route::get('superadmin', function () {
         return redirect(route('superadmin.users'));
     })->name('superadmin.index');

@@ -65,9 +65,8 @@ function getDataToEditTaskForm(task_id) {
             document.getElementById('task_next_date_edit').value = response.data[0].task_next_date;
             document.getElementById('task_notification_value_edit').value = response.data[0].task_notification_value;
             document.getElementById('task_notification_type_edit').value = response.data[0].task_notification_type;
-            document.getElementById('delete_form').action = 'tasks/' + task_id;
-            document.getElementById('offcanvasEditForm').action = 'tasks/' + task_id;
-
+            document.getElementById('delete_form').action = '/tasks/' + task_id;
+            document.getElementById('offcanvasEditForm').action = '/tasks/' + task_id;
 
 
             const offcanvasEditTask = new bootstrap.Offcanvas(document.getElementById(

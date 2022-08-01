@@ -1,0 +1,10 @@
+{
+    "two-factor::messages.required": "Potvrdenie",
+    "two-factor::messages.continue": "Zadajte kód z vašej mobilnej aplikácie . Prosím vyplňte nasledovné pole.",
+    "two-factor::messages.confirm": "Potvrdiť",
+    "two-factor::messages.back": "Späť na prihlásenie",
+    "two-factor::messages.title": "Potvrdenie MFA",
+    "two-factor::validation.totp_code": "Kód je nesprávny alebo už expiroval.",
+    "two-factor::messages.enable": "Pre pokračovanie je potrebné aktivovať dvojfaktorovú autentifikáciu",
+    "two-factor::messages.switch_on": "Prejsť na aktiváciu"
+}

@@ -14,8 +14,8 @@
                                 </div>
                                 <div class="bd-highlight">
                                     <button class="btn btn-dark btn-sm" type="button" data-bs-toggle="offcanvas"
-                                        data-bs-target="#offcanvasAddTask"
-                                        aria-controls="offcanvasWithBackdrop">{{ __('tasks.menu_task_create') }}</button>
+                                            data-bs-target="#offcanvasAddTask"
+                                            aria-controls="offcanvasWithBackdrop">{{ __('tasks.menu_task_create') }}</button>
                                 </div>
                             </div>
 
@@ -23,21 +23,21 @@
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     {{ session('status_success') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
+                                            aria-label="Close"></button>
                                 </div>
                             @endif
                             @if (session('status_warning'))
                                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                                     {{ session('status_warning') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
+                                            aria-label="Close"></button>
                                 </div>
                             @endif
                             @if (session('status_danger'))
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                                     {{ session('status_danger') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                        aria-label="Close"></button>
+                                            aria-label="Close"></button>
                                 </div>
                             @endif
 
@@ -45,41 +45,41 @@
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <thead>
-                                            <tr>
-                                                <th>{{ __('tasks.task_name') }}</th>
-                                                <th>{{ __('tasks.task_note') }}</th>
-                                                <th>{{ __('tasks.task_date') }}</th>
-                                                <th>{{ __('tasks.task_repeat') }}</th>
-                                            </tr>
+                                        <tr>
+                                            <th>{{ __('tasks.task_name') }}</th>
+                                            <th>{{ __('tasks.task_note') }}</th>
+                                            <th>{{ __('tasks.task_date') }}</th>
+                                            <th>{{ __('tasks.task_repeat') }}</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
-                                            @isset($all_enabled_tasks)
-                                                @forelse ($all_enabled_tasks as $item)
-                                                    @php
-                                                        $item->task_repeat_type = match ($item->task_repeat_type) { 1 => trans_choice('tasks.day', $item->task_repeat_value),  2 => trans_choice('tasks.week', $item->task_repeat_value),  3 => trans_choice('tasks.month', $item->task_repeat_value),  4 => trans_choice('tasks.year', $item->task_repeat_value),  default => __('tasks.none') };
-                                                    @endphp
-                                                    <tr style="cursor: pointer;">
-                                                        <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
-                                                            {{ $item->task_name }}</td>
-                                                        <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
-                                                            {{ $item->task_note }}</td>
-                                                        <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
-                                                            {{ \Carbon\Carbon::parse($item->task_next_date)->format('d.m.Y') }}
-                                                        </td>
-                                                        <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
-                                                            {{ $item->task_repeat_value }}
-                                                            {{ $item->task_repeat_type }}
-                                                        </td>
-                                                    </tr>
-                                                @empty
-                                                    <tr>
-                                                        <td scope="row">{{ __('tasks.no_data') }}</td>
-                                                        <td scope="row"></td>
-                                                        <td scope="row"></td>
-                                                        <td scope="row"></td>
-                                                    </tr>
-                                                @endforelse
-                                            @endisset
+                                        @isset($all_enabled_tasks)
+                                            @forelse ($all_enabled_tasks as $item)
+                                                @php
+                                                    $item->task_repeat_type = match ($item->task_repeat_type) { 1 => trans_choice('tasks.day', $item->task_repeat_value),  2 => trans_choice('tasks.week', $item->task_repeat_value),  3 => trans_choice('tasks.month', $item->task_repeat_value),  4 => trans_choice('tasks.year', $item->task_repeat_value),  default => __('tasks.none') };
+                                                @endphp
+                                                <tr style="cursor: pointer;">
+                                                    <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
+                                                        {{ $item->task_name }}</td>
+                                                    <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
+                                                        {{ $item->task_note }}</td>
+                                                    <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
+                                                        {{ \Carbon\Carbon::parse($item->task_next_date)->format('d.m.Y') }}
+                                                    </td>
+                                                    <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
+                                                        {{ $item->task_repeat_value }}
+                                                        {{ $item->task_repeat_type }}
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td scope="row">{{ __('tasks.no_data') }}</td>
+                                                    <td scope="row"></td>
+                                                    <td scope="row"></td>
+                                                    <td scope="row"></td>
+                                                </tr>
+                                            @endforelse
+                                        @endisset
                                         </tbody>
                                     </table>
                                 </div>
@@ -99,11 +99,12 @@
                                                             {{ __('tasks.task_date') }}:
                                                             {{ \Carbon\Carbon::parse($item->task_next_date)->format('d.m.Y') }}
                                                             <br>
-                                                            {{ __('tasks.task_repeat') }}: {{ $item->task_repeat_value }}
+                                                            {{ __('tasks.task_repeat') }}
+                                                            : {{ $item->task_repeat_value }}
                                                             {{ $item->task_repeat_type }}
                                                         </p>
                                                         <button type="button" class="btn btn-outline-primary btn-sm"
-                                                            onclick="getDataToEditTaskForm({{ $item->id }})">{{ __('tasks.edit_btn') }}</button>
+                                                                onclick="getDataToEditTaskForm({{ $item->id }})">{{ __('tasks.edit_btn') }}</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -134,7 +135,7 @@
     {{-- Offcanvas to add task --}}
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasAddTask" aria-labelledby="offcanvasAddTaskLabel"
-        data-bs-keyboard="false">
+         data-bs-keyboard="false">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">{{ __('tasks.add_new_task') }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -148,12 +149,12 @@
                     <div class="col-sm-1-12">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="task_type" id="task_type0"
-                                onclick="NewTaskChangeType('one');" value="0" checked>
+                                   onclick="NewTaskChangeType('one');" value="0" checked>
                             <label class="form-check-label" for="inlineRadio1">{{__('tasks.one_time')}}</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="task_type" id="task_type1"
-                                onclick="NewTaskChangeType('reap');" value="1">
+                                   onclick="NewTaskChangeType('reap');" value="1">
                             <label class="form-check-label" for="inlineRadio2">{{__('tasks.many_time')}}</label>
                         </div>
                     </div>
@@ -172,7 +173,7 @@
                 </div>
                 <div class="form-group row">
                     <label for="task_next_date"
-                        class="col-sm-1-12 col-form-label">{{ __('tasks.task_next_date') }}</label>
+                           class="col-sm-1-12 col-form-label">{{ __('tasks.task_next_date') }}</label>
                     <div class="col-sm-1-12">
                         <input type="date" class="form-control" name="task_next_date" id="task_next_date" required>
                     </div>
@@ -180,15 +181,15 @@
                 <div class="form-group row" id="add_task_repeat_group" style="display: none;">
                     <div class="col-6">
                         <label for="task_repeat_value"
-                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_value') }}</label>
+                               class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_value') }}</label>
                         <div class="col-sm-1-12">
                             <input type="number" class="form-control" name="task_repeat_value" id="task_repeat_value"
-                                min="1" max="16777215" placeholder="{{ __('tasks.amount') }}">
+                                   min="1" max="16777215" placeholder="{{ __('tasks.amount') }}">
                         </div>
                     </div>
                     <div class="col-6">
                         <label for="task_repeat_type"
-                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_type') }}</label>
+                               class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_type') }}</label>
                         <div class="col-sm-1-12">
                             <select class="form-control" name="task_repeat_type" id="task_repeat_type">
                                 <option value="1">{{ __('tasks.one_day') }}</option>
@@ -202,16 +203,16 @@
                 <div class="form-group row">
                     <div class="col-6">
                         <label for="task_notification_value"
-                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_notification_value') }}</label>
+                               class="col-sm-1-12 col-form-label">{{ __('tasks.task_notification_value') }}</label>
                         <div class="col-sm-1-12">
                             <input type="number" class="form-control" name="task_notification_value"
-                                id="task_notification_value" min="1" max="16777215"
-                                placeholder="{{ __('tasks.amount') }}" required>
+                                   id="task_notification_value" min="1" max="16777215"
+                                   placeholder="{{ __('tasks.amount') }}" required>
                         </div>
                     </div>
                     <div class="col-6">
                         <label for="task_notification_type"
-                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_notification_type') }}</label>
+                               class="col-sm-1-12 col-form-label">{{ __('tasks.task_notification_type') }}</label>
                         <div class="col-sm-1-12">
                             <select class="form-control" name="task_notification_type" id="task_notification_type">
                                 <option value="1">{{ __('tasks.one_day') }}</option>
@@ -234,7 +235,7 @@
     {{-- Offcanvas to edit task --}}
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasEditTask" aria-labelledby="offcanvasEditTaskLabel"
-        data-bs-keyboard="false">
+         data-bs-keyboard="false">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">{{ __('tasks.edit_task') }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -270,7 +271,7 @@
                 </div>
                 <div class="form-group row">
                     <label for="task_next_date"
-                        class="col-sm-1-12 col-form-label">{{ __('tasks.task_next_date') }}</label>
+                           class="col-sm-1-12 col-form-label">{{ __('tasks.task_next_date') }}</label>
                     <div class="col-sm-1-12">
                         <input type="date" class="form-control" id="task_next_date_edit" readonly>
                     </div>
@@ -278,16 +279,17 @@
                 <div class="form-group row" id="add_task_repeat_group_edit" style="display: none;">
                     <div class="col-6">
                         <label for="task_repeat_value"
-                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_value') }}</label>
+                               class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_value') }}</label>
                         <div class="col-sm-1-12">
                             <input type="number" class="form-control" name="task_repeat_value"
-                                id="task_repeat_value_edit" min="1" max="16777215" placeholder="{{ __('tasks.amount') }}"
-                                required>
+                                   id="task_repeat_value_edit" min="1" max="16777215"
+                                   placeholder="{{ __('tasks.amount') }}"
+                                   required>
                         </div>
                     </div>
                     <div class="col-6">
                         <label for="task_repeat_type"
-                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_type') }}</label>
+                               class="col-sm-1-12 col-form-label">{{ __('tasks.task_repeat_type') }}</label>
                         <div class="col-sm-1-12">
                             <select class="form-control" name="task_repeat_type" id="task_repeat_type_edit">
                                 <option value="1">{{ __('tasks.one_day') }}</option>
@@ -301,16 +303,16 @@
                 <div class="form-group row">
                     <div class="col-6">
                         <label for="task_notification_value"
-                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_notification_value') }}</label>
+                               class="col-sm-1-12 col-form-label">{{ __('tasks.task_notification_value') }}</label>
                         <div class="col-sm-1-12">
                             <input type="number" class="form-control" name="task_notification_value"
-                                id="task_notification_value_edit" min="1" max="16777215"
-                                placeholder="{{ __('tasks.amount') }}" required>
+                                   id="task_notification_value_edit" min="1" max="16777215"
+                                   placeholder="{{ __('tasks.amount') }}" required>
                         </div>
                     </div>
                     <div class="col-6">
                         <label for="task_notification_type"
-                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_notification_type') }}</label>
+                               class="col-sm-1-12 col-form-label">{{ __('tasks.task_notification_type') }}</label>
                         <div class="col-sm-1-12">
                             <select class="form-control" name="task_notification_type" id="task_notification_type_edit">
                                 <option value="1">{{ __('tasks.one_day') }}</option>
@@ -321,17 +323,41 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="offset mt-3">
-                        <button type="submit" class="btn btn-primary">{{ __('tasks.save_button') }}</button>
-                        <button type="button" class="btn btn-success" id="complete_btn" data-bs-toggle="modal"
-                            data-bs-target="#completeModal">{{ __('tasks.complete_btn') }}</button>
-                        <button type="button" class="btn btn-danger"
-                            onclick="delete_task();">{{ __('tasks.remove_button') }}</button>
-                        <button type="button" id="show_history_btn" class="btn btn-secondary"
-                            style="display: none;">{{ __('tasks.history_btn') }}</button>
+                @if ((new \Jenssegers\Agent\Agent())->isDesktop())
+                    <div class="form-group row">
+                        <div class="offset mt-3">
+                            <button type="submit" class="btn btn-primary">{{ __('tasks.save_button') }}</button>
+                            <button type="button" class="btn btn-success" id="complete_btn" data-bs-toggle="modal"
+                                    data-bs-target="#completeModal">{{ __('tasks.complete_btn') }}</button>
+                            <button type="button" class="btn btn-danger"
+                                    onclick="delete_task();">{{ __('tasks.remove_button') }}</button>
+                            <button type="button" id="show_history_btn" class="btn btn-secondary"
+                                    style="display: none;">{{ __('tasks.history_btn') }}</button>
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div class="form-group row">
+                        <div class="offset mt-3">
+                            <div class="d-grid gap-2">
+                                <button type="submit"
+                                        class="btn btn-primary btn-block">{{ __('tasks.save_button') }}</button>
+                            </div>
+                            <div class="d-grid gap-2 mt-2">
+                                <button type="button" class="btn btn-success" id="complete_btn" data-bs-toggle="modal"
+                                        data-bs-target="#completeModal">{{ __('tasks.complete_btn') }}</button>
+                            </div>
+                            <div class="d-grid gap-2 mt-2">
+                                <button type="button" class="btn btn-danger"
+                                        onclick="delete_task();">{{ __('tasks.remove_button') }}</button>
+                            </div>
+                            <div class="d-grid gap-2 mt-2">
+                                <button type="button" id="show_history_btn" class="btn btn-secondary"
+                                        style="display: none;">{{ __('tasks.history_btn') }}</button>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
             </form>
         </div>
     </div>
@@ -339,7 +365,7 @@
     {{-- Offcanvas to show history --}}
 
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasShowHistory"
-        aria-labelledby="offcanvasShowHistoryLabel" data-bs-keyboard="false">
+         aria-labelledby="offcanvasShowHistoryLabel" data-bs-keyboard="false">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasWithBackdropLabel">{{ __('tasks.history_header') }}</h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -364,25 +390,26 @@
                         @method('PUT')
                         <div class="form-group row">
                             <label for="complete_date"
-                                class="col-sm-1-12 col-form-label">{{ __('tasks.complete_date') }}</label>
+                                   class="col-sm-1-12 col-form-label">{{ __('tasks.complete_date') }}</label>
                             <div class="col-sm-1-12">
-                                <input type="date" class="form-control" name="complete_date" id="complete_date" required>
+                                <input type="date" class="form-control" name="complete_date" id="complete_date"
+                                       required>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">{{ __('tasks.close_button') }}</button>
+                            data-bs-dismiss="modal">{{ __('tasks.close_button') }}</button>
                     <button type="button" class="btn btn-success"
-                        onclick="document.getElementById('form_complete_task').submit();">{{ __('tasks.save_button') }}</button>
+                            onclick="document.getElementById('form_complete_task').submit();">{{ __('tasks.save_button') }}</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
+        document.addEventListener("DOMContentLoaded", function (event) {
 
             let today = new Date();
             let dd = String(today.getDate()).padStart(2, '0');
@@ -394,12 +421,12 @@
         });
 
         let offcanvasAddTask = document.getElementById('offcanvasAddTask')
-        offcanvasAddTask.addEventListener('hidden.bs.offcanvas', function() {
+        offcanvasAddTask.addEventListener('hidden.bs.offcanvas', function () {
             document.getElementById("offcanvasAddTaskForm").reset();
         })
 
         let offcanvasShowHistory = document.getElementById('offcanvasShowHistory')
-        offcanvasShowHistory.addEventListener('hidden.bs.offcanvas', function() {
+        offcanvasShowHistory.addEventListener('hidden.bs.offcanvas', function () {
             document.getElementById('history_list').innerHTML = "";
         })
 

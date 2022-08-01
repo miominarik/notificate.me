@@ -43,7 +43,7 @@
                                               id="settings_form" class="row row-cols-lg-auto g-3 align-items-center">
                                             @csrf
                                             @method('PUT')
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                 <label
                                                     for="enable_email_notif">{{ __('settings.enable_email_notif') }}</label>
                                                 <select class="form-select" name="enable_email_notif"
@@ -58,7 +58,7 @@
                                                         {{ __('settings.no') }}</option>
                                                 </select>
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                 <label
                                                     for="enable_email_notif">{{__('settings.mobile_num')}}</label>
                                                 <input type="tel"
@@ -68,7 +68,7 @@
                                                        value="{{$settings_data[0]->mobile_number}}">
                                             </div>
 
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                 <label
                                                     for="notification_time">{{ __('settings.time_when_notif') }}</label>
                                                 <select class="form-select" name="notification_time"
@@ -81,7 +81,7 @@
                                                     @endfor
                                                 </select>
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+                                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
                                                 <label
                                                     for="color_palette">{{ __('settings.color_palette') }}</label>
                                                 <select class="form-select" name="color_palette"
@@ -97,14 +97,8 @@
                                                     <option @if ($settings_data[0]->color_palette == 3) selected
                                                             @endif value="3">{{__('settings.color_yellow')}}
                                                     </option>
-                                                    <option @if ($settings_data[0]->color_palette == 4) selected
-                                                            @endif value="4">{{__('settings.color_red')}}
-                                                    </option>
                                                     <option @if ($settings_data[0]->color_palette == 5) selected
                                                             @endif value="5">{{__('settings.color_black')}}
-                                                    </option>
-                                                    <option @if ($settings_data[0]->color_palette == 6) selected
-                                                            @endif value="6">{{__('settings.color_white')}}
                                                     </option>
                                                     <option @if ($settings_data[0]->color_palette == 7) selected
                                                             @endif value="7">{{__('settings.color_gray')}}
@@ -177,6 +171,24 @@
                                                 </a>
                                             @endif
                                         </div>
+                                        <hr>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#changepassModal">{{__('settings.change_pass_btn')}}
+                                            </button>
+                                            @if(isset($qr_code) && $qr_code != NULL)
+                                                <button type="button" class="btn btn-outline-dark"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#activate_two_factorModal">{{__('settings.mfa_activate_btn')}}
+                                                </button>
+                                            @endif
+                                            @if(isset($recovery_codes) && $recovery_codes != NULL)
+                                                <button type="button" class="btn btn-outline-dark"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#show_recocery_codesModal">{{__('settings.mfa_activated_btn')}}
+                                                </button>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -184,4 +196,12 @@
             </div>
         </div>
     </section>
+
+    @include('settings.inc.change_pass_modal')
+    @if(isset($qr_code) && $qr_code != NULL)
+        @include('settings.inc.activate_two_factor')
+    @endif
+    @if(isset($recovery_codes) && $recovery_codes != NULL)
+        @include('settings.inc.show_mfa_recovery_codes')
+    @endif
 @endsection

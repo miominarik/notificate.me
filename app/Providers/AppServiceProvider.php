@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\ModulesController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
@@ -32,6 +33,7 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
             $view->with('notifications', (new NotificationController)->WebNotification());
+            $view->with('activated_modules', (new ModulesController())->Users_modules());
         });
     }
 }

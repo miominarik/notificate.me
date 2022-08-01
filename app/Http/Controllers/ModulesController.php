@@ -8,11 +8,26 @@ use Illuminate\Support\Facades\DB;
 
 class ModulesController extends Controller
 {
+    public function Users_modules()
+    {
+        $data = DB::table('modules')
+            ->select('module_sms', 'module_calendar')
+            ->where('user_id', Auth::id())
+            ->get();
+
+        if (isset($data[0])) {
+            return $data[0];
+        } else {
+            return NULL;
+        };
+
+    }
+
     public function index()
     {
         return view('modules.index', [
             'modules_status' => DB::table('modules')
-                ->select('module_sms')
+                ->select('module_sms', 'module_calendar')
                 ->where('user_id', Auth::id())
                 ->get()
         ]);
@@ -21,7 +36,7 @@ class ModulesController extends Controller
     public function activate_modul(Request $request)
     {
         $allowed_modules = [
-            'module_sms'
+            'module_sms', 'module_calendar'
         ];
 
         if (isset($request->module_name) && !empty($request->module_name)) {
@@ -37,25 +52,25 @@ class ModulesController extends Controller
                             $request->module_name => 1
                         ]);
                     if ($activate_status) {
-                        return redirect(route('modules.index'))->with('status_success', 'Modul bol úspešné aktivovaný');
+                        return redirect(route('modules.index'))->with('status_success', __('alerts.modules_activated'));
                     } else {
-                        return redirect(route('modules.index'))->with('status_danger', 'Modul sa nepodarilo aktivovať');
+                        return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_activated_error'));
                     };
                 } else {
-                    return redirect(route('modules.index'))->with('status_warning', 'Modul už je aktivovaný');
+                    return redirect(route('modules.index'))->with('status_warning', __('alerts.modules_activated_already'));
                 };
             } else {
-                return redirect(route('modules.index'))->with('status_danger', 'Uvedený modul neexistuje');
+                return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_activated_missing'));
             };
         } else {
-            return redirect(route('modules.index'))->with('status_danger', 'Modul sa nepodarilo aktivovať');
+            return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_activated_error'));
         };
     }
 
     public function deactivate_modul(Request $request)
     {
         $allowed_modules = [
-            'module_sms'
+            'module_sms', 'module_calendar'
         ];
 
         if (isset($request->module_name) && !empty($request->module_name)) {
@@ -71,18 +86,18 @@ class ModulesController extends Controller
                             $request->module_name => 0
                         ]);
                     if ($activate_status) {
-                        return redirect(route('modules.index'))->with('status_success', 'Modul bol úspešné deaktivovaný');
+                        return redirect(route('modules.index'))->with('status_success', __('alerts.modules_deactivated'));
                     } else {
-                        return redirect(route('modules.index'))->with('status_danger', 'Modul sa nepodarilo deaktivovať');
+                        return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_deactivated_error'));
                     };
                 } else {
-                    return redirect(route('modules.index'))->with('status_warning', 'Modul už je deaktivovaný');
+                    return redirect(route('modules.index'))->with('status_warning', __('alerts.modules_deactivated_already'));
                 };
             } else {
-                return redirect(route('modules.index'))->with('status_danger', 'Uvedený modul neexistuje');
+                return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_deactivated_missing'));
             };
         } else {
-            return redirect(route('modules.index'))->with('status_danger', 'Modul sa nepodarilo deaktivovať');
+            return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_deactivated_error'));
         };
     }
 }
