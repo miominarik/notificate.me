@@ -207,30 +207,32 @@
     <main>
         @yield('content')
     </main>
-    @if((new \Jenssegers\Agent\Agent())->isMobile() ||(new \Jenssegers\Agent\Agent())->isTablet())
-        <div class="sticky-footer">
-            <a href="{{ route('tasks.index') }}"
-               class="sticky-footer item {{ request()->is('tasks*') ? 'active' : '' }}">
-                <i class="fa-solid fa-house"></i>
-                {{ __('layout.menu_tasks') }}
-            </a>
-            <a href="{{ route('calendar.index') }}"
-               class="sticky-footer item {{ request()->is('calendar*') ? 'active' : '' }}">
-                <i class="fa-solid fa-calendar-days"></i>
-                {{__('layout.menu_calendar')}}
-            </a>
-            <a href="{{ route('modules.index') }}"
-               class="sticky-footer item {{ request()->is('modules*') ? 'active' : '' }}">
-                <i class="fa-solid fa-puzzle-piece"></i>
-                {{ __('layout.menu_modules') }}
-            </a>
-            <a href="{{ route('settings.index') }}"
-               class="sticky-footer item {{ request()->is('settings*') ? 'active' : '' }}">
-                <i class="fa-solid fa-gear"></i>
-                {{ __('layout.menu_settings') }}
-            </a>
-        </div>
-    @endif
+    @auth
+        @if((new \Jenssegers\Agent\Agent())->isMobile() ||(new \Jenssegers\Agent\Agent())->isTablet())
+            <div class="sticky-footer">
+                <a href="{{ route('tasks.index') }}"
+                   class="sticky-footer item {{ request()->is('tasks*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-house"></i>
+                    {{ __('layout.menu_tasks') }}
+                </a>
+                <a href="{{ route('calendar.index') }}"
+                   class="sticky-footer item {{ request()->is('calendar*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-calendar-days"></i>
+                    {{__('layout.menu_calendar')}}
+                </a>
+                <a href="{{ route('modules.index') }}"
+                   class="sticky-footer item {{ request()->is('modules*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                    {{ __('layout.menu_modules') }}
+                </a>
+                <a href="{{ route('settings.index') }}"
+                   class="sticky-footer item {{ request()->is('settings*') ? 'active' : '' }}">
+                    <i class="fa-solid fa-gear"></i>
+                    {{ __('layout.menu_settings') }}
+                </a>
+            </div>
+        @endif
+    @endauth
 </div>
 
 <!-- Scripts -->
