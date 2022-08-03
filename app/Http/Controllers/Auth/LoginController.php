@@ -40,7 +40,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        //$this->middleware(VerifyGoogleRecaptcha::class);
+        $this->middleware(VerifyGoogleRecaptcha::class);
     }
 
     protected function loggedOut(Request $request)
