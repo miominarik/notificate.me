@@ -34,41 +34,41 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="description"
-              content="Notificate.me Vám pomôže s evidenciou Vaších úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy."/>
-        <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vaších úloh">
-        <meta name="author" content="Miroslav Minárik"/>
-        <meta name="robots" content="noindex, nofollow"/>
-        <meta name="apple-mobile-web-app-title" content="Notificate.me">
-        <meta name="application-name" content="Notificate.me"/>
-        <meta name="msapplication-tooltip" content="Notificate.me">
-        <meta name="msapplication-starturl" content="/"/>
+    <meta name="description"
+          content="Notificate.me Vám pomôže s evidenciou Vaších úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy."/>
+    <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vaších úloh">
+    <meta name="author" content="Miroslav Minárik"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="apple-mobile-web-app-title" content="Notificate.me">
+    <meta name="application-name" content="Notificate.me"/>
+    <meta name="msapplication-tooltip" content="Notificate.me">
+    <meta name="msapplication-starturl" content="/"/>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-        <!-- Styles -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
-              integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <link href="https://lipis.github.io/bootstrap-social/bootstrap-social.css" rel="stylesheet">
+    <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+          integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://lipis.github.io/bootstrap-social/bootstrap-social.css" rel="stylesheet">
 
-        @if(request()->is('calendar*'))
-            <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
-            <link href='{{asset('css/fullcalendar.css')}}' rel='stylesheet'/>
-            <script src='{{asset('js/fullcalendar.js')}}'></script>
-            <script src='{{asset('js/fullcalendar-sk.js')}}'></script>
-            <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
-            <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
-        @endif
+    @if(request()->is('calendar*'))
+        <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
+        <link href='{{asset('css/fullcalendar.css')}}' rel='stylesheet'/>
+        <script src='{{asset('js/fullcalendar.js')}}'></script>
+        <script src='{{asset('js/fullcalendar-sk.js')}}'></script>
+        <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+        <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
+    @endif
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
 
@@ -215,11 +215,13 @@
                     <i class="fa-solid fa-house"></i>
                     {{ __('layout.menu_tasks') }}
                 </a>
-                <a href="{{ route('calendar.index') }}"
-                   class="sticky-footer item {{ request()->is('calendar*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    {{__('layout.menu_calendar')}}
-                </a>
+                @if($activated_modules->module_calendar)
+                    <a href="{{ route('calendar.index') }}"
+                       class="sticky-footer item {{ request()->is('calendar*') ? 'active' : '' }}">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        {{__('layout.menu_calendar')}}
+                    </a>
+                @endif
                 <a href="{{ route('modules.index') }}"
                    class="sticky-footer item {{ request()->is('modules*') ? 'active' : '' }}">
                     <i class="fa-solid fa-puzzle-piece"></i>

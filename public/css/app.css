@@ -1,204 +1,184 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);
 .sticky-footer {
-    align-items: center;
-    background: #1C3879;
-    bottom: 0px;
-    display: flex;
-    justify-content: space-evenly;
-    padding: 0.5rem 0;
-    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
-    position: fixed;
-    -webkit-transform: translateZ(0);
-    width: 100%;
-    z-index: 1;
+  align-items: center;
+  background: #1C3879;
+  bottom: 0px;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 0.5rem 0;
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  position: fixed;
+  -webkit-transform: translateZ(0);
+  width: 100%;
+  z-index: 1;
 }
 .sticky-footer .item {
-    align-items: center;
-    color: white;
-    flex-direction: column;
-    position: relative;
-    text-decoration: none;
-    border-right: 1px solid rgba(96, 126, 170, 0.45);
+  align-items: center;
+  color: white;
+  flex-direction: column;
+  position: relative;
+  text-decoration: none;
+  border-right: 1px solid rgba(96, 126, 170, 0.45);
 }
 .sticky-footer .active {
-    color: rgba(223, 229, 229, 0.61);
+  color: rgba(223, 229, 229, 0.61);
 }
 
 body {
-    background-color: rgba(244, 241, 235, 0.3);
-    font-family: "Nunito", sans-serif;
-    font-size: 0.9rem;
-    line-height: 1.6;
+  background-color: rgba(244, 241, 235, 0.3);
+  font-family: "Nunito", sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 .navbar {
-    background-color: #1C3879;
+  background-color: #1C3879;
 }
 
 .btn-own-primary {
-    color: white;
-    background-color: #3f5b87;
-    padding: 10px;
-    border: 0px;
+  color: white;
+  background-color: #3f5b87;
+  padding: 10px;
+  border: 0px;
 }
-
 .btn-own-primary:hover, .btn-own-primary:active {
-    color: white;
-    background-color: #3f5b87;
+  color: white;
+  background-color: #3f5b87;
 }
 
 .btn-own-success {
-    color: white;
-    background-color: #3f8749;
-    padding: 10px;
-    border: 0px;
+  color: white;
+  background-color: #3f8749;
+  padding: 10px;
+  border: 0px;
 }
-
 .btn-own-success:hover, .btn-own-success:active {
-    color: white;
-    background-color: #3f8749;
+  color: white;
+  background-color: #3f8749;
 }
 
 .btn-own-danger {
-    color: white;
-    background-color: #992f2f;
-    padding: 10px;
-    border: 0px;
+  color: white;
+  background-color: #992f2f;
+  padding: 10px;
+  border: 0px;
 }
-
 .btn-own-danger:hover, .btn-own-danger:active {
-    color: white;
-    background-color: #992f2f;
+  color: white;
+  background-color: #992f2f;
 }
 
 .btn-own-secondary {
-    color: white;
-    background-color: #565656;
-    padding: 10px;
-    border: 0px;
+  color: white;
+  background-color: #565656;
+  padding: 10px;
+  border: 0px;
 }
-
 .btn-own-secondary:hover, .btn-own-secondary:active {
-    color: white;
-    background-color: #565656;
+  color: white;
+  background-color: #565656;
 }
 
 .page-item.active .page-link {
-    background-color: #3f5b87;
-    border-color: #3f5b87;
+  background-color: #3f5b87;
+  border-color: #3f5b87;
 }
 
 .nav-pills .nav-link.active {
-    color: white;
-    background-color: rgba(96, 126, 170, 0.45);
+  color: white;
+  background-color: rgba(96, 126, 170, 0.45);
 }
 
 .fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start {
-    background-color: #3f5b87;
-    border-color: #3f5b87;
+  background-color: #3f5b87;
+  border-color: #3f5b87;
 }
 
 .fc-today-button, .fc-next-button, .fc-prev-button {
-    background-color: #3f5b87;
-    border-color: #3f5b87;
+  background-color: #3f5b87;
+  border-color: #3f5b87;
 }
-
 .fc-today-button:hover, .fc-today-button:active, .fc-today-button:disabled, .fc-next-button:hover, .fc-next-button:active, .fc-next-button:disabled, .fc-prev-button:hover, .fc-prev-button:active, .fc-prev-button:disabled {
-    background-color: #3f5b87;
-    border-color: #3f5b87;
+  background-color: #3f5b87;
+  border-color: #3f5b87;
 }
 
 .fc .fc-daygrid-day.fc-day-today {
-    background-color: rgba(223, 229, 229, 0.61);
+  background-color: rgba(223, 229, 229, 0.61);
 }
 
 .fc .fc-list-empty {
-    background-color: transparent;
+  background-color: transparent;
 }
 
 .fc-theme-bootstrap5 .fc-list, .fc-theme-bootstrap5 .fc-scrollgrid, .fc-theme-bootstrap5 td, .fc-theme-bootstrap5 th {
-    border: 0px;
+  border: 0px;
 }
 
 .fc-theme-bootstrap5-shaded {
-    background-color: #3f5b87;
-    color: white;
+  background-color: #3f5b87;
+  color: white;
 }
 
 .dropdown-item.active, .dropdown-item:active {
-    background-color: #3f5b87;
-    border-color: #3f5b87;
+  background-color: #3f5b87;
+  border-color: #3f5b87;
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-    background-color: #3f5b87;
-    color: white;
+  background-color: #3f5b87;
+  color: white;
 }
 
 .fc .fc-scrollgrid-section-header.fc-scrollgrid-section-sticky > * {
-    background-color: #3f5b87;
-    color: white;
+  background-color: #3f5b87;
+  color: white;
 }
 
 .succes_icon {
-    color: #22b922;
-    cursor: pointer;
+  color: #22b922;
+  cursor: pointer;
 }
 
 .btn-dark {
-    background-color: #343A40;
+  background-color: #343A40;
 }
 
 .card-header {
-    background-color: #343A3F;
-    color: white;
+  background-color: #343A3F;
+  color: white;
 }
 
 .grecaptcha-badge {
-    visibility: hidden;
-    display: none;
+  visibility: hidden;
+  display: none;
 }
 
 #notif_bell {
-    color: white;
+  color: white;
 }
 
 #notif_bell.active {
-    color: #DC3545;
+  color: #DC3545;
 }
 
 .offcanvas-end {
-    width: 600px;
+  width: 600px;
 }
 
 .card-sub {
-    border-radius: 4px;
-    background: #fff;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
-    transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12), 0.3s box-shadow;
-    padding: 14px 80px 18px 36px;
-    cursor: pointer;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
+  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12), 0.3s box-shadow;
+  cursor: pointer;
 }
 
 .card-sub:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
 }
 
 .card-sub h3 {
-    font-weight: 600;
-}
-
-.card-sub img {
-    position: absolute;
-    top: 20px;
-    right: 15px;
-    max-height: 120px;
-}
-
-.card-sub {
-    background-image: url(https://notificate.me/images/components-card.png);
-    background-repeat: no-repeat;
-    background-position: right;
-    background-size: 80px;
+  font-weight: 600;
 }

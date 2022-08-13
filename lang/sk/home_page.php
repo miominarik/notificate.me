@@ -42,5 +42,6 @@ return [
     'contact_sended' => 'Vaša správa bola odoslaná. Ďakujeme!',
     'menu_login' => 'Prihlásiť sa',
     'gdpr' => 'Zásady ochrany osobných údajov',
-    'cookies' => 'Zásady používania súborov cookies'
+    'cookies' => 'Zásady používania súborov cookies',
+    'back_to_app' => 'Späť do aplikácie'
 ];
