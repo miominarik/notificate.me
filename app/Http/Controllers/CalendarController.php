@@ -63,6 +63,8 @@ class CalendarController extends Controller
                     'updated_at' => Carbon::now()
                 ]);
 
+            $this->add_log('Update task time', $request->ip(), $task_id);
+
             return 1;
         }
     }

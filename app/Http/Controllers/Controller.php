@@ -9,6 +9,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Controller extends BaseController
 {
@@ -30,6 +32,36 @@ class Controller extends BaseController
     public function JWT_decode($data)
     {
         return (array)JWT::decode($data, new Key($this->key, 'HS512'));
+    }
+
+    /**
+     * @param string $log_type - Názov daného logu
+     * @param string $ip_address - IP adresa
+     * @param int $task_id - Ak je to task, tak jeho id. Inak sa uloži NULL
+     * @return void
+     */
+    protected function add_log($log_type, $ip_address, $task_id, $date = NULL)
+    {
+
+        if (!isset($task_id) || empty($task_id) || $task_id == 0) {
+            $task_id = NULL;
+        };
+
+        if (!isset($date) || empty($date) || $date == NULL) {
+            $date = Carbon::now();
+        };
+
+        if (isset($log_type)) {
+            DB::table('logs')
+                ->insert([
+                    'user_id' => Auth::id(),
+                    'log_type' => $log_type,
+                    'task_id' => $task_id,
+                    'ip_address' => $ip_address,
+                    'created_at' => $date
+                ]);
+        }
+
     }
 
 }

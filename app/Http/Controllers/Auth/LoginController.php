@@ -75,6 +75,7 @@ class LoginController extends Controller
                         $request->session()->put('auth.password_confirmed_at', time());
                     }
 
+                    $this->add_log('Login', $request->ip(), 0);
                     return $this->sendLoginResponse($request);
                 }
 
@@ -82,12 +83,15 @@ class LoginController extends Controller
                 // to login and redirect the user back to the login form. Of course, when this
                 // user surpasses their maximum number of attempts they will get locked out.
                 $this->incrementLoginAttempts($request);
+                $this->add_log('AttempLogin', $request->ip(), 0);
 
                 return $this->sendFailedLoginResponse($request);
             } else {
+                $this->add_log('AttempLogin', $request->ip(), 0);
                 return redirect(route('login'));
             };
         } else {
+            $this->add_log('AttempLogin', $request->ip(), 0);
             return redirect(route('login'));
         };
 

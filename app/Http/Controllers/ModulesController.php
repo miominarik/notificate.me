@@ -52,6 +52,7 @@ class ModulesController extends Controller
                             $request->module_name => 1
                         ]);
                     if ($activate_status) {
+                        $this->add_log('Activate ' . $request->module_name . '', $request->ip(), 0);
                         return redirect(route('modules.index'))->with('status_success', __('alerts.modules_activated'));
                     } else {
                         return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_activated_error'));
@@ -86,6 +87,7 @@ class ModulesController extends Controller
                             $request->module_name => 0
                         ]);
                     if ($activate_status) {
+                        $this->add_log('Deactivate ' . $request->module_name . '', $request->ip(), 0);
                         return redirect(route('modules.index'))->with('status_success', __('alerts.modules_deactivated'));
                     } else {
                         return redirect(route('modules.index'))->with('status_danger', __('alerts.modules_deactivated_error'));

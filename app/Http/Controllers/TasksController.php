@@ -80,7 +80,7 @@ class TasksController extends Controller
                     'updated_at' => Carbon::now()
                 ]);
 
-                $this->AddNewActionToHistory($task, 2);
+                $this->add_log('Add new task', $request->ip(), $task);
 
                 return redirect(route('tasks.index'))->with('status_success', __('alerts.task_added'));
             }
@@ -147,7 +147,7 @@ class TasksController extends Controller
             ->where('task_enabled', true)
             ->update($update_arr);
 
-        $this->AddNewActionToHistory($task, 1);
+        $this->add_log('Update task', $request->ip(), $task);
 
         return redirect(route('tasks.index'))->with('status_success', __('alerts.task_edited'));
     }
@@ -158,7 +158,7 @@ class TasksController extends Controller
      * @param \App\Models\Task $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy($task)
+    public function destroy(Request $request, $task)
     {
         DB::table('tasks')
             ->where('id', $task)
@@ -167,7 +167,7 @@ class TasksController extends Controller
                 'task_enabled' => false
             ]);
 
-        $this->AddNewActionToHistory($task, 3);
+        $this->add_log('Remove task', $request->ip(), $task);
 
         return redirect(route('tasks.index'))->with('status_success', __('alerts.task_removed'));
     }
@@ -220,64 +220,21 @@ class TasksController extends Controller
                         'updated_at' => Carbon::now()
                     ]);
 
-                $this->AddNewCompleteToHistory($task, Carbon::createFromFormat('Y-m-d', $validated['complete_date'])->format('Y-m-d H:i:s'));
+                $this->add_log('Complete task', $request->ip(), $task, Carbon::createFromFormat('Y-m-d', $validated['complete_date'])->format('Y-m-d H:i:s'));
+
                 return redirect(route('tasks.index'))->with('status_success', __('alerts.task_completed'));
             }
         }
     }
 
-    /**
-     * AddNewActionToHistory
-     *
-     * @param mixed $task_id
-     * @param mixed $user_id
-     * @param mixed $action
-     * @param mixed $date
-     * @return void
-     */
-    public function AddNewActionToHistory($task_id, $action)
-    {
-        if (isset($task_id) && isset($action)) {
-            DB::table('history')
-                ->insert([
-                    'task_id' => $task_id,
-                    'user_id' => Auth::id(),
-                    'log_type' => $action,
-                    'created_at' => Carbon::now()
-                ]);
-        }
-    }
-
-    /**
-     * AddNewCompleteToHistory
-     *
-     * @param mixed $task_id
-     * @param mixed $user_id
-     * @param mixed $action
-     * @param mixed $date
-     * @return void
-     */
-    public function AddNewCompleteToHistory($task_id, $date)
-    {
-        if (isset($task_id) && isset($date)) {
-            DB::table('history')
-                ->insert([
-                    'task_id' => $task_id,
-                    'user_id' => Auth::id(),
-                    'log_type' => 99,
-                    'created_at' => $date
-                ]);
-        }
-    }
-
     public function ShowHistory($task)
     {
-        $return_data = DB::table('history')
+        $return_data = DB::table('logs')
             ->select(DB::raw('DATE_FORMAT(created_at, "%d.%m.%Y") as created_at'))
             ->where([
                 'user_id' => Auth::id(),
                 'task_id' => $task,
-                'log_type' => 99
+                'log_type' => 'Complete task'
             ])
             ->orderByDesc('created_at')
             ->get();

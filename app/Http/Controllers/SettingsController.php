@@ -72,6 +72,8 @@ class SettingsController extends Controller
             session()->put('locale', $validated['language']);
         };
 
+        $this->add_log('Update Profile', $request->ip(), 0);
+
         return redirect(route('settings.index'))->with('status_success', __('alerts.settings_updated'));
     }
 
@@ -109,6 +111,8 @@ class SettingsController extends Controller
                             if (isset($logout_everywhere) && $logout_everywhere != NULL && $logout_everywhere == 'on') {
                                 Auth::logoutOtherDevices($newpass1);
                             };
+
+                            $this->add_log('Change Password', $request->ip(), 0);
 
                             return redirect()->back()->with('status_success', __('alerts.settings_change_pass_succ'));
 
