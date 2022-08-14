@@ -82,8 +82,10 @@
 
         @if ($page == 'gdpr')
             @include('home.page.gdpr')
-        @elseif($page = 'cookies')
+        @elseif($page == 'cookies')
             @include('home.page.cookies')
+        @elseif($page == 'unsubscribe')
+            @include('home.page.unsubscribe')
         @endif
     @else
         <!-- ======= Services Section ======= -->

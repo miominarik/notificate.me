@@ -8,6 +8,7 @@ use App\Http\Middleware\VerifyGoogleRecaptcha;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
@@ -76,6 +77,16 @@ class LoginController extends Controller
                     }
 
                     $this->add_log('Login', $request->ip(), 0);
+
+                    $lang = DB::table('users_settings')
+                        ->select('language')
+                        ->where('user_id', '=', Auth::id())
+                        ->get();
+
+                    if ($lang[0]) {
+                        session()->put('locale', $lang[0]->language);
+                    };
+
                     return $this->sendLoginResponse($request);
                 }
 

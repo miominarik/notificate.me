@@ -43,5 +43,9 @@ return [
     'menu_login' => 'Prihlásiť sa',
     'gdpr' => 'Zásady ochrany osobných údajov',
     'cookies' => 'Zásady používania súborov cookies',
-    'back_to_app' => 'Späť do aplikácie'
+    'back_to_app' => 'Späť do aplikácie',
+    'unsubscribe' => 'Odhlásenie z e-mailových notifikácií',
+    'unsubscribe_success' => 'Odhlásili sme Vás z e-mailových notifikácií',
+    'unsubscribe_not_success' => 'Nie ste prihlásený ku e-mailovým notifikáciam',
+    'unsubscribe_message' => 'Ak chcete dostávať e-mailová notifkácie týkajúce sa Vaších úloh, opätovne sa možete prihlásiť v aplikácií.',
 ];

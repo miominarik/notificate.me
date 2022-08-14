@@ -58,18 +58,20 @@ class SettingsController extends Controller
         $validated['notification_time'] = $validated['notification_time'] . ":00";
         $validated['mobile_number'] = trim(str_replace(array("'", "\"", ";", "\\", "?", "&", "@", ":", "/", "#", "$", "=", ">", "<", "+", " "), "", $validated['mobile_number']));
 
-        DB::table('users_settings')
-            ->where('user_id', Auth::id())
-            ->update([
-                'enable_email_notification' => $validated['enable_email_notif'],
-                'notification_time' => $validated['notification_time'],
-                'mobile_number' => $validated['mobile_number'],
-                'updated_at' => Carbon::now()
-            ]);
-
         if (in_array($validated['language'], ['en', 'sk'])) {
             app()->setLocale($validated['language']);
             session()->put('locale', $validated['language']);
+
+            DB::table('users_settings')
+                ->where('user_id', Auth::id())
+                ->update([
+                    'enable_email_notification' => $validated['enable_email_notif'],
+                    'notification_time' => $validated['notification_time'],
+                    'mobile_number' => $validated['mobile_number'],
+                    'language' => $validated['language'],
+                    'updated_at' => Carbon::now()
+                ]);
+
         };
 
         $this->add_log('Update Profile', $request->ip(), 0);
@@ -131,5 +133,38 @@ class SettingsController extends Controller
         } else {
             return redirect()->back()->with('status_danger', __('alerts.settings_change_pass_error'));
         };
+    }
+
+    public function Email_unsubscribe($user_email)
+    {
+        $status = 0;
+        if ($user_email) {
+            $user_id = DB::table('users')
+                ->select('id')
+                ->where('email', '=', $user_email)
+                ->get();
+
+            if ($user_id[0]) {
+                $check_status = DB::table('users_settings')
+                    ->select('enable_email_notification')
+                    ->where('user_id', '=', $user_id[0]->id)
+                    ->get();
+
+                if ($check_status[0]->enable_email_notification == 1) {
+                    DB::table('users_settings')
+                        ->where('user_id', '=', $user_id[0]->id)
+                        ->update([
+                            'enable_email_notification' => 0
+                        ]);
+                    $status = 1;
+                }
+            }
+
+            return view('home.index', [
+                'page' => 'unsubscribe',
+                'status' => $status
+            ]);
+
+        }
     }
 }

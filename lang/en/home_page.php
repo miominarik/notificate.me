@@ -43,5 +43,6 @@ return [
     'menu_login' => 'Prihlásiť sa',
     'gdpr' => 'Zásady ochrany osobných údajov',
     'cookies' => 'Zásady používania súborov cookies',
-    'back_to_app' => 'Späť do aplikácie'
+    'back_to_app' => 'Späť do aplikácie',
+    'unsubscribe' => 'Odhlásenie z e-mailových notifikácií'
 ];

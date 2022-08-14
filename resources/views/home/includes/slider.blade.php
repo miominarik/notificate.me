@@ -9,6 +9,8 @@
                         <h2 class="animate__animated animate__fadeInDown">{{__('home_page.gdpr')}}</h2>
                     @elseif($page == 'cookies')
                         <h2 class="animate__animated animate__fadeInDown">{{__('home_page.cookies')}}</h2>
+                    @elseif($page == 'unsubscribe')
+                        <h2 class="animate__animated animate__fadeInDown">{{__('home_page.unsubscribe')}}</h2>
                     @endif
                 @else
                     <h2 class="animate__animated animate__fadeInDown">{{ __('home_page.header') }}</h2>

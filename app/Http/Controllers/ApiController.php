@@ -27,7 +27,7 @@ class ApiController extends Controller
         $data = DB::table('tasks')
             ->join('users', 'tasks.user_id', '=', 'users.id')
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
-            ->select('tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users.email', 'users_settings.enable_email_notification', 'users_settings.notification_time')
+            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users.email', 'users_settings.enable_email_notification', 'users_settings.notification_time', 'users_settings.language')
             ->where([
                 'task_enabled' => true
             ])
@@ -62,9 +62,11 @@ class ApiController extends Controller
                 if ($now == $date2) {
                     if ($new_date <= Carbon::now()->format('Y-m-d')) {
                         array_push($notification_array, [
+                            'task_id' => $item->id,
                             'task_name' => $item->task_name,
                             'task_next_date' => $item->task_next_date,
                             'user_email' => $item->email,
+                            'language' => $item->language,
                         ]);
                     }
                 }
@@ -73,7 +75,7 @@ class ApiController extends Controller
 
         if (!empty($notification_array)) {
             foreach ($notification_array as $one_task) {
-                Mail::to($one_task['user_email'], $one_task['user_email'])->send(new NotificationMail($one_task['task_name'], $one_task['task_next_date']));
+                Mail::to($one_task['user_email'], $one_task['user_email'])->send(new NotificationMail($one_task['task_name'], $one_task['task_next_date'], $one_task['language'], $one_task['task_id'], $one_task['user_email']));
             }
         };
 
