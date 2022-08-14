@@ -88,6 +88,8 @@ Route::middleware(['auth', 'verified', 'superadmin'])->group(function () {
     Route::post('superadmin/users/{user_id}/update', "App\Http\Controllers\SuperAdminController@update_users_detail")->name('superadmin.update_users_detail');
     Route::get('superadmin/users/{user_id}/{auth_type}/deauthorization', "App\Http\Controllers\SuperAdminController@users_deauthorization")->name('superadmin.users_deauthorization');
     Route::post('superadmin/users/{user_id}/tooglestatus', "App\Http\Controllers\SuperAdminController@tooglestatus")->name('superadmin.tooglestatus');
+    Route::get('superadmin/logs', "App\Http\Controllers\SuperAdminController@logs")->name('superadmin.logs');
+
 
 });
 

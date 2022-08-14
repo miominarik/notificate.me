@@ -162,4 +162,22 @@ class SuperAdminController extends Controller
         ]);
     }
 
+    public function logs()
+    {
+        $return_data = DB::table('logs')
+            ->select('logs.log_type', 'logs.ip_address', 'logs.created_at', 'users.email', 'tasks.task_name')
+            ->join('users', 'logs.user_id', '=', 'users.id')
+            ->leftJoin('tasks', 'logs.task_id', '=', 'tasks.id')
+            ->orderByDesc('logs.created_at')
+            ->paginate(150);
+
+        foreach ($return_data as $one_data_id => $one_data_data) {
+            $return_data[$one_data_id]->created_at = Carbon::parse($one_data_data->created_at)->format('d.m.Y H:i');
+        }
+
+        return view('superadmin.pages.logs', [
+            'all_logs' => $return_data
+        ]);
+    }
+
 }

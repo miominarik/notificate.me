@@ -21,7 +21,7 @@ class WhiteListIpAddressessMiddleware
         $endIp = ip2long('10.31.63.255');
         $requestIp = ip2long($request->ip());
 
-        if (($requestIp >= $startIp && $requestIp <= $endIp) || ($request->ip() == '213.160.175.138')) {
+        if (($requestIp >= $startIp && $requestIp <= $endIp) || ($request->ip() == '213.160.175.138' || $request->ip() == '127.0.0.1')) {
             return $next($request);
         }else{
             return response()->json([

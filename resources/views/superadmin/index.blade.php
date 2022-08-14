@@ -11,6 +11,8 @@
                         <a href="{{route('superadmin.users_modules')}}"
                            class="list-group-item list-group-item-action {{request()->is('superadmin/users_modules') ? 'active' : ''}}">Stav
                             modulov</a>
+                        <a href="{{route('superadmin.logs')}}"
+                           class="list-group-item list-group-item-action {{request()->is('superadmin/logs') ? 'active' : ''}}">Logy</a>
                     </div>
                 </div>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
