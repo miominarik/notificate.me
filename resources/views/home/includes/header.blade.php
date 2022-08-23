@@ -6,7 +6,7 @@
         </div>
 
         <nav id="navbar" class="navbar">
-            @if (request()->is('gdpr') || request()->is('cookies') || request()->is('unsubscribe'))
+            @if (request()->is('gdpr') || request()->is('cookies') || request()->is('api/*'))
                 <ul>
                     <li><a class="nav-link scrollto" href="/">{{ __('home_page.menu_home') }}</a></li>
                     <li><a class="nav-link scrollto" href="/#services">{{ __('home_page.menu_services') }}</a></li>

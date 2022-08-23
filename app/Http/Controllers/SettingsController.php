@@ -144,7 +144,7 @@ class SettingsController extends Controller
                 ->where('email', '=', $user_email)
                 ->get();
 
-            if ($user_id[0]) {
+            if (isset($user_id[0])) {
                 $check_status = DB::table('users_settings')
                     ->select('enable_email_notification')
                     ->where('user_id', '=', $user_id[0]->id)
