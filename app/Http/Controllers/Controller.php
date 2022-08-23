@@ -43,24 +43,27 @@ class Controller extends BaseController
     protected function add_log($log_type, $ip_address, $task_id, $date = NULL)
     {
 
-        if (!isset($task_id) || empty($task_id) || $task_id == 0) {
-            $task_id = NULL;
-        };
+        if (Auth::check()) {
+            if (!isset($task_id) || empty($task_id) || $task_id == 0) {
+                $task_id = NULL;
+            };
 
-        if (!isset($date) || empty($date) || $date == NULL) {
-            $date = Carbon::now();
-        };
+            if (!isset($date) || empty($date) || $date == NULL) {
+                $date = Carbon::now();
+            };
 
-        if (isset($log_type)) {
-            DB::table('logs')
-                ->insert([
-                    'user_id' => Auth::id(),
-                    'log_type' => $log_type,
-                    'task_id' => $task_id,
-                    'ip_address' => $ip_address,
-                    'created_at' => $date
-                ]);
+            if (isset($log_type)) {
+                DB::table('logs')
+                    ->insert([
+                        'user_id' => Auth::id(),
+                        'log_type' => $log_type,
+                        'task_id' => $task_id,
+                        'ip_address' => $ip_address,
+                        'created_at' => $date
+                    ]);
+            }
         }
+
 
     }
 

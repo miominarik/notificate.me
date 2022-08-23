@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Middleware\CheckBlockedStatusUser;
 use App\Http\Middleware\VerifyGoogleRecaptcha;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -44,8 +47,44 @@ class LoginController extends Controller
         $this->middleware(VerifyGoogleRecaptcha::class);
     }
 
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLoginForm(Request $request)
+    {
+
+        if (!empty(Cookie::get('token'))) {
+            $token = Cookie::get('token');
+            if (isset($token) && !empty($token) && $token != '' && $token != NULL) {
+                $get_user_id_db = DB::table('sessions')
+                    ->select('user_id')
+                    ->where('token', '=', $token)
+                    ->get();
+                if (isset($get_user_id_db[0]->user_id) && !empty($get_user_id_db[0]->user_id)) {
+                    if (Hash::check($get_user_id_db[0]->user_id, $token)) {
+                        Auth::loginUsingId($get_user_id_db[0]->user_id);
+                        $this->add_log('Login by cookies', $request->ip(), 0);
+                        //generate new cookie
+                        $this->Generate_cookie($token);
+                        return redirect(route('tasks.index'));
+                    }
+                }
+            }
+        }
+        return view('auth.login');
+    }
+
     protected function loggedOut(Request $request)
     {
+
+        DB::table('sessions')
+            ->where('token', '=', Cookie::get('token'))
+            ->delete();
+
+        Cookie::queue(Cookie::forget('token'));
+
         return redirect('/app');
     }
 
@@ -87,6 +126,9 @@ class LoginController extends Controller
                         session()->put('locale', $lang[0]->language);
                     };
 
+                    //generate new cookie
+                    $this->Generate_cookie();
+
                     return $this->sendLoginResponse($request);
                 }
 
@@ -105,7 +147,28 @@ class LoginController extends Controller
             $this->add_log('AttempLogin', $request->ip(), 0);
             return redirect(route('login'));
         };
+    }
 
+    private function Generate_cookie($old_token = NULL)
+    {
 
+        if (isset($old_token) && !empty($old_token) && $old_token != NULL) {
+            DB::table('sessions')
+                ->where('token', '=', $old_token)
+                ->delete();
+        };
+
+        //generate token
+        $token = Hash::make(Auth::id());
+
+        $expires = time() + 60 * 60 * 24 * 365;
+        Cookie::queue('token', $token, $expires);
+
+        DB::table('sessions')
+            ->insert([
+                'user_id' => Auth::id(),
+                'token' => $token,
+                'last_used' => Carbon::now()
+            ]);
     }
 }
