@@ -42,6 +42,8 @@ class OauthController extends Controller
             if ($check) {
                 $user = User::where('apple_id', $appleUser->id)->first();
                 Auth::login($user);
+                //generate new cookie
+                $this->Generate_cookie();
             } else {
                 $check_if_email_exits = User::where('email', $appleUser->email)->count();
                 if ($check_if_email_exits == 0) {
@@ -66,6 +68,8 @@ class OauthController extends Controller
                     ]);
 
                     Auth::login($user);
+                    //generate new cookie
+                    $this->Generate_cookie();
                 }
             };
         };
@@ -88,6 +92,8 @@ class OauthController extends Controller
             if ($check) {
                 $user = User::where('google_id', $googleUser->id)->first();
                 Auth::login($user);
+                //generate new cookie
+                $this->Generate_cookie();
             } else {
                 if (Auth::check() == true) {
                     User::where('id', Auth::id())
@@ -118,6 +124,8 @@ class OauthController extends Controller
                     ]);
 
                     Auth::login($user);
+                    //generate new cookie
+                    $this->Generate_cookie();
                 };
             };
         };
@@ -141,6 +149,8 @@ class OauthController extends Controller
             if ($check) {
                 $user = User::where('microsoft_id', $microsoftUser->id)->first();
                 Auth::login($user);
+                //generate new cookie
+                $this->Generate_cookie();
             } else {
                 if (Auth::check() == true) {
                     User::where('id', Auth::id())
@@ -171,6 +181,8 @@ class OauthController extends Controller
                     ]);
 
                     Auth::login($user);
+                    //generate new cookie
+                    $this->Generate_cookie();
                 };
             };
         };

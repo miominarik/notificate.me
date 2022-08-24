@@ -149,26 +149,5 @@ class LoginController extends Controller
         };
     }
 
-    private function Generate_cookie($old_token = NULL)
-    {
 
-        if (isset($old_token) && !empty($old_token) && $old_token != NULL) {
-            DB::table('sessions')
-                ->where('token', '=', $old_token)
-                ->delete();
-        };
-
-        //generate token
-        $token = Hash::make(Auth::id());
-
-        $expires = time() + 60 * 60 * 24 * 365;
-        Cookie::queue('token', $token, $expires);
-
-        DB::table('sessions')
-            ->insert([
-                'user_id' => Auth::id(),
-                'token' => $token,
-                'last_used' => Carbon::now()
-            ]);
-    }
 }

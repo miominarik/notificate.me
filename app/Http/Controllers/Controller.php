@@ -10,7 +10,9 @@ use Illuminate\Routing\Controller as BaseController;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class Controller extends BaseController
 {
@@ -63,8 +65,29 @@ class Controller extends BaseController
                     ]);
             }
         }
+    }
 
+    protected function Generate_cookie($old_token = NULL)
+    {
 
+        if (isset($old_token) && !empty($old_token) && $old_token != NULL) {
+            DB::table('sessions')
+                ->where('token', '=', $old_token)
+                ->delete();
+        };
+
+        //generate token
+        $token = Hash::make(Auth::id());
+
+        $expires = time() + 60 * 60 * 24 * 365;
+        Cookie::queue('token', $token, $expires);
+
+        DB::table('sessions')
+            ->insert([
+                'user_id' => Auth::id(),
+                'token' => $token,
+                'last_used' => Carbon::now()
+            ]);
     }
 
 }
