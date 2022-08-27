@@ -211,24 +211,24 @@
         @if((new \Jenssegers\Agent\Agent())->isMobile() ||(new \Jenssegers\Agent\Agent())->isTablet())
             <div class="sticky-footer">
                 <a href="{{ route('tasks.index') }}"
-                   class="sticky-footer item {{ request()->is('tasks*') ? 'active' : '' }}">
+                   class="sticky-footer mb-1 item {{ request()->is('tasks*') ? 'active' : '' }}">
                     <i class="fa-solid fa-house"></i>
                     {{ __('layout.menu_tasks') }}
                 </a>
                 @if($activated_modules->module_calendar)
                     <a href="{{ route('calendar.index') }}"
-                       class="sticky-footer item {{ request()->is('calendar*') ? 'active' : '' }}">
+                       class="sticky-footer mb-1 item {{ request()->is('calendar*') ? 'active' : '' }}">
                         <i class="fa-solid fa-calendar-days"></i>
                         {{__('layout.menu_calendar')}}
                     </a>
                 @endif
                 <a href="{{ route('modules.index') }}"
-                   class="sticky-footer item {{ request()->is('modules*') ? 'active' : '' }}">
+                   class="sticky-footer mb-1 item {{ request()->is('modules*') ? 'active' : '' }}">
                     <i class="fa-solid fa-puzzle-piece"></i>
                     {{ __('layout.menu_modules') }}
                 </a>
                 <a href="{{ route('settings.index') }}"
-                   class="sticky-footer item {{ request()->is('settings*') ? 'active' : '' }}">
+                   class="sticky-footer mb-1 item {{ request()->is('settings*') ? 'active' : '' }}">
                     <i class="fa-solid fa-gear"></i>
                     {{ __('layout.menu_settings') }}
                 </a>
