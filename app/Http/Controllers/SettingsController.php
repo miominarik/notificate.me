@@ -39,44 +39,9 @@ class SettingsController extends Controller
             'modules_status' => DB::table('modules')
                 ->select('module_sms')
                 ->where('user_id', Auth::id())
-                ->get()
+                ->get(),
+            'calendar_hash' => $this->JWT_encode(Auth::id())
         ]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(EditSettingsRequest $request)
-    {
-
-        $validated = $request->validated();
-
-        $validated['notification_time'] = $validated['notification_time'] . ":00";
-        $validated['mobile_number'] = trim(str_replace(array("'", "\"", ";", "\\", "?", "&", "@", ":", "/", "#", "$", "=", ">", "<", "+", " "), "", $validated['mobile_number']));
-
-        if (in_array($validated['language'], ['en', 'sk'])) {
-            app()->setLocale($validated['language']);
-            session()->put('locale', $validated['language']);
-
-            DB::table('users_settings')
-                ->where('user_id', Auth::id())
-                ->update([
-                    'enable_email_notification' => $validated['enable_email_notif'],
-                    'notification_time' => $validated['notification_time'],
-                    'mobile_number' => $validated['mobile_number'],
-                    'language' => $validated['language'],
-                    'updated_at' => Carbon::now()
-                ]);
-
-        };
-
-        $this->add_log('Update Profile', $request->ip(), 0);
-
-        return redirect(route('settings.index'))->with('status_success', __('alerts.settings_updated'));
     }
 
     public function change_password(ChangePasswordRequest $request)
@@ -133,6 +98,42 @@ class SettingsController extends Controller
         } else {
             return redirect()->back()->with('status_danger', __('alerts.settings_change_pass_error'));
         };
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(EditSettingsRequest $request)
+    {
+
+        $validated = $request->validated();
+
+        $validated['notification_time'] = $validated['notification_time'] . ":00";
+        $validated['mobile_number'] = trim(str_replace(array("'", "\"", ";", "\\", "?", "&", "@", ":", "/", "#", "$", "=", ">", "<", "+", " "), "", $validated['mobile_number']));
+
+        if (in_array($validated['language'], ['en', 'sk'])) {
+            app()->setLocale($validated['language']);
+            session()->put('locale', $validated['language']);
+
+            DB::table('users_settings')
+                ->where('user_id', Auth::id())
+                ->update([
+                    'enable_email_notification' => $validated['enable_email_notif'],
+                    'notification_time' => $validated['notification_time'],
+                    'mobile_number' => $validated['mobile_number'],
+                    'language' => $validated['language'],
+                    'updated_at' => Carbon::now()
+                ]);
+
+        };
+
+        $this->add_log('Update Profile', $request->ip(), 0);
+
+        return redirect(route('settings.index'))->with('status_success', __('alerts.settings_updated'));
     }
 
     public function Email_unsubscribe($user_email)

@@ -93,6 +93,15 @@
                                                             @if (session('locale') == 'sk') selected @endif>{{ __('layout.lang_slovak') }}</option>
                                                 </select>
                                             </div>
+                                            @if($activated_modules->module_calendar)
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <label
+                                                        for="">Verejná adresa vo formáte ICS</label>
+                                                    <input type="text" class="form-control"
+                                                           value="{{env('APP_URL')}}/api/ics/public/{{$calendar_hash}}"
+                                                           readonly>
+                                                </div>
+                                            @endif
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <button type="submit"
                                                         class="btn btn-own-primary">{{ __('settings.send_btn') }}</button>
