@@ -25,4 +25,6 @@ return [
     'log_out_everywhere' => 'Sign out on all devices',
     'close' => 'Close',
     'change_it' => 'Change Password',
+    'public_ics_url' => 'Public address in ICS format',
+    'copy_btn' => 'Copy'
 ];

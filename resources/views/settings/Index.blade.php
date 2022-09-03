@@ -96,10 +96,13 @@
                                             @if($activated_modules->module_calendar)
                                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                     <label
-                                                        for="">Verejná adresa vo formáte ICS</label>
-                                                    <input type="text" class="form-control"
-                                                           value="{{env('APP_URL')}}/api/ics/public/{{$calendar_hash}}"
-                                                           readonly>
+                                                        for="public_ics_url">{{__('settings.public_ics_url')}}</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" id="public_ics_url" class="form-control" value="{{env('APP_URL')}}/api/ics/public/{{$calendar_hash}}" aria-label="ICS URL" aria-describedby="copy_btn_ics_url" readonly>
+                                                        <button class="btn btn-outline-secondary" type="button" id="copy_btn_ics_url" onclick="CopyIcsUrl();">
+                                                            {{__('settings.copy_btn')}}</button>
+                                                    </div>
+
                                                 </div>
                                             @endif
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">

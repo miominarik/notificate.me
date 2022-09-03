@@ -88,7 +88,6 @@ function getDataToEditTaskForm(task_id) {
 }
 
 function NewTaskChangeType(type) {
-
     if (type) {
         if (type == 'one') {
             document.getElementById("task_repeat_value").required = false;
@@ -98,6 +97,10 @@ function NewTaskChangeType(type) {
             document.getElementById("task_repeat_value").required = true;
         }
     }
+}
 
-
+function CopyIcsUrl() {
+    var textBox = document.getElementById("public_ics_url");
+    textBox.select();
+    document.execCommand("copy");
 }

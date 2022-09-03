@@ -25,4 +25,6 @@ return [
     'log_out_everywhere' => 'Odhlásiť ma na všetkých zariadeniach',
     'close' => 'Zavrieť',
     'change_it' => 'Zmeniť heslo',
+    'public_ics_url' => 'Verejná adresa vo formáte ICS',
+    'copy_btn' => 'Kopírovať'
 ];
