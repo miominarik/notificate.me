@@ -16,6 +16,7 @@
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
+        "sngrl/php-firebase-cloud-messaging": "dev-master",
         "socialiteproviders/apple": "^5.2",
         "socialiteproviders/microsoft": "^4.1",
         "spatie/icalendar-generator": "^2.3",
