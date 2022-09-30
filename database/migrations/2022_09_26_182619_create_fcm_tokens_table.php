@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('fcm_tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('fcm_token', 255)->unique();
+            $table->string('fcm_token', 500)->unique();
             $table->bigInteger('user_id');
             $table->boolean('enabled')->default(true);
             $table->timestamps();

@@ -209,13 +209,23 @@ class ApiController extends Controller
         }
     }
 
-    protected function FCM_Token($token)
+    protected function FCM_Token($token, $device_name, $device_model, $android_id)
     {
         if ($token && Auth::check()) {
             DB::table('fcm_tokens')
                 ->updateOrInsert(
-                    ['user_id' => Auth::id()],
-                    ['fcm_token' => $token, 'user_id' => Auth::id(), 'updated_at' => Carbon::now()]
+                    [
+                        'user_id' => Auth::id(),
+                        'android_id' => $android_id
+                    ],
+                    [
+                        'fcm_token' => $token,
+                        'device_name' => $device_name,
+                        'device_model' => $device_model,
+                        'android_id' => $android_id,
+                        'user_id' => Auth::id(),
+                        'updated_at' => Carbon::now()
+                    ]
                 );
         };
 
@@ -232,10 +242,8 @@ class ApiController extends Controller
         $notification_array = array();
 
         $data = DB::table('tasks')
-            ->join('users', 'tasks.user_id', '=', 'users.id')
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
-            ->join('fcm_tokens', 'tasks.user_id', '=', 'fcm_tokens.user_id')
-            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users_settings.notification_time', 'fcm_tokens.fcm_token')
+            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users_settings.notification_time', 'tasks.user_id')
             ->where([
                 'task_enabled' => true
             ])
@@ -268,14 +276,11 @@ class ApiController extends Controller
 
                 if ($now == $date2) {
                     if ($new_date <= Carbon::now()->format('Y-m-d')) {
-                        if (!empty($item->fcm_token) && $item->fcm_token != "" && $item->fcm_token != NULL) {
-                            array_push($notification_array, [
-                                'task_id' => $item->id,
-                                'task_name' => $item->task_name,
-                                'task_next_date' => Carbon::parse($item->task_next_date)->format('d.m.Y'),
-                                'fcm_token' => $item->fcm_token,
-                            ]);
-                        };
+                        array_push($notification_array, [
+                            'task_name' => $item->task_name,
+                            'task_next_date' => Carbon::parse($item->task_next_date)->format('d.m.Y'),
+                            'user_id' => $item->user_id,
+                        ]);
                     }
                 }
             }
@@ -285,23 +290,33 @@ class ApiController extends Controller
                 $body = "Blíži sa termín Vašej naplánovanej úlohy. ";
                 $body .= "Názov úlohy: " . $one_task['task_name'] . " ";
                 $body .= "Termín: " . $one_task['task_next_date'];
-                return $this->sendNotification($this->FCM_client, "Notificate.me", $body, $one_task['fcm_token']);
+                return $this->sendNotification($this->FCM_client, "Notificate.me", $body, $one_task['user_id']);
             }
         };
 
     }
 
-    protected function sendNotification(Client $client, string $title, string $body, string ...$clientTokens)
+    protected function sendNotification(Client $client, string $title, string $body, int $user_id)
     {
         $message = new MessageFCM();
         $message->setNotification(new Notification($title, $body));
         $message->setTimeToLive(10800);
         $message->setPriority("normal");
 
-        foreach ($clientTokens as $clientToken) {
-            $message->addRecipient(new Device($clientToken));
-        }
+        //získanie všetkých FCM tokenov
+        $all_fcm_tokens = DB::table('fcm_tokens')
+            ->select('fcm_token')
+            ->where('user_id', '=', $user_id)
+            ->where('enabled', '=', 1)
+            ->get();
 
-        $client->send($message);
+        if (!empty($all_fcm_tokens)) {
+            foreach ($all_fcm_tokens as $one_fcm_token) {
+                $message->addRecipient(new Device($one_fcm_token->fcm_token));
+            }
+            $client->send($message);
+        };
+
+
     }
 }
