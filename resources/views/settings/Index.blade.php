@@ -1,5 +1,6 @@
 @php
-    $selected_time = \Carbon\Carbon::parse($settings_data[0]->notification_time)->format('G');
+    use Carbon\Carbon;
+    $selected_time = Carbon::parse($settings_data[0]->notification_time)->format('G');
 @endphp
 
 @extends('layouts.app')
@@ -98,8 +99,12 @@
                                                     <label
                                                         for="public_ics_url">{{__('settings.public_ics_url')}}</label>
                                                     <div class="input-group mb-3">
-                                                        <input type="text" id="public_ics_url" class="form-control" value="{{env('APP_URL')}}/api/ics/public/{{$calendar_hash}}" aria-label="ICS URL" aria-describedby="copy_btn_ics_url" readonly>
-                                                        <button class="btn btn-outline-secondary" type="button" id="copy_btn_ics_url" onclick="CopyIcsUrl();">
+                                                        <input type="text" id="public_ics_url" class="form-control"
+                                                               value="{{env('APP_URL')}}/api/ics/public/{{$calendar_hash}}"
+                                                               aria-label="ICS URL" aria-describedby="copy_btn_ics_url"
+                                                               readonly>
+                                                        <button class="btn btn-outline-secondary" type="button"
+                                                                id="copy_btn_ics_url" onclick="CopyIcsUrl();">
                                                             {{__('settings.copy_btn')}}</button>
                                                     </div>
 
@@ -108,6 +113,9 @@
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <button type="submit"
                                                         class="btn btn-own-primary">{{ __('settings.send_btn') }}</button>
+                                                <button type="button" class="btn btn-own-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#changepassModal">{{__('settings.change_pass_btn')}}
+                                                </button>
                                             </div>
                                         </form>
                                         <hr class="my-4">
@@ -172,21 +180,37 @@
                                         </div>
                                         <hr>
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            <button type="button" class="btn btn-own-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#changepassModal">{{__('settings.change_pass_btn')}}
+                                            <h3 class="mb-5">{{__('settings.my_devices')}}</h3>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">{{__('settings.device_name')}}</th>
+                                                    <th scope="col">{{__('settings.device_last_used')}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @php($count = 1)
+                                                @forelse($my_devices as $one_device)
+                                                    <tr>
+                                                        <th scope="row">{{$count}}</th>
+                                                        <td>{{$one_device->device_model}}</td>
+                                                        <td>{{Carbon::parse($one_device->updated_at)->format('d.m.Y H:i')}}</td>
+                                                    </tr>
+                                                    @php($count++)
+                                                @empty
+                                                    <tr>
+                                                        <th scope="row">{{__('settings.device_noone')}}</th>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endforelse
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn btn-own-secondary mt-3"
+                                                    onclick="window.location.replace('{{route('settings.disconnect_all_devices')}}');">
+                                                {{__('settings.device_disconnect_all')}}
                                             </button>
-                                            @if(isset($qr_code) && $qr_code != NULL)
-                                                <button type="button" class="btn btn-own-secondary"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#activate_two_factorModal">{{__('settings.mfa_activate_btn')}}
-                                                </button>
-                                            @endif
-                                            @if(isset($recovery_codes) && $recovery_codes != NULL)
-                                                <button type="button" class="btn btn-own-secondary"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#show_recocery_codesModal">{{__('settings.mfa_activated_btn')}}
-                                                </button>
-                                            @endif
                                         </div>
                                     </div>
                                 </div>

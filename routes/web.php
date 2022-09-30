@@ -63,6 +63,7 @@ Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(
     Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');
     Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
     Route::post('settings/change_password', "App\Http\Controllers\SettingsController@change_password")->name('settings.change_password');
+    Route::get('settings/disconnect_all_devices', "App\Http\Controllers\SettingsController@disconnect_all_devices")->name('settings.disconnect_all_devices');
 
     //Calendar
     Route::middleware('check_module:module_calendar')->group(function () {

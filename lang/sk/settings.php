@@ -26,5 +26,10 @@ return [
     'close' => 'Zavrieť',
     'change_it' => 'Zmeniť heslo',
     'public_ics_url' => 'Verejná adresa vo formáte ICS',
-    'copy_btn' => 'Kopírovať'
+    'copy_btn' => 'Kopírovať',
+    'my_devices' => 'Moje zariadenia',
+    'device_name' => 'Názov zariadenia',
+    'device_last_used' => 'Naposledný použité',
+    'device_noone' => 'Žiadne zariadenie',
+    'device_disconnect_all' => 'Odpojiť všetky zariadenia'
 ];

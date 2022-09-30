@@ -26,5 +26,10 @@ return [
     'close' => 'Close',
     'change_it' => 'Change Password',
     'public_ics_url' => 'Public address in ICS format',
-    'copy_btn' => 'Copy'
+    'copy_btn' => 'Copy',
+    'my_devices' => 'My devices',
+    'device_name' => 'Device name',
+    'device_last_used' => 'Last used',
+    'device_noone' => 'No devices',
+    'device_disconnect_all' => 'Disconnect all devices'
 ];
