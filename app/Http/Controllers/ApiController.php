@@ -285,7 +285,7 @@ class ApiController extends Controller
                 $body = "Blíži sa termín Vašej naplánovanej úlohy. ";
                 $body .= "Názov úlohy: " . $one_task['task_name'] . " ";
                 $body .= "Termín: " . $one_task['task_next_date'];
-                $this->sendNotification($this->FCM_client, "Notificate.me", $body, $one_task['fcm_token']);
+                return $this->sendNotification($this->FCM_client, "Notificate.me", $body, $one_task['fcm_token']);
             }
         };
 
@@ -294,12 +294,14 @@ class ApiController extends Controller
     protected function sendNotification(Client $client, string $title, string $body, string ...$clientTokens)
     {
         $message = new MessageFCM();
-        $message->setNotification(new Notification($title, $body)
-        );
+        $message->setNotification(new Notification($title, $body));
+        $message->setTimeToLive(10800);
+        $message->setPriority("normal");
 
         foreach ($clientTokens as $clientToken) {
             $message->addRecipient(new Device($clientToken));
         }
-        return $client->send($message);
+
+        $client->send($message);
     }
 }

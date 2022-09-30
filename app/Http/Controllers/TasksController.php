@@ -127,6 +127,7 @@ class TasksController extends Controller
                 'task_repeat_type' => NULL,
                 'task_notification_value' => $validated['task_notification_value'],
                 'task_notification_type' => $validated['task_notification_type'],
+                'task_next_date' => $validated['task_next_date_edit'],
                 'updated_at' => Carbon::now()
             ];
         } else {
@@ -137,6 +138,7 @@ class TasksController extends Controller
                 'task_repeat_type' => $validated['task_repeat_type'],
                 'task_notification_value' => $validated['task_notification_value'],
                 'task_notification_type' => $validated['task_notification_type'],
+                'task_next_date' => $validated['task_next_date_edit'],
                 'updated_at' => Carbon::now()
             ];
         };

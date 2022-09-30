@@ -273,7 +273,7 @@
                     <label for="task_next_date"
                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_next_date') }}</label>
                     <div class="col-sm-1-12">
-                        <input type="date" class="form-control" id="task_next_date_edit" readonly>
+                        <input type="date" class="form-control" name="task_next_date_edit" id="task_next_date_edit">
                     </div>
                 </div>
                 <div class="form-group row" id="add_task_repeat_group_edit" style="display: none;">
