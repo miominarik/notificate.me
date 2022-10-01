@@ -184,6 +184,9 @@ class SettingsController extends Controller
         DB::table('sessions')
             ->where('user_id', '=', Auth::id())
             ->delete();
+        DB::table('fcm_tokens')
+            ->where('user_id', '=', Auth::id())
+            ->delete();
 
         return redirect(route('settings.index'));
     }

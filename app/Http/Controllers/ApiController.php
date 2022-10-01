@@ -12,20 +12,19 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use BulkGate\Sms\Sender;
 use BulkGate\Sms\SenderSettings;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\Messaging\AndroidConfig;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 use Ramsey\Uuid\Type\Integer;
 use BulkGate\Sms\Country;
-use sngrl\PhpFirebaseCloudMessaging\Client;
-use sngrl\PhpFirebaseCloudMessaging\Message as MessageFCM;
-use sngrl\PhpFirebaseCloudMessaging\Notification;
-use sngrl\PhpFirebaseCloudMessaging\Recipient\Device;
 
 class ApiController extends Controller
 {
     public function __construct()
     {
-        $this->FCM_client = new Client();
-        $this->FCM_client->setApiKey("AAAAgl2WWSw:APA91bGpVwK8VIUazGfRQG6WD8X9qdYXLzSylZgVXpmY4GSzTzC_1j3rsvz_Ifa90J6xi_VluD39sZKrK6UA4eMB-uYRA736uxMXPvPXqT5Hhpz0wP5Xz2DSPU89yfYolZMhnRMcwmG5");
-        $this->FCM_client->injectGuzzleHttpClient(new \GuzzleHttp\Client());
+        $this->factory = (new Factory)->withServiceAccount(storage_path('app/private/notificateme-firebase-adminsdk-a0ed2-007ce012a5.json'));
+        $this->messaging = $this->factory->createMessaging();
     }
 
 
@@ -290,33 +289,68 @@ class ApiController extends Controller
                 $body = "Blíži sa termín Vašej naplánovanej úlohy. ";
                 $body .= "Názov úlohy: " . $one_task['task_name'] . " ";
                 $body .= "Termín: " . $one_task['task_next_date'];
-                return $this->sendNotification($this->FCM_client, "Notificate.me", $body, $one_task['user_id']);
+                return $this->sendNotification("Notificate.me", $body, $one_task['user_id']);
             }
         };
 
     }
 
-    protected function sendNotification(Client $client, string $title, string $body, int $user_id)
+    protected function sendNotification(string $title, string $body, int $user_id)
     {
-        $message = new MessageFCM();
-        $message->setNotification(new Notification($title, $body));
-        $message->setTimeToLive(10800);
-        $message->setPriority("normal");
-
-        //získanie všetkých FCM tokenov
         $all_fcm_tokens = DB::table('fcm_tokens')
             ->select('fcm_token')
             ->where('user_id', '=', $user_id)
             ->where('enabled', '=', 1)
             ->get();
 
-        if (!empty($all_fcm_tokens)) {
-            foreach ($all_fcm_tokens as $one_fcm_token) {
-                $message->addRecipient(new Device($one_fcm_token->fcm_token));
-            }
-            $client->send($message);
-        };
 
+        if (!empty($all_fcm_tokens)) {
+            $all_tokens = array();
+            foreach ($all_fcm_tokens as $one_fcm_token) {
+                array_push($all_tokens, $one_fcm_token->fcm_token);
+            }
+
+            $result = $this->messaging->validateRegistrationTokens($all_tokens);
+
+            $validated_tokens = array();
+
+            foreach ($all_tokens as $one_token) {
+                if (in_array($one_token, $result['valid'])) {
+                    array_push($validated_tokens, $one_token);
+                }
+            }
+
+            $config = AndroidConfig::fromArray([
+                'ttl' => '10800s',
+                'notification' => [
+                    'icon' => 'ic_baseline_notifications_active_24',
+                    'color' => '#1C3879',
+                    'sound' => 'default',
+                ],
+            ]);
+
+            $notification = Notification::fromArray([
+                'title' => $title,
+                'body' => $body
+            ]);
+
+            $message = CloudMessage::new()
+                ->withNotification($notification)
+                ->withHighestPossiblePriority()
+                ->withAndroidConfig($config);
+
+            if (is_array($validated_tokens) && !empty($validated_tokens)) {
+                $send_status = $this->messaging->sendMulticast($message, $validated_tokens);
+
+                if ($send_status->hasFailures()) {
+                    foreach ($send_status->failures()->getItems() as $failure) {
+                        echo $failure->error()->getMessage() . PHP_EOL;
+                    }
+                }
+                unset($validated_tokens, $all_tokens, $all_fcm_tokens, $message, $notification, $config, $send_status);
+            }
+
+        };
 
     }
 }
