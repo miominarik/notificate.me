@@ -10,7 +10,7 @@
                 <ul>
                     <li><a class="nav-link scrollto" href="/">{{ __('home_page.menu_home') }}</a></li>
                     <li><a class="nav-link scrollto" href="/#services">{{ __('home_page.menu_services') }}</a></li>
-                    <li><a class="nav-link scrollto" href="/#pricing">{{ __('home_page.menu_pricing') }}</a></li>
+                    {{--<li><a class="nav-link scrollto" href="/#pricing">{{ __('home_page.menu_pricing') }}</a></li>--}}
                     <li><a class="nav-link scrollto" href="/#contact">{{ __('home_page.menu_contact') }}</a></li>
                     <div class="vr me-2 ms-2" style="color: white;"></div>
                     @guest
@@ -24,7 +24,7 @@
                 <ul>
                     <li><a class="nav-link scrollto" href="#hero">{{ __('home_page.menu_home') }}</a></li>
                     <li><a class="nav-link scrollto" href="#services">{{ __('home_page.menu_services') }}</a></li>
-                    <li><a class="nav-link scrollto" href="#pricing">{{ __('home_page.menu_pricing') }}</a></li>
+                    {{--<li><a class="nav-link scrollto" href="#pricing">{{ __('home_page.menu_pricing') }}</a></li>--}}
                     <li><a class="nav-link scrollto" href="#contact">{{ __('home_page.menu_contact') }}</a></li>
                     <div class="vr me-2 ms-2" style="color: white;"></div>
                     @guest

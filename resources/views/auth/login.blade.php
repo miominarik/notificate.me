@@ -56,7 +56,7 @@
                                 <div class="p-2 bd-highlight"><a
                                         href="{{ route('password.request') }}">{{ __('auth.forgot_pass') }}</a></div>
                             </div>
-                            <hr class="my-4">
+                            {{--<hr class="my-4">
                             <div class="d-grid gap-2 mb-2">
                                 <a href="{{route('oauth.apple-login')}}" class="btn btn-block btn-social"
                                    style="background-color: #050708; color: white">
@@ -73,7 +73,7 @@
                                 <a href="{{route('oauth.google-login')}}" class="btn btn-block btn-social btn-google">
                                     <span class="fa-brands fa-google"></span> {{__('auth.login_google')}}
                                 </a>
-                            </div>
+                            </div>--}}
                         </div>
                     </div>
                 </div>

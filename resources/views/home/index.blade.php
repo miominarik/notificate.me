@@ -92,9 +92,9 @@
         @include('home.includes.services')
         <!-- End Services Section -->
 
-        <!-- ======= Pricing Section ======= -->
+        {{--<!-- ======= Pricing Section ======= -->
         @include('home.includes.pricing')
-        <!-- End Pricing Section -->
+        <!-- End Pricing Section -->--}}
 
         <!-- ======= Contact Section ======= -->
         @include('home.includes.contact')
