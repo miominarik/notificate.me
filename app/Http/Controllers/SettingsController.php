@@ -24,18 +24,6 @@ class SettingsController extends Controller
             'settings_data' => DB::table('users_settings')
                 ->where('user_id', Auth::id())
                 ->get(),
-            'apple_oauth_status' => DB::table('users')
-                ->select('apple_id')
-                ->where('id', Auth::id())
-                ->get(),
-            'google_oauth_status' => DB::table('users')
-                ->select('google_id')
-                ->where('id', Auth::id())
-                ->get(),
-            'microsoft_oauth_status' => DB::table('users')
-                ->select('microsoft_id')
-                ->where('id', Auth::id())
-                ->get(),
             'modules_status' => DB::table('modules')
                 ->select('module_sms')
                 ->where('user_id', Auth::id())
