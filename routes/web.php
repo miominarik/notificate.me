@@ -53,6 +53,7 @@ Route::get('/app', function () {
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(function () {
+    //Tasks
     Route::get('tasks/{task_id?}', 'App\Http\Controllers\TasksController@index')->name('tasks.index');
     Route::post('tasks', 'App\Http\Controllers\TasksController@store')->name('tasks.store');
     Route::post('tasks/{task}/edit', 'App\Http\Controllers\TasksController@edit')->name('tasks.edit');
@@ -60,6 +61,13 @@ Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(
     Route::put('tasks/{task}', 'App\Http\Controllers\TasksController@update')->name('tasks.update');
     Route::delete('tasks/{task}', 'App\Http\Controllers\TasksController@destroy')->name('tasks.destroy');
     Route::put('tasks/complete/{task}', "App\Http\Controllers\TasksController@complete")->name('tasks.complete');
+    Route::post('tasks/upload_file', "App\Http\Controllers\TasksController@Upload_File")->name('tasks.upload_file');
+
+    //Files
+    Route::post('tasks/{task}/all_files', 'App\Http\Controllers\TasksController@Show_All_files')->name('tasks.all_files');
+    Route::get('files/{file_id}/download', 'App\Http\Controllers\TasksController@Download_file')->name('files.download_file');
+
+    //Settings
     Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');
     Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
     Route::post('settings/change_password', "App\Http\Controllers\SettingsController@change_password")->name('settings.change_password');

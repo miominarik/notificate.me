@@ -37,5 +37,11 @@ return [
     'history_btn' => 'View history',
     'task_type' => 'Task type',
     'one_time' => 'Disposable',
-    'many_time' => 'Repetitive'
+    'many_time' => 'Repetitive',
+    'files_btn' => 'Files',
+    'files_upload_title' => 'Upload new file',
+    'files_btn_upload' => 'Upload',
+    'files_no_file' => 'No files',
+    'files_upload_error' => 'Failed to upload file',
+    'files_upload_big' => 'The file is too large. The maximum size is 30 MB',
 ];

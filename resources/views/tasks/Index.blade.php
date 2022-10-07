@@ -83,7 +83,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            @elseif ((new \Jenssegers\Agent\Agent())->isMobile() == true || (new \Jenssegers\Agent\Agent())->isTable() == true)
+                            @elseif ((new \Jenssegers\Agent\Agent())->isMobile() == TRUE || (new \Jenssegers\Agent\Agent())->isTable() == TRUE)
                                 @isset($all_enabled_tasks)
                                     @forelse ($all_enabled_tasks as $item)
                                         @php
@@ -333,6 +333,8 @@
                                     onclick="delete_task();">{{ __('tasks.remove_button') }}</button>
                             <button type="button" id="show_history_btn" class="btn btn-own-secondary"
                                     style="display: none;">{{ __('tasks.history_btn') }}</button>
+                            <button type="button" class="btn btn-own-purple"
+                                    id="show_files_btn">{{__('tasks.files_btn')}}</button>
                         </div>
                     </div>
                 @else
@@ -364,7 +366,6 @@
     </div>
 
     {{-- Offcanvas to show history --}}
-
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasShowHistory"
          aria-labelledby="offcanvasShowHistoryLabel" data-bs-keyboard="false">
         <div class="offcanvas-header">
@@ -374,6 +375,46 @@
         <div class="offcanvas-body">
             <div id="history_list">
             </div>
+        </div>
+    </div>
+
+    {{-- Offcanvas to show files --}}
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasShowFiles"
+         aria-labelledby="offcanvasShowFilesLabel" data-bs-keyboard="false">
+        <div class="offcanvas-header">
+            <button type="button" class="btn btn-own-primary" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false"
+                    aria-controls="flush-collapseOne">{{__('tasks.files_upload_title')}}
+            </button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="row">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                    <div class="accordion-item">
+                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                             aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <form action="{{route('tasks.upload_file')}}" method="POST"
+                                          enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name="task_id" id="file_upload_task_id">
+                                        <div class="input-group mb-3">
+                                            <input type="file" class="form-control" name="uploading_file">
+                                            <button class="btn btn-own-primary"
+                                                    type="submit">
+                                                {{__('tasks.files_btn_upload')}}</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="files_list">{{__('tasks.files_no_file')}}</div>
         </div>
     </div>
 
