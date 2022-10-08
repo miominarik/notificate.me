@@ -356,6 +356,8 @@
                             <div class="d-grid gap-2 mt-2">
                                 <button type="button" id="show_history_btn" class="btn btn-own-secondary"
                                         style="display: none;">{{ __('tasks.history_btn') }}</button>
+                                <button type="button" class="btn btn-own-purple"
+                                        id="show_files_btn">{{__('tasks.files_btn')}}</button>
                             </div>
                         </div>
                     </div>

@@ -44,7 +44,6 @@ function ShowHistoryTask(task_id) {
 function ShowFiles(task_id) {
     axios.post('/tasks/' + task_id + '/all_files')
     .then(function (response) {
-        console.log(response);
 
         let final_html = "";
 
