@@ -126,4 +126,3 @@ Route::get('/auth/oauth/microsoft', function () {
 Route::post('/auth/oauth/callback/apple', "App\Http\Controllers\Auth\OauthController@AppleOauth");
 Route::get('/auth/oauth/callback/google', "App\Http\Controllers\Auth\OauthController@GoogleOauth");
 Route::get('/auth/oauth/callback/microsoft', "App\Http\Controllers\Auth\OauthController@MicrosoftOauth");
-Route::get('/fcm_register/{token}/{device_name}/{device_model}/{android_id}', "App\Http\Controllers\ApiController@FCM_Token");

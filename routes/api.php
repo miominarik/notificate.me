@@ -19,3 +19,4 @@ Route::get('/main_check_agent_sms', "App\Http\Controllers\ApiController@AgentChe
 Route::get('/main_check_agent_fcm', "App\Http\Controllers\ApiController@AgentCheckFCM")->middleware(WhiteListIpAddressessMiddleware::class);
 Route::get('/unsubscribe/{user_email}', "App\Http\Controllers\SettingsController@Email_unsubscribe");
 Route::get('/ics/public/{hash}', "App\Http\Controllers\CalendarController@GenerateICS");
+Route::post('/fcm_register', "App\Http\Controllers\ApiController@FCM_Token");
