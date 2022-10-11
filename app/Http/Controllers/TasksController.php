@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CompleteTaskRequest;
 use App\Http\Requests\EditTaskRequest;
 use App\Http\Requests\StoreTaskRequest;
-use Aws\S3\S3Client;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,15 +14,6 @@ use Illuminate\Support\Facades\Storage;
 
 class TasksController extends Controller
 {
-    public function __construct()
-    {
-        $this->S3_region = 'United States (Central)';
-        $this->S3_endpoint = 'https://usc1.contabostorage.com';
-        $this->S3_key = 'edc4b47e3e534f5d99f11ddbe7e4d61a';
-        $this->S3_secret = 'b24fe22dedf620429d52162955ef3c18';
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -260,44 +250,23 @@ class TasksController extends Controller
         return response()->json($return_data, 200);
     }
 
-    private function CreateS3Connection()
-    {
-        return new S3Client([
-            'version' => 'latest',
-            'region' => $this->S3_region,
-            'endpoint' => $this->S3_endpoint,
-            'use_path_style_endpoint' => TRUE,
-            'credentials' => [
-                'key' => $this->S3_key,
-                'secret' => $this->S3_secret,
-            ],
-        ]);
-    }
-
     public function Upload_File(Request $request)
     {
         if ($request->hasFile('uploading_file')) {
             if ($request->file('uploading_file')->getSize() < 31457280) {
                 if ($request->has('task_id')) {
                     $task_id = $request->input('task_id');
+                    $path = $request->file('uploading_file')->store('files');
                     $name = $request->file('uploading_file')->getClientOriginalName();
-                    $name_hash = hash('sha512', $name . Carbon::now()->timestamp) . "." . pathinfo($name, PATHINFO_EXTENSION);
                     $size = $request->file('uploading_file')->getSize();
 
-                    $this->CreateS3Connection()->putObject([
-                        'Bucket' => "notificateme",
-                        'Key' => $name_hash,
-                        'Body' => fopen($request->file('uploading_file'), 'r'),
-                        'ACL' => 'public-read',
-                    ]);
-
-                    if (!empty($name_hash) && !empty($name)) {
+                    if (!empty($path) && !empty($name)) {
                         DB::table('files')
                             ->insert([
                                 'task_id' => $task_id,
                                 'user_id' => Auth::id(),
                                 'file_name' => $name,
-                                'file_url' => $name_hash,
+                                'file_url' => $path,
                                 'file_size' => $size,
                                 'created_at' => Carbon::now()
                             ]);
@@ -346,19 +315,7 @@ class TasksController extends Controller
             ->get();
 
         if (isset($verify_my_file[0])) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="' . $verify_my_file[0]->file_name . '"');
-            header('Content-Transfer-Encoding: binary');
-            header('Connection: Keep-Alive');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Pragma: public');
-            $result = $this->CreateS3Connection()->getObject([
-                'Bucket' => 'notificateme',
-                'Key' => $verify_my_file[0]->file_url,
-            ]);
-            echo $result['Body'];
+            return Storage::download($verify_my_file[0]->file_url, $verify_my_file[0]->file_name);
         };
         return redirect(route('tasks.index'));
     }
