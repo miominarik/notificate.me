@@ -2,9 +2,12 @@ var glower = document.getElementById('notif_bell');
 
 let empty_list_text = "";
 
-if (empty_list_text == "") {
-    empty_list_text = document.getElementById('files_list').innerHTML;
+if (document.getElementById('files_list')) {
+    if (empty_list_text == "") {
+        empty_list_text = document.getElementById('files_list').innerHTML;
+    }
 }
+
 
 if (glower) {
     window.setInterval(function () {
@@ -49,8 +52,8 @@ function ShowFiles(task_id) {
 
         if (response.data.length > 0) {
             response.data.forEach(element => {
-
-                final_html += '<div class="card me-4 mb-4 file_card"  onclick="window.location.replace(\'https://notificate.me/files/' + element.id + '/download\')">\n' +
+                var host = window.location.protocol + "//" + window.location.host;
+                final_html += '<div class="card me-4 mb-4 file_card"  onclick="window.location.replace(\'' + host + '/files/' + element.id + '/download\')">\n' +
                     '  <img src="https://notificate.me/images/file_avatar_new.png" class="card-img-top" alt="...">\n' +
                     '  <div class="card-body">\n' +
                     '    <h5 class="text-muted text-truncate">' + element.file_name + '</h5>\n' +

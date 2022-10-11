@@ -6,9 +6,10 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "aws/aws-sdk-php": "^3.238",
         "bulkgate/sms": "^2.1",
         "doctrine/dbal": "^3.3",
-        "firebase/php-jwt": "^6.2",
+        "firebase/php-jwt": "^6.3",
         "guzzlehttp/guzzle": "^7.2",
         "jenssegers/agent": "^2.6",
         "kreait/firebase-php": "^6.9",
