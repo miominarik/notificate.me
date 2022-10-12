@@ -74,6 +74,7 @@ class RegisterController extends Controller
 
         DB::table('users_settings')->insert([
             'user_id' => $query->id,
+            'language' => 'sk',
             'created_at' => Carbon::now()
         ]);
         DB::table('modules')->insert([
