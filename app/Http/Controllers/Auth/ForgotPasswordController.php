@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\VerifyGoogleRecaptcha;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
@@ -18,11 +17,6 @@ class ForgotPasswordController extends Controller
     | your application to your users. Feel free to explore this trait.
     |
     */
-
-    public function __construct()
-    {
-        $this->middleware(VerifyGoogleRecaptcha::class);
-    }
 
     use SendsPasswordResetEmails;
 }

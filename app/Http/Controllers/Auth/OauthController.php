@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\VerifyGoogleRecaptcha;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
@@ -16,16 +15,6 @@ use Illuminate\Support\Str;
 
 class OauthController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware(VerifyGoogleRecaptcha::class);
-    }
-
     /**
      * AppleOath
      *

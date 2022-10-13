@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\VerifyGoogleRecaptcha;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Carbon\Carbon;
@@ -42,7 +41,6 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->middleware(VerifyGoogleRecaptcha::class);
     }
 
     /**
