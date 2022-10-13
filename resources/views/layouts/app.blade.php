@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    @if(env('APP_DEBUG') == false)
+    @if(env('APP_DEBUG') == FALSE)
         @if((new \Jenssegers\Agent\Agent())->isDesktop())
             <!-- Start cookieyes banner -->
             <script id="cookieyes" type="text/javascript"
@@ -245,6 +245,17 @@
         integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ asset('js/main.js') }}" defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render={{env('RECAPTCHA_V3_SITE_KEY')}}"></script>
+<script>
+    function submitPost(g_recaptcha_element, form) {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('{{env('RECAPTCHA_V3_SITE_KEY')}}', {action: 'validate_captcha'}).then(function (token) {
+                document.getElementById(g_recaptcha_element).value = token;
+                document.getElementById(form).submit();
+            });
+        });
+    }
+</script>
 </body>
 
 </html>

@@ -23,8 +23,9 @@
 
             <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left">
                 <form method="POST" action="{{ route('contact.send_mail') }}" class="php-email-form">
-                    {!! GoogleReCaptchaV3::renderField('contact_id', 'verify') !!}
                     @csrf
+                    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+                    <input type="hidden" name="action" value="validate_captcha">
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <input type="text" name="name" class="form-control" id="name"
@@ -53,7 +54,8 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <button type="submit">{{ __('home_page.contact_send') }}</button>
+                        <button type="submit" id="contact_form_submit_btn" style="display: none;"></button>
+                        <button type="button" onclick="event.preventDefault(); submitPost();" >{{ __('home_page.contact_send') }}</button>
                     </div>
                 </form>
 
@@ -61,4 +63,3 @@
         </div>
     </div>
 </section>
-{!! GoogleReCaptchaV3::init() !!}

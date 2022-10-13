@@ -12,6 +12,9 @@ class HomeController extends Controller
 
     public function SendContactMail(ContactMailRequest $request)
     {
+
+        $this->VerifyRecaptcha($request);
+
         $validated = $request->validated();
 
         if (!empty($validated)) {

@@ -8,9 +8,10 @@
                     <div class="card shadow-2-strong" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">
                             <h3 class="mb-5">{{ __('auth.login') }}</h3>
-                            <form method="POST" action="{{ route('login') }}">
+                            <form method="POST" action="{{ route('login') }}" id="form_f4jkd23" onsubmit="event.preventDefault();submitPost('g-recaptcha-response', this.id);">
                                 @csrf
-                                {!! GoogleReCaptchaV3::renderField('login_id', 'verify') !!}
+                                <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+                                <input type="hidden" name="action" value="validate_captcha">
                                 <div class="form-outline mb-4">
                                     <input type="email" id="email" name="email"
                                            class="form-control form-control-lg @error('email') is-invalid @enderror"
@@ -80,5 +81,4 @@
             </div>
         </div>
     </section>
-    {!! GoogleReCaptchaV3::init() !!}
 @endsection

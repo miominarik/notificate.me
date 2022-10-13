@@ -89,6 +89,8 @@ class LoginController extends Controller
     public function login(Request $request)
     {
 
+        $this->VerifyRecaptcha($request);
+
         $get_status = DB::table('users')
             ->select('blocked')
             ->where('email', $request->email)

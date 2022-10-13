@@ -2,7 +2,7 @@
 <html lang="sk">
 
 <head>
-    @if(env('APP_DEBUG') == false)
+    @if(env('APP_DEBUG') == FALSE)
         @if((new \Jenssegers\Agent\Agent())->isDesktop())
             <!-- Start cookieyes banner -->
             <script id="cookieyes" type="text/javascript"
@@ -146,6 +146,17 @@
 <!-- Template Main JS File -->
 <script src="{{ asset('home_page_assets/js/main.js') }}"></script>
 
+<script src="https://www.google.com/recaptcha/api.js?render={{env('RECAPTCHA_V3_SITE_KEY')}}"></script>
+<script>
+    function submitPost() {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('{{env('RECAPTCHA_V3_SITE_KEY')}}', {action: 'validate_captcha'}).then(function (token) {
+                document.getElementById('g-recaptcha-response').value = token;
+                document.getElementById('contact_form_submit_btn').click();
+            });
+        });
+    }
+</script>
 </body>
 
 </html>

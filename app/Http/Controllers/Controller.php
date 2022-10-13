@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Firebase\JWT\Key;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -85,6 +86,28 @@ class Controller extends BaseController
                 'token' => $token,
                 'last_used' => Carbon::now()
             ]);
+    }
+
+    public function VerifyRecaptcha(Request $request)
+    {
+        if ($request->input('action') !== NULL && $request->input('g-recaptcha-response') !== NULL && $request->input('action') === 'validate_captcha') {
+            $captcha = $request->input('g-recaptcha-response');
+        } else {
+            $captcha = FALSE;
+        };
+
+        if ($captcha == FALSE) {
+            return die("Captcha error");
+        } else {
+            $secret = env('RECAPTCHA_V3_SECRET_KEY');
+            $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $secret . "&response=" . $captcha . "&remoteip=" . $request->ip());
+            $response = json_decode($response);
+
+            if ($response->success !== TRUE || $response->score < 0.7 || $response->action !== 'validate_captcha') {
+                return die("Captcha error");
+            };
+        }
+
     }
 
 }
