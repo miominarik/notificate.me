@@ -256,7 +256,7 @@ class TasksController extends Controller
             if ($request->file('uploading_file')->getSize() < 31457280) {
                 if ($request->has('task_id')) {
                     $task_id = $request->input('task_id');
-                    $path = $request->file('uploading_file')->store('files');
+                    $path = $request->file('uploading_file')->store('clients_files');
                     $name = $request->file('uploading_file')->getClientOriginalName();
                     $size = $request->file('uploading_file')->getSize();
 
