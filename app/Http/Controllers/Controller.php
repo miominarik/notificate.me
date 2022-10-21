@@ -21,7 +21,12 @@ class Controller extends BaseController
 
     public function JWT_encode($data)
     {
-        $decorder_key = Cookie::get('token');
+        if (Cookie::has('token')) {
+            $decorder_key = Cookie::get('token');
+        } else {
+            $decorder_key = "NotificateME578565475GFFGGG35677866856GJGHFJHG2G3FFG2HGHG3HTR627868762786GHJG3HG2J2UI63762763HGH2HJ3G2";
+        };
+
         $data = [$data];
 
         return JWT::encode($data, $decorder_key, 'HS512');
@@ -29,7 +34,11 @@ class Controller extends BaseController
 
     public function JWT_decode($data)
     {
-        $decorder_key = Cookie::get('token');
+        if (Cookie::has('token')) {
+            $decorder_key = Cookie::get('token');
+        } else {
+            $decorder_key = "NotificateME578565475GFFGGG35677866856GJGHFJHG2G3FFG2HGHG3HTR627868762786GHJG3HG2J2UI63762763HGH2HJ3G2";
+        };
         return (array)JWT::decode($data, new Key($decorder_key, 'HS512'));
     }
 

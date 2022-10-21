@@ -23,7 +23,7 @@ class CalendarController extends Controller
         $DB_data = DB::table('tasks')
             ->select('id', 'task_name', 'task_note', 'task_next_date')
             ->where('user_id', Auth::id())
-            ->where('task_enabled', true);
+            ->where('task_enabled', TRUE);
 
         if (isset($request->start) && !empty($request->start) && isset($request->end) && !empty($request->end)) {
             $odkedy = Carbon::createFromDate($request->start)->format('Y-m-d');
@@ -76,59 +76,59 @@ class CalendarController extends Controller
     public function GenerateICS(string $hash)
     {
         if (isset($hash) && !empty($hash)) {
-            $decrypt_user = $this->JWT_decode($hash)[0];
 
-            if (isset($decrypt_user) && !empty($decrypt_user)) {
+            if (isset($hash) && !empty($hash)) {
                 //Získanie eventov z DB
-                $events = DB::table('tasks')
-                    ->where('user_id', '=', $decrypt_user)
-                    ->where('task_enabled', '=', 1)
+
+                $user_id = DB::table('users')
+                    ->select('id')
+                    ->where('email', '=', $hash)
                     ->get();
 
-                //Založenie icalu
-                if (isset($events) && !empty($events)) {
-                    //Pridanie eventov
-                    $array_events = array();
-                    foreach ($events as $one_event) {
-                        $event = Event::create()
-                            ->name($one_event->task_name)
-                            ->description(!empty($one_event->task_note) ? $one_event->task_note : '')
-                            ->uniqueIdentifier('notificateme_' . $one_event->id)
-                            ->createdAt(new \DateTime(Carbon::parse($one_event->created_at)->format('Y-m-d')))
-                            ->startsAt(new \DateTime($one_event->task_next_date . '00:00'))
-                            ->endsAt(new \DateTime($one_event->task_next_date . '23:59'))
-                            ->fullDay();
+                if (isset($user_id[0])) {
+                    $events = DB::table('tasks')
+                        ->where('user_id', '=', $user_id[0]->id)
+                        ->where('task_enabled', '=', 1)
+                        ->get();
 
-                        if ($one_event->task_type == 1) {
-                            $repeat_value = match ($one_event->task_repeat_type) {
-                                1 => 'daily',
-                                2 => 'weekly',
-                                3 => 'monthly',
-                                4 => 'yearly'
+                    //Založenie icalu
+                    if (isset($events) && !empty($events)) {
+                        //Pridanie eventov
+                        $array_events = array();
+                        foreach ($events as $one_event) {
+                            $event = Event::create()
+                                ->name($one_event->task_name)
+                                ->description(!empty($one_event->task_note) ? $one_event->task_note : '')
+                                ->uniqueIdentifier('notificateme_' . $one_event->id)
+                                ->createdAt(new \DateTime(Carbon::parse($one_event->created_at)->format('Y-m-d')))
+                                ->startsAt(new \DateTime($one_event->task_next_date . '00:00'))
+                                ->endsAt(new \DateTime($one_event->task_next_date . '23:59'))
+                                ->fullDay();
+
+                            if ($one_event->task_type == 1) {
+                                $repeat_value = match ($one_event->task_repeat_type) {
+                                    1 => 'daily',
+                                    2 => 'weekly',
+                                    3 => 'monthly',
+                                    4 => 'yearly'
+                                };
+                                $event->rrule(RRule::frequency(RecurrenceFrequency::$repeat_value())->interval($one_event->task_repeat_value));
                             };
-                            $event->rrule(RRule::frequency(RecurrenceFrequency::$repeat_value())->interval($one_event->task_repeat_value));
-                        };
 
-                        array_push($array_events, $event);
+                            array_push($array_events, $event);
+                        }
+                        $calendar = Calendar::create('Notificate.me ' . __('layout.menu_calendar'))
+                            ->event($array_events)
+                            ->withoutAutoTimezoneComponents()
+                            ->refreshInterval(15);
+
+                        return response($calendar->get(), 200, [
+                            'Content-Type' => 'text/calendar; charset=utf-8',
+                            'Content-Disposition' => 'attachment; filename="NotificateMeCalendar.ics"',
+                        ]);
                     }
-                    $calendar = Calendar::create('Notificate.me ' . __('layout.menu_calendar'))
-                        ->event($array_events)
-                        ->withoutAutoTimezoneComponents()
-                        ->refreshInterval(15);
-
-                    return response($calendar->get(), 200, [
-                        'Content-Type' => 'text/calendar; charset=utf-8',
-                        'Content-Disposition' => 'attachment; filename="NotificateMeCalendar.ics"',
-                    ]);
                 }
-
             }
-
-
         }
-
-
     }
-
-
 }

@@ -28,7 +28,7 @@ class SettingsController extends Controller
                 ->select('module_sms')
                 ->where('user_id', Auth::id())
                 ->get(),
-            'calendar_hash' => $this->JWT_encode(Auth::id()),
+            'calendar_hash' => Auth::user()->email,
             'my_devices' => DB::table('fcm_tokens')
                 ->select('device_model', 'updated_at')
                 ->where('user_id', '=', Auth::id())
