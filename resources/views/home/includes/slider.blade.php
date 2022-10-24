@@ -15,10 +15,8 @@
                 @else
                     <h2 class="animate__animated animate__fadeInDown">{{ __('home_page.header') }}</h2>
                     <p class="animate__animated fanimate__adeInUp">{{ __('home_page.sub_header') }}</p>
-                    <a href="#services"
-                       class="btn-get-started animate__animated animate__fadeInUp scrollto">{{ __('home_page.more_info') }}</a>
+                    <a href='https://play.google.com/store/apps/details?id=com.miucode.notificateme&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1' target="_blank"><img alt='Teraz na Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/sk_badge_web_generic.png' width="200rem"/></a>
                 @endif
-
             </div>
         </div>
 

@@ -37,12 +37,14 @@
     <meta name="description"
           content="Notificate.me Vám pomôže s evidenciou Vašich úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy."/>
     <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vašich úloh">
-    <meta name="author" content="Miroslav Minárik"/>
-    <meta name="robots" content="index,follow"/>
     <meta name="apple-mobile-web-app-title" content="Notificate.me">
     <meta name="application-name" content="Notificate.me"/>
     <meta name="msapplication-tooltip" content="Notificate.me">
     <meta name="msapplication-starturl" content="/"/>
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="revisit-after" content="30 days">
+    <meta name="author" content="Miroslav Minárik">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -89,7 +91,19 @@
         @endif
     @else
         <!-- ======= Services Section ======= -->
+        @include('home.includes.info')
+        <!-- End Services Section -->
+
+        <!-- ======= Services Section ======= -->
         @include('home.includes.services')
+        <!-- End Services Section -->
+
+        <!-- ======= Services Section ======= -->
+        @include('home.includes.app')
+        <!-- End Services Section -->
+
+        <!-- ======= Services Section ======= -->
+        @include('home.includes.screenshots')
         <!-- End Services Section -->
 
         {{--<!-- ======= Pricing Section ======= -->
@@ -112,9 +126,6 @@
             <ul class="list-inline">
                 <li class="list-inline-item"><a href="/gdpr">{{__('home_page.gdpr')}}</a></li>
                 <li class="list-inline-item"><a href="/cookies">{{__('home_page.cookies')}}</a></li>
-                <li class="list-inline-item"><a href="https://miucode.cronitorstatus.com/" target="_blank">System
-                        status</a>
-                </li>
             </ul>
         </div>
         <div class="copyright">
