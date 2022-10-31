@@ -327,44 +327,46 @@ class ApiController extends Controller
                 array_push($all_tokens, $one_fcm_token->fcm_token);
             }
 
-            $result = $this->messaging->validateRegistrationTokens($all_tokens);
+            if (count($all_tokens) > 0) {
+                $result = $this->messaging->validateRegistrationTokens($all_tokens);
 
-            $validated_tokens = array();
+                $validated_tokens = array();
 
-            foreach ($all_tokens as $one_token) {
-                if (in_array($one_token, $result['valid'])) {
-                    array_push($validated_tokens, $one_token);
-                }
-            }
-
-            $config = AndroidConfig::fromArray([
-                'ttl' => '10800s',
-                'notification' => [
-                    'icon' => 'ic_baseline_notifications_active_24',
-                    'color' => '#1C3879',
-                    'sound' => 'default',
-                ],
-            ]);
-
-            $notification = Notification::fromArray([
-                'title' => $title,
-                'body' => $body
-            ]);
-
-            $message = CloudMessage::new()
-                ->withNotification($notification)
-                ->withHighestPossiblePriority()
-                ->withAndroidConfig($config);
-
-            if (is_array($validated_tokens) && !empty($validated_tokens)) {
-                $send_status = $this->messaging->sendMulticast($message, $validated_tokens);
-
-                if ($send_status->hasFailures()) {
-                    foreach ($send_status->failures()->getItems() as $failure) {
-                        echo $failure->error()->getMessage() . PHP_EOL;
+                foreach ($all_tokens as $one_token) {
+                    if (in_array($one_token, $result['valid'])) {
+                        array_push($validated_tokens, $one_token);
                     }
                 }
-                unset($validated_tokens, $all_tokens, $all_fcm_tokens, $message, $notification, $config, $send_status);
+
+                $config = AndroidConfig::fromArray([
+                    'ttl' => '10800s',
+                    'notification' => [
+                        'icon' => 'ic_baseline_notifications_active_24',
+                        'color' => '#1C3879',
+                        'sound' => 'default',
+                    ],
+                ]);
+
+                $notification = Notification::fromArray([
+                    'title' => $title,
+                    'body' => $body
+                ]);
+
+                $message = CloudMessage::new()
+                    ->withNotification($notification)
+                    ->withHighestPossiblePriority()
+                    ->withAndroidConfig($config);
+
+                if (is_array($validated_tokens) && !empty($validated_tokens) && count($validated_tokens) > 0) {
+                    $send_status = $this->messaging->sendMulticast($message, $validated_tokens);
+
+                    if ($send_status->hasFailures()) {
+                        foreach ($send_status->failures()->getItems() as $failure) {
+                            echo $failure->error()->getMessage() . PHP_EOL;
+                        }
+                    }
+                    unset($validated_tokens, $all_tokens, $all_fcm_tokens, $message, $notification, $config, $send_status);
+                }
             }
 
         };
