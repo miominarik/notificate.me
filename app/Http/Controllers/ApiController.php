@@ -43,7 +43,8 @@ class ApiController extends Controller
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
             ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users.email', 'users_settings.enable_email_notification', 'users_settings.notification_time', 'users_settings.language')
             ->where([
-                'task_enabled' => TRUE
+                'task_enabled' => TRUE,
+                'notification' => TRUE
             ])
             ->get();
 
@@ -113,7 +114,8 @@ class ApiController extends Controller
             ->where([
                 'tasks.task_enabled' => TRUE,
                 'tasks.sms_sent' => FALSE,
-                'modules.module_sms' => TRUE
+                'modules.module_sms' => TRUE,
+                'tasks.notification' => TRUE
             ])
             ->get();
 
@@ -261,7 +263,8 @@ class ApiController extends Controller
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
             ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users_settings.notification_time', 'tasks.user_id')
             ->where([
-                'task_enabled' => TRUE
+                'task_enabled' => TRUE,
+                'notification' => TRUE
             ])
             ->get();
         if (!empty($data)) {

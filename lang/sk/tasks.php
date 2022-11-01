@@ -44,4 +44,5 @@ return [
     'files_no_file' => 'Žiadny súbor',
     'files_upload_error' => 'Súbor sa nepodarilo nahrať',
     'files_upload_big' => 'Súbor je príliš veľký. Maximálna veľkosť je 30 MB',
+    'notification_status' => 'Prajem si zasielať upozornenia o tejto úlohe'
 ];

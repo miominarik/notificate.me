@@ -27,14 +27,14 @@ class TasksController extends Controller
             $task_id = $task_id[0];
 
             $task_pick = DB::table('tasks')
-                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type')
+                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'notification')
                 ->where('user_id', Auth::id())
                 ->where('task_enabled', TRUE)
                 ->where('id', $task_id)
                 ->paginate(10);
         } else {
             $task_pick = DB::table('tasks')
-                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type')
+                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'notification')
                 ->where('user_id', Auth::id())
                 ->where('task_enabled', TRUE)
                 ->orderBy('task_next_date', 'ASC')
@@ -68,6 +68,12 @@ class TasksController extends Controller
                     $validated['task_repeat_type'] = NULL;
                 };
 
+                if (!isset($validated['notification_status']) || is_null($validated['notification_status']) || empty($validated['notification_status']) && $validated['notification_status'] != 1) {
+                    $validated['notification_status'] = FALSE;
+                } else {
+                    $validated['notification_status'] = TRUE;
+                };
+
                 $task = DB::table('tasks')->insertGetId([
                     'user_id' => Auth::id(),
                     'task_name' => $validated['task_name'],
@@ -78,6 +84,7 @@ class TasksController extends Controller
                     'task_repeat_type' => $validated['task_repeat_type'],
                     'task_notification_value' => $validated['task_notification_value'],
                     'task_notification_type' => $validated['task_notification_type'],
+                    'notification' => $validated['notification_status'],
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ]);
@@ -101,7 +108,7 @@ class TasksController extends Controller
     public function edit($task)
     {
         $return_data = DB::table('tasks')
-            ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'task_notification_value', 'task_notification_type', 'task_type')
+            ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'task_notification_value', 'task_notification_type', 'task_type', 'notification')
             ->where('user_id', Auth::id())
             ->where('task_enabled', TRUE)
             ->where('id', $task)
@@ -123,6 +130,12 @@ class TasksController extends Controller
         // Retrieve the validated input data.
         $validated = $request->validated();
 
+        if (!isset($validated['notification_status']) || is_null($validated['notification_status']) || empty($validated['notification_status']) && $validated['notification_status'] != 1) {
+            $validated['notification_status'] = FALSE;
+        } else {
+            $validated['notification_status'] = TRUE;
+        };
+
         if (is_null($validated['task_repeat_value'])) {
             $update_arr = [
                 'task_name' => $validated['task_name'],
@@ -132,6 +145,7 @@ class TasksController extends Controller
                 'task_notification_value' => $validated['task_notification_value'],
                 'task_notification_type' => $validated['task_notification_type'],
                 'task_next_date' => $validated['task_next_date_edit'],
+                'notification' => $validated['notification_status'],
                 'updated_at' => Carbon::now()
             ];
         } else {
@@ -143,6 +157,7 @@ class TasksController extends Controller
                 'task_notification_value' => $validated['task_notification_value'],
                 'task_notification_type' => $validated['task_notification_type'],
                 'task_next_date' => $validated['task_next_date_edit'],
+                'notification' => $validated['notification_status'],
                 'updated_at' => Carbon::now()
             ];
         };

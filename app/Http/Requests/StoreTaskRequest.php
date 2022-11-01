@@ -33,6 +33,7 @@ class StoreTaskRequest extends FormRequest
             'task_repeat_type' => 'required|integer',
             'task_notification_value' => 'required|integer',
             'task_notification_type' => 'required|integer',
+            'notification_status' => 'nullable|boolean',
         ];
     }
 }

@@ -120,6 +120,12 @@ function getDataToEditTaskForm(task_id) {
         document.getElementById('delete_form').action = '/tasks/' + task_id;
         document.getElementById('offcanvasEditForm').action = '/tasks/' + task_id;
 
+        if (response.data[0].notification == 1){
+            document.getElementById('notification_status_edit').checked = true;
+        }else{
+            document.getElementById('notification_status_edit').checked = false;
+        }
+
 
         const offcanvasEditTask = new bootstrap.Offcanvas(document.getElementById(
             'offcanvasEditTask'));

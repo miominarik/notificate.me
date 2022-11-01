@@ -44,4 +44,5 @@ return [
     'files_no_file' => 'No files',
     'files_upload_error' => 'Failed to upload file',
     'files_upload_big' => 'The file is too large. The maximum size is 30 MB',
+    'notification_status' => 'I\'d like to receive notifications about this task'
 ];

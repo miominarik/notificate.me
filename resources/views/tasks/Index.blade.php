@@ -103,8 +103,21 @@
                                                             : {{ $item->task_repeat_value }}
                                                             {{ $item->task_repeat_type }}
                                                         </p>
-                                                        <button type="button" class="btn btn-outline-primary btn-sm"
-                                                                onclick="getDataToEditTaskForm({{ $item->id }})">{{ __('tasks.edit_btn') }}</button>
+                                                        <div class="d-flex justify-content-between">
+                                                            <div></div>
+                                                            <button type="button"
+                                                                    class="btn btn-outline-primary btn-sm ms-4"
+                                                                    onclick="getDataToEditTaskForm({{ $item->id }})">{{ __('tasks.edit_btn') }}</button>
+                                                            <div class="text-muted opacity-50">
+                                                                @if($item->notification == FALSE)
+                                                                    <i class="fa-solid fa-bell-slash"></i>
+                                                                @else
+                                                                    <i class="fa-solid fa-bell"></i>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -222,6 +235,13 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-12 mt-2">
+                        <input class="form-check-input" type="checkbox" value="1" name="notification_status"
+                               id="notification_status" checked>
+                        <label class="form-check-label" for="notification_status">
+                            {{__('tasks.notification_status')}}
+                        </label>
+                    </div>
                 </div>
                 <div class="form-group row">
                     <div class="offset mt-3">
@@ -321,6 +341,13 @@
                                 <option value="4">{{ __('tasks.one_year') }}</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <input class="form-check-input" type="checkbox" value="1" name="notification_status"
+                               id="notification_status_edit" checked>
+                        <label class="form-check-label" for="notification_status">
+                            {{__('tasks.notification_status')}}
+                        </label>
                     </div>
                 </div>
                 @if ((new \Jenssegers\Agent\Agent())->isDesktop())
