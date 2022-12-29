@@ -66,6 +66,8 @@ Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(
     //Files
     Route::post('tasks/{task}/all_files', 'App\Http\Controllers\TasksController@Show_All_files')->name('tasks.all_files');
     Route::get('files/{file_id}/download', 'App\Http\Controllers\TasksController@Download_file')->name('files.download_file');
+    Route::get('files', 'App\Http\Controllers\TasksController@AllFiles')->name('files.all_files');
+    Route::get('files/{file_id}/delete', 'App\Http\Controllers\TasksController@DeleteFile')->name('files.delete');
 
     //Settings
     Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');

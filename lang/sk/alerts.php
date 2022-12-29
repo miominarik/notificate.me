@@ -20,4 +20,7 @@ return [
     'modules_deactivated_error' => 'Modul sa nepodarilo deaktivovaný',
     'modules_deactivated_already' => 'Modul už je deaktivovaný',
     'modules_deactivated_missing' => 'Uvedený modul neexistuje',
+    'files_delete_success' => 'Súbor bol úspešne vymazaný',
+    'files_delete_danger' => 'Súbor sa nepodarilo vymazať',
+    'files_delete_warming' => 'Súbor neexistuje',
 ];

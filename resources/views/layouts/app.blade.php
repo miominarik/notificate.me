@@ -86,10 +86,27 @@
                 <div class="collapse navbar-collapse" id="mainNavbar">
                     @auth
                         <ul class="nav nav-pills">
-                            <li class="nav-item">
-                                <a class="nav-link text-white {{ request()->is('tasks*') ? 'active' : '' }}"
-                                   aria-current="page"
-                                   href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown"
+                                   class="nav-link dropdown-toggle text-white {{ request()->is('tasks*') || request()->is('files*') ? 'active' : '' }}"
+                                   href="#"
+                                   role="button"
+                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('layout.menu_tasks') }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end"
+                                     aria-labelledby="navbarDropdown"
+                                     aria-current="page">
+                                    <a class="dropdown-item {{ request()->is('tasks') ? 'active' : '' }}"
+                                       href="{{ route('tasks.index') }}">
+                                        {{ __('layout.menu_tasks_head') }}
+                                    </a>
+                                    <a class="dropdown-item {{ request()->is('files*') ? 'active' : '' }}"
+                                       href="{{ route('files.all_files') }}">
+                                        {{ __('layout.menu_tasks_files') }}
+                                    </a>
+                                </div>
                             </li>
                             @if($activated_modules->module_calendar)
                                 <li class="nav-item">
@@ -210,11 +227,26 @@
     @auth
         @if((new \Jenssegers\Agent\Agent())->isMobile() ||(new \Jenssegers\Agent\Agent())->isTablet())
             <div class="sticky-footer">
-                <a href="{{ route('tasks.index') }}"
-                   class="sticky-footer mb-1 item {{ request()->is('tasks*') ? 'active' : '' }}">
+                <a id="navbarDropdown"
+                   class="nav-link sticky-footer mb-1 item {{ request()->is('tasks*') || request()->is('files*') ? 'active' : '' }}"
+                   href="#"
+                   role="button"
+                   data-bs-toggle="dropdown">
                     <i class="fa-solid fa-house"></i>
                     {{ __('layout.menu_tasks') }}
                 </a>
+                <div class="dropdown-menu dropdown-menu-end"
+                     aria-labelledby="navbarDropdown"
+                     aria-current="page">
+                    <a class="dropdown-item {{ request()->is('tasks') ? 'active' : '' }}"
+                       href="{{ route('tasks.index') }}">
+                        {{ __('layout.menu_tasks_head') }}
+                    </a>
+                    <a class="dropdown-item {{ request()->is('files*') ? 'active' : '' }}"
+                       href="{{ route('files.all_files') }}">
+                        {{ __('layout.menu_tasks_files') }}
+                    </a>
+                </div>
                 @if($activated_modules->module_calendar)
                     <a href="{{ route('calendar.index') }}"
                        class="sticky-footer mb-1 item {{ request()->is('calendar*') ? 'active' : '' }}">

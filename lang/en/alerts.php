@@ -20,4 +20,7 @@ return [
     'modules_deactivated_error' => 'The module could not be deactivated',
     'modules_deactivated_already' => 'The module is already deactivated',
     'modules_deactivated_missing' => 'The specified module does not exist',
+    'files_delete_success' => 'File was successfully deleted',
+    'files_delete_danger' => 'File could not be deleted',
+    'files_delete_warming' => 'File does not exist',
 ];

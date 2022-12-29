@@ -16,7 +16,6 @@ class TasksController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index($task_id = NULL)
@@ -222,11 +221,11 @@ class TasksController extends Controller
 
                 if ($next_data[0]->task_repeat_type == 1) { //Add x days
                     $new_date = $date->addDays($next_data[0]->task_repeat_value);
-                } elseif ($next_data[0]->task_repeat_type == 2) { //Add x weeks
+                } else if ($next_data[0]->task_repeat_type == 2) { //Add x weeks
                     $new_date = $date->addWeeks($next_data[0]->task_repeat_value);
-                } elseif ($next_data[0]->task_repeat_type == 3) { //Add x months
+                } else if ($next_data[0]->task_repeat_type == 3) { //Add x months
                     $new_date = $date->addMonths($next_data[0]->task_repeat_value);
-                } elseif ($next_data[0]->task_repeat_type == 4) { //Add x months
+                } else if ($next_data[0]->task_repeat_type == 4) { //Add x months
                     $new_date = $date->addYears($next_data[0]->task_repeat_value);
                 };
 
@@ -330,8 +329,65 @@ class TasksController extends Controller
             ->get();
 
         if (isset($verify_my_file[0])) {
-            return Storage::download($verify_my_file[0]->file_url, $verify_my_file[0]->file_name);
+            if (Storage::exists($verify_my_file[0]->file_url)) {
+                return Storage::download($verify_my_file[0]->file_url, $verify_my_file[0]->file_name);
+            }
         };
-        return redirect(route('tasks.index'));
+        return redirect()->back();
+    }
+
+    public function DeleteFile($file_id)
+    {
+        $file_id = $this->JWT_decode($file_id);
+        $verify_my_file = DB::table('files')
+            ->select('file_url', 'file_name')
+            ->where('id', '=', $file_id)
+            ->where('user_id', '=', Auth::id())
+            ->get();
+
+        if (isset($verify_my_file[0])) {
+            if (Storage::exists($verify_my_file[0]->file_url)) {
+                $status = Storage::delete($verify_my_file[0]->file_url);
+                if ($status == TRUE) {
+                    $status_update = DB::table('files')
+                        ->where('id', '=', $file_id)
+                        ->where('user_id', '=', Auth::id())
+                        ->delete();
+                    if ($status_update == TRUE) {
+                        return redirect()->back()->with('status_success', __('alerts.files_delete_success'));
+                    } else {
+                        return redirect()->back()->with('status_danger', __('alerts.files_delete_danger'));
+                    };
+                } else {
+                    return redirect()->back()->with('status_danger', __('alerts.files_delete_danger'));
+                };
+            } else {
+                return redirect()->back()->with('status_warning', __('alerts.files_delete_warming'));
+            };
+        } else {
+            return redirect()->back()->with('status_warning', __('alerts.files_delete_warming'));
+        };
+    }
+
+    public function AllFiles(Request $request)
+    {
+        $all_files = DB::table('files')
+            ->select('files.file_name', 'files.id', 'files.file_size', 'files.created_at', 'tasks.task_name')
+            ->join('tasks', 'tasks.id', '=', 'files.task_id')
+            ->where('files.user_id', '=', Auth::id())
+            ->orderByDesc('files.created_at')
+            ->paginate(15);
+
+        if ($all_files->count() > 0) {
+            foreach ($all_files as $idcko => $file) {
+                $all_files[$idcko]->file_size = $this->formatBytes($file->file_size, 2);
+                $all_files[$idcko]->id = $this->JWT_encode($file->id);
+                $all_files[$idcko]->created_at = Carbon::parse($file->created_at)->format('d.m.Y');
+            }
+        }
+
+        return view('tasks.files.Index', [
+            'all_files' => $all_files
+        ]);
     }
 }

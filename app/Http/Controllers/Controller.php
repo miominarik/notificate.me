@@ -119,4 +119,12 @@ class Controller extends BaseController
 
     }
 
+    public function formatBytes($size, $precision = 2)
+    {
+        $base = log((float)$size, 1024);
+        $suffixes = array('', 'Kb', 'Mb', 'Gb', 'Tb');
+
+        return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
+    }
+
 }
