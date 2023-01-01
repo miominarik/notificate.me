@@ -181,5 +181,6 @@ function SendVerifyCode(device_id, user_id) {
             }
         })
         .catch(function (error) {
-s        });
+            //console.log(error)
+        });
 }
