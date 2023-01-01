@@ -8,9 +8,10 @@
                     <div class="card shadow-2-strong" style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">
                             <h3 class="mb-5">{{ __('auth.register') }}</h3>
-                            <form method="POST" action="{{ route('register') }}">
+                            <form method="POST" action="{{ route('register') }}" id="form_f4jdsdkd23" onsubmit="event.preventDefault();submitPost('g-recaptcha-response', this.id);">
                                 @csrf
-                                {!! GoogleReCaptchaV3::renderField('register_id', 'verify') !!}
+                                <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+                                <input type="hidden" name="action" value="validate_captcha">
                                 <div class="form-outline mb-4">
                                     <input type="email" id="email" name="email"
                                            class="form-control form-control-lg @error('email') is-invalid @enderror"
@@ -56,7 +57,7 @@
                                         href="{{ route('password.request') }}">{{ __('auth.forgot_pass') }}</a></div>
                             </div>
 
-                            <hr class="my-4">
+                            {{--<hr class="my-4">
                             <div class="d-grid gap-2 mb-2">
                                 <a href="{{route('oauth.apple-login')}}" class="btn btn-block btn-social"
                                    style="background-color: #050708; color: white">
@@ -73,7 +74,7 @@
                                 <a href="{{ route('oauth.google-login') }}" class="btn btn-block btn-social btn-google">
                                     <span class="fa-brands fa-google"></span> {{ __('auth.register_google') }}
                                 </a>
-                            </div>
+                            </div>--}}
                             <small>
                                 Registráciou súhlasíte so
                                 <a href="{{ route('gdpr') }}" target="_blank">spracovaním osobných údajov</a>.
@@ -84,5 +85,4 @@
             </div>
         </div>
     </section>
-    {!! GoogleReCaptchaV3::init() !!}
 @endsection

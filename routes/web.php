@@ -53,6 +53,7 @@ Route::get('/app', function () {
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(function () {
+    //Tasks
     Route::get('tasks/{task_id?}', 'App\Http\Controllers\TasksController@index')->name('tasks.index');
     Route::post('tasks', 'App\Http\Controllers\TasksController@store')->name('tasks.store');
     Route::post('tasks/{task}/edit', 'App\Http\Controllers\TasksController@edit')->name('tasks.edit');
@@ -60,9 +61,23 @@ Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(
     Route::put('tasks/{task}', 'App\Http\Controllers\TasksController@update')->name('tasks.update');
     Route::delete('tasks/{task}', 'App\Http\Controllers\TasksController@destroy')->name('tasks.destroy');
     Route::put('tasks/complete/{task}', "App\Http\Controllers\TasksController@complete")->name('tasks.complete');
+    Route::post('tasks/upload_file', "App\Http\Controllers\TasksController@Upload_File")->name('tasks.upload_file');
+
+    //Files
+    Route::post('tasks/{task}/all_files', 'App\Http\Controllers\TasksController@Show_All_files')->name('tasks.all_files');
+    Route::get('files/{file_id}/download', 'App\Http\Controllers\TasksController@Download_file')->name('files.download_file');
+    Route::get('files', 'App\Http\Controllers\TasksController@AllFiles')->name('files.all_files');
+    Route::get('files/{file_id}/delete', 'App\Http\Controllers\TasksController@DeleteFile')->name('files.delete');
+
+    //Settings
     Route::get('settings', "App\Http\Controllers\SettingsController@index")->name('settings.index');
     Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
     Route::post('settings/change_password', "App\Http\Controllers\SettingsController@change_password")->name('settings.change_password');
+    Route::get('settings/disconnect_all_devices', "App\Http\Controllers\SettingsController@disconnect_all_devices")->name('settings.disconnect_all_devices');
+
+    //MFA
+    Route::post('/mfa/checkcode', "App\Http\Controllers\SettingsController@CheckMfaCode")->name('mfa.checkcode');
+    Route::get('/mfa/disablemfa', "App\Http\Controllers\SettingsController@DisableMFA")->name('mfa.disablemfa');
 
     //Calendar
     Route::middleware('check_module:module_calendar')->group(function () {
@@ -75,21 +90,10 @@ Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(
     Route::get('modules', "App\Http\Controllers\ModulesController@index")->name('modules.index');
     Route::get('modules/activate/{module_name}', "App\Http\Controllers\ModulesController@activate_modul")->name('modules.activate_modul');
     Route::get('modules/deactivate/{module_name}', "App\Http\Controllers\ModulesController@deactivate_modul")->name('modules.deactivate_modul');
-
-    //MFA
-    Route::post('mfa/checkcode', "App\Http\Controllers\SettingsController@confirmTwoFactor")->name('mfa.checkcode');
-    Route::get('mfa/disablemfa', "App\Http\Controllers\SettingsController@disableTwoFactorAuth")->name('mfa.disablemfa');
-    Route::get('mfa/generatenewcodes', "App\Http\Controllers\SettingsController@generateNewCodesTwoFactorAuth")->name('mfa.generatenewcodes');
-    Route::view('2fa-required', 'two-factor::notice', [
-        'url' => url('settings')
-    ])->name('2fa.notice');
-    Route::get('2fa-confirm', [\Laragear\TwoFactor\Http\Controllers\ConfirmTwoFactorCodeController::class, 'form'])
-        ->name('2fa.confirm');
-    Route::post('2fa-confirm', [\Laragear\TwoFactor\Http\Controllers\ConfirmTwoFactorCodeController::class, 'confirm']);
 });
 
 //superadmin routes
-Route::middleware(['auth', 'verified', 'superadmin', '2fa.enabled', '2fa.confirm'])->group(function () {
+Route::middleware(['auth', 'verified', 'superadmin'])->group(function () {
     Route::get('superadmin', function () {
         return redirect(route('superadmin.users'));
     })->name('superadmin.index');
@@ -99,6 +103,9 @@ Route::middleware(['auth', 'verified', 'superadmin', '2fa.enabled', '2fa.confirm
     Route::post('superadmin/users/{user_id}/update', "App\Http\Controllers\SuperAdminController@update_users_detail")->name('superadmin.update_users_detail');
     Route::get('superadmin/users/{user_id}/{auth_type}/deauthorization', "App\Http\Controllers\SuperAdminController@users_deauthorization")->name('superadmin.users_deauthorization');
     Route::post('superadmin/users/{user_id}/tooglestatus', "App\Http\Controllers\SuperAdminController@tooglestatus")->name('superadmin.tooglestatus');
+    Route::get('superadmin/logs', "App\Http\Controllers\SuperAdminController@logs")->name('superadmin.logs');
+    Route::get('superadmin/users/{user_id}/removemfa', "App\Http\Controllers\SuperAdminController@removemfa")->name('superadmin.removemfa');
+
 
 });
 

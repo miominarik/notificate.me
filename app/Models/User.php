@@ -7,12 +7,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Laragear\TwoFactor\TwoFactorAuthentication;
-use Laragear\TwoFactor\Contracts\TwoFactorAuthenticatable;
 
-class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, TwoFactorAuthentication;
+    use HasApiTokens, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
     protected $fillable = [
         'email',
         'password',
+        'github_id',
+        'github_token',
         'google_id',
         'google_token',
         'created_at',

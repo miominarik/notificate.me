@@ -1,5 +1,14 @@
 var glower = document.getElementById('notif_bell');
 
+let empty_list_text = "";
+
+if (document.getElementById('files_list')) {
+    if (empty_list_text == "") {
+        empty_list_text = document.getElementById('files_list').innerHTML;
+    }
+}
+
+
 if (glower) {
     window.setInterval(function () {
         glower.classList.toggle('active');
@@ -35,6 +44,38 @@ function ShowHistoryTask(task_id) {
         });
 }
 
+function ShowFiles(task_id) {
+    axios.post('/tasks/' + task_id + '/all_files')
+        .then(function (response) {
+
+            let final_html = "";
+
+            if (response.data.length > 0) {
+                response.data.forEach(element => {
+                    var host = window.location.protocol + "//" + window.location.host;
+                    final_html += '<div class="card me-4 mb-4 file_card"  onclick="window.location.replace(\'' + host + '/files/' + element.id + '/download\')">\n' +
+                        '  <img src="https://notificate.me/images/file_avatar_new.png" class="card-img-top" alt="...">\n' +
+                        '  <div class="card-body">\n' +
+                        '    <h5 class="text-muted text-truncate">' + element.file_name + '</h5>\n' +
+                        '  </div>\n' +
+                        '</div>'
+                });
+            } else {
+                final_html = empty_list_text;
+            }
+
+            document.getElementById('files_list').innerHTML = final_html;
+
+
+            const offcanvasShowFiles = new bootstrap.Offcanvas(document.getElementById(
+                'offcanvasShowFiles'));
+            offcanvasShowFiles.show();
+        })
+        .catch(function (error) {
+            //console.log(error);
+        });
+}
+
 function getDataToEditTaskForm(task_id) {
     axios.post('/tasks/' + task_id + '/edit')
         .then(function (response) {
@@ -60,7 +101,7 @@ function getDataToEditTaskForm(task_id) {
                 document.getElementById('task_type_edit1').checked = true;
 
                 document.getElementById('show_history_btn').setAttribute('onclick', 'ShowHistoryTask(' +
-                    task_id + ')')
+                    task_id + ')');
                 document.getElementById('show_history_btn').removeAttribute('style');
 
                 document.getElementById('form_complete_task').setAttribute('action', '/tasks/complete/' + task_id)
@@ -69,6 +110,8 @@ function getDataToEditTaskForm(task_id) {
 
             }
 
+            document.getElementById('file_upload_task_id').value = response.data[0].id;
+            document.getElementById('show_files_btn').setAttribute('onclick', 'ShowFiles(' + task_id + ')')
             document.getElementById('task_name_edit').value = response.data[0].task_name;
             document.getElementById('task_note_edit').value = response.data[0].task_note;
             document.getElementById('task_next_date_edit').value = response.data[0].task_next_date;
@@ -76,6 +119,12 @@ function getDataToEditTaskForm(task_id) {
             document.getElementById('task_notification_type_edit').value = response.data[0].task_notification_type;
             document.getElementById('delete_form').action = '/tasks/' + task_id;
             document.getElementById('offcanvasEditForm').action = '/tasks/' + task_id;
+
+            if (response.data[0].notification == 1) {
+                document.getElementById('notification_status_edit').checked = true;
+            } else {
+                document.getElementById('notification_status_edit').checked = false;
+            }
 
 
             const offcanvasEditTask = new bootstrap.Offcanvas(document.getElementById(
@@ -88,7 +137,6 @@ function getDataToEditTaskForm(task_id) {
 }
 
 function NewTaskChangeType(type) {
-
     if (type) {
         if (type == 'one') {
             document.getElementById("task_repeat_value").required = false;
@@ -98,6 +146,40 @@ function NewTaskChangeType(type) {
             document.getElementById("task_repeat_value").required = true;
         }
     }
+}
 
+function CopyIcsUrl() {
+    var textBox = document.getElementById("public_ics_url");
+    textBox.select();
+    document.execCommand("copy");
+}
 
+function SendVerifyCode(device_id, user_id) {
+    axios.post('/api/mfa/verify_code/' + device_id + '/' + user_id)
+        .then(function (response) {
+            console.log(response);
+
+            if (response.data == 1) {
+                var els = document.querySelectorAll('.send_btn');
+                for (var i = 0; i < els.length; i++) {
+                    els[i].setAttribute("disabled", "");
+                }
+                document.getElementById('device_id').value = device_id;
+
+                var timeleft = 60;
+                var downloadTimer = setInterval(function () {
+                    if (timeleft <= 0) {
+                        clearInterval(downloadTimer);
+                        var els = document.querySelectorAll('.send_btn');
+                        for (var i = 0; i < els.length; i++) {
+                            els[i].removeAttribute("disabled");
+                        }
+                    }
+                    timeleft -= 1;
+                }, 1000);
+            } else {
+            }
+        })
+        .catch(function (error) {
+s        });
 }

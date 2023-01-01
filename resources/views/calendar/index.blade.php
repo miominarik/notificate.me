@@ -15,6 +15,12 @@
                 firstDay: 1,
                 @if((new \Jenssegers\Agent\Agent())->isMobile())
                 initialView: 'listWeek',
+                titleFormat: {day: 'numeric', month: 'numeric'},
+                headerToolbar: {
+                    start: 'title', // will normally be on the left. if RTL, will be on the right
+                    center: '',
+                    end: 'today prev,next' // will normally be on the right. if RTL, will be on the left
+                },
                 @else
                 initialView: 'dayGridMonth',
                 @endif

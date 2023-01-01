@@ -2,7 +2,7 @@
 <html lang="sk">
 
 <head>
-    @if(env('APP_DEBUG') == false)
+    @if(env('APP_DEBUG') == FALSE)
         @if((new \Jenssegers\Agent\Agent())->isDesktop())
             <!-- Start cookieyes banner -->
             <script id="cookieyes" type="text/javascript"
@@ -37,12 +37,14 @@
     <meta name="description"
           content="Notificate.me Vám pomôže s evidenciou Vašich úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy."/>
     <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vašich úloh">
-    <meta name="author" content="Miroslav Minárik"/>
-    <meta name="robots" content="index,follow"/>
     <meta name="apple-mobile-web-app-title" content="Notificate.me">
     <meta name="application-name" content="Notificate.me"/>
     <meta name="msapplication-tooltip" content="Notificate.me">
     <meta name="msapplication-starturl" content="/"/>
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="revisit-after" content="30 days">
+    <meta name="author" content="Miroslav Minárik">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -82,17 +84,31 @@
 
         @if ($page == 'gdpr')
             @include('home.page.gdpr')
-        @elseif($page = 'cookies')
+        @elseif($page == 'cookies')
             @include('home.page.cookies')
+        @elseif($page == 'unsubscribe')
+            @include('home.page.unsubscribe')
         @endif
     @else
+        <!-- ======= Services Section ======= -->
+        @include('home.includes.info')
+        <!-- End Services Section -->
+
         <!-- ======= Services Section ======= -->
         @include('home.includes.services')
         <!-- End Services Section -->
 
-        <!-- ======= Pricing Section ======= -->
+        <!-- ======= Services Section ======= -->
+        @include('home.includes.app')
+        <!-- End Services Section -->
+
+        <!-- ======= Services Section ======= -->
+        @include('home.includes.screenshots')
+        <!-- End Services Section -->
+
+        {{--<!-- ======= Pricing Section ======= -->
         @include('home.includes.pricing')
-        <!-- End Pricing Section -->
+        <!-- End Pricing Section -->--}}
 
         <!-- ======= Contact Section ======= -->
         @include('home.includes.contact')
@@ -110,9 +126,6 @@
             <ul class="list-inline">
                 <li class="list-inline-item"><a href="/gdpr">{{__('home_page.gdpr')}}</a></li>
                 <li class="list-inline-item"><a href="/cookies">{{__('home_page.cookies')}}</a></li>
-                <li class="list-inline-item"><a href="https://miucode.cronitorstatus.com/" target="_blank">System
-                        status</a>
-                </li>
             </ul>
         </div>
         <div class="copyright">
@@ -144,6 +157,17 @@
 <!-- Template Main JS File -->
 <script src="{{ asset('home_page_assets/js/main.js') }}"></script>
 
+<script src="https://www.google.com/recaptcha/api.js?render={{env('RECAPTCHA_V3_SITE_KEY')}}"></script>
+<script>
+    function submitPost() {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('{{env('RECAPTCHA_V3_SITE_KEY')}}', {action: 'validate_captcha'}).then(function (token) {
+                document.getElementById('g-recaptcha-response').value = token;
+                document.getElementById('contact_form_submit_btn').click();
+            });
+        });
+    }
+</script>
 </body>
 
 </html>

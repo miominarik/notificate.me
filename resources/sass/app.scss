@@ -7,6 +7,7 @@ $primary: #3f5b87;
 $success: #3f8749;
 $danger: #992f2f;
 $secondary: #565656;
+$purple: #6a187a;
 $active: rgb(96 126 170 / 45%);
 $menu: #1C3879;
 @import "iosmenu";
@@ -14,7 +15,7 @@ $menu: #1C3879;
 
 body {
     background-color: $background;
-    font-family: 'Nunito', sans-serif;
+    font-family: "Open Sans", sans-serif;
     font-size: 0.9rem;
     line-height: 1.6;
 }
@@ -69,6 +70,19 @@ body {
     &:hover, &:active {
         color: white;
         background-color: $secondary;
+    }
+
+    padding: 10px;
+    border: 0px;
+}
+
+.btn-own-purple {
+    color: white;
+    background-color: $purple;
+
+    &:hover, &:active {
+        color: white;
+        background-color: $purple;
     }
 
     padding: 10px;
@@ -169,7 +183,6 @@ body {
     background: #fff;
     box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
     transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
-    padding: 14px 80px 18px 36px;
     cursor: pointer;
 }
 
@@ -182,17 +195,12 @@ body {
     font-weight: 600;
 }
 
-.card-sub img {
-    position: absolute;
-    top: 20px;
-    right: 15px;
-    max-height: 120px;
+small a {
+    text-decoration: none;
+    color: #4D8BF4;
 }
 
-.card-sub {
-    background-image: url(https://notificate.me/images/components-card.png);
-    background-repeat: no-repeat;
-    background-position: right;
-    background-size: 80px;
+.file_card{
+    width: 10rem;
+    cursor:pointer;
 }
-

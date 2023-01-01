@@ -8,17 +8,17 @@ use App\Http\Requests\StoreTaskRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TasksController extends Controller
 {
-
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
-    public function index($task_id = null)
+    public function index($task_id = NULL)
     {
         if (isset($task_id) && !empty($task_id)) {
 
@@ -26,16 +26,16 @@ class TasksController extends Controller
             $task_id = $task_id[0];
 
             $task_pick = DB::table('tasks')
-                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type')
+                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'notification')
                 ->where('user_id', Auth::id())
-                ->where('task_enabled', true)
+                ->where('task_enabled', TRUE)
                 ->where('id', $task_id)
                 ->paginate(10);
         } else {
             $task_pick = DB::table('tasks')
-                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type')
+                ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'notification')
                 ->where('user_id', Auth::id())
-                ->where('task_enabled', true)
+                ->where('task_enabled', TRUE)
                 ->orderBy('task_next_date', 'ASC')
                 ->paginate(10);
         };
@@ -49,6 +49,7 @@ class TasksController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(StoreTaskRequest $request)
@@ -66,6 +67,12 @@ class TasksController extends Controller
                     $validated['task_repeat_type'] = NULL;
                 };
 
+                if (!isset($validated['notification_status']) || is_null($validated['notification_status']) || empty($validated['notification_status']) && $validated['notification_status'] != 1) {
+                    $validated['notification_status'] = FALSE;
+                } else {
+                    $validated['notification_status'] = TRUE;
+                };
+
                 $task = DB::table('tasks')->insertGetId([
                     'user_id' => Auth::id(),
                     'task_name' => $validated['task_name'],
@@ -76,11 +83,12 @@ class TasksController extends Controller
                     'task_repeat_type' => $validated['task_repeat_type'],
                     'task_notification_value' => $validated['task_notification_value'],
                     'task_notification_type' => $validated['task_notification_type'],
+                    'notification' => $validated['notification_status'],
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ]);
 
-                $this->AddNewActionToHistory($task, 2);
+                $this->add_log('Add new task', $request->ip(), $task);
 
                 return redirect(route('tasks.index'))->with('status_success', __('alerts.task_added'));
             }
@@ -93,14 +101,15 @@ class TasksController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param \App\Models\Task $task
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($task)
     {
         $return_data = DB::table('tasks')
-            ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'task_notification_value', 'task_notification_type', 'task_type')
+            ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'task_notification_value', 'task_notification_type', 'task_type', 'notification')
             ->where('user_id', Auth::id())
-            ->where('task_enabled', true)
+            ->where('task_enabled', TRUE)
             ->where('id', $task)
             ->get();
 
@@ -112,12 +121,19 @@ class TasksController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Task $task
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(EditTaskRequest $request, $task)
     {
         // Retrieve the validated input data.
         $validated = $request->validated();
+
+        if (!isset($validated['notification_status']) || is_null($validated['notification_status']) || empty($validated['notification_status']) && $validated['notification_status'] != 1) {
+            $validated['notification_status'] = FALSE;
+        } else {
+            $validated['notification_status'] = TRUE;
+        };
 
         if (is_null($validated['task_repeat_value'])) {
             $update_arr = [
@@ -127,6 +143,8 @@ class TasksController extends Controller
                 'task_repeat_type' => NULL,
                 'task_notification_value' => $validated['task_notification_value'],
                 'task_notification_type' => $validated['task_notification_type'],
+                'task_next_date' => $validated['task_next_date_edit'],
+                'notification' => $validated['notification_status'],
                 'updated_at' => Carbon::now()
             ];
         } else {
@@ -137,6 +155,8 @@ class TasksController extends Controller
                 'task_repeat_type' => $validated['task_repeat_type'],
                 'task_notification_value' => $validated['task_notification_value'],
                 'task_notification_type' => $validated['task_notification_type'],
+                'task_next_date' => $validated['task_next_date_edit'],
+                'notification' => $validated['notification_status'],
                 'updated_at' => Carbon::now()
             ];
         };
@@ -144,10 +164,10 @@ class TasksController extends Controller
         DB::table('tasks')
             ->where('id', $task)
             ->where('user_id', Auth::id())
-            ->where('task_enabled', true)
+            ->where('task_enabled', TRUE)
             ->update($update_arr);
 
-        $this->AddNewActionToHistory($task, 1);
+        $this->add_log('Update task', $request->ip(), $task);
 
         return redirect(route('tasks.index'))->with('status_success', __('alerts.task_edited'));
     }
@@ -156,18 +176,19 @@ class TasksController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Models\Task $task
+     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($task)
+    public function destroy(Request $request, $task)
     {
         DB::table('tasks')
             ->where('id', $task)
             ->where('user_id', Auth::id())
             ->update([
-                'task_enabled' => false
+                'task_enabled' => FALSE
             ]);
 
-        $this->AddNewActionToHistory($task, 3);
+        $this->add_log('Remove task', $request->ip(), $task);
 
         return redirect(route('tasks.index'))->with('status_success', __('alerts.task_removed'));
     }
@@ -176,6 +197,7 @@ class TasksController extends Controller
      * Check the specified resource as complete
      *
      * @param \App\Models\Task $task
+     *
      * @return \Illuminate\Http\Response
      */
     public function complete(CompleteTaskRequest $request, $task)
@@ -189,7 +211,7 @@ class TasksController extends Controller
                 ->where([
                     'id' => $task,
                     'user_id' => Auth::id(),
-                    'task_enabled' => true
+                    'task_enabled' => TRUE
                 ])
                 ->get();
 
@@ -199,11 +221,11 @@ class TasksController extends Controller
 
                 if ($next_data[0]->task_repeat_type == 1) { //Add x days
                     $new_date = $date->addDays($next_data[0]->task_repeat_value);
-                } elseif ($next_data[0]->task_repeat_type == 2) { //Add x weeks
+                } else if ($next_data[0]->task_repeat_type == 2) { //Add x weeks
                     $new_date = $date->addWeeks($next_data[0]->task_repeat_value);
-                } elseif ($next_data[0]->task_repeat_type == 3) { //Add x months
+                } else if ($next_data[0]->task_repeat_type == 3) { //Add x months
                     $new_date = $date->addMonths($next_data[0]->task_repeat_value);
-                } elseif ($next_data[0]->task_repeat_type == 4) { //Add x months
+                } else if ($next_data[0]->task_repeat_type == 4) { //Add x months
                     $new_date = $date->addYears($next_data[0]->task_repeat_value);
                 };
 
@@ -213,75 +235,159 @@ class TasksController extends Controller
                     ->where([
                         'id' => $task,
                         'user_id' => Auth::id(),
-                        'task_enabled' => true
+                        'task_enabled' => TRUE
                     ])
                     ->update([
                         'task_next_date' => $new_date,
                         'updated_at' => Carbon::now()
                     ]);
 
-                $this->AddNewCompleteToHistory($task, Carbon::createFromFormat('Y-m-d', $validated['complete_date'])->format('Y-m-d H:i:s'));
+                $this->add_log('Complete task', $request->ip(), $task, Carbon::createFromFormat('Y-m-d', $validated['complete_date'])->format('Y-m-d H:i:s'));
+
                 return redirect(route('tasks.index'))->with('status_success', __('alerts.task_completed'));
             }
         }
     }
 
-    /**
-     * AddNewActionToHistory
-     *
-     * @param mixed $task_id
-     * @param mixed $user_id
-     * @param mixed $action
-     * @param mixed $date
-     * @return void
-     */
-    public function AddNewActionToHistory($task_id, $action)
-    {
-        if (isset($task_id) && isset($action)) {
-            DB::table('history')
-                ->insert([
-                    'task_id' => $task_id,
-                    'user_id' => Auth::id(),
-                    'log_type' => $action,
-                    'created_at' => Carbon::now()
-                ]);
-        }
-    }
-
-    /**
-     * AddNewCompleteToHistory
-     *
-     * @param mixed $task_id
-     * @param mixed $user_id
-     * @param mixed $action
-     * @param mixed $date
-     * @return void
-     */
-    public function AddNewCompleteToHistory($task_id, $date)
-    {
-        if (isset($task_id) && isset($date)) {
-            DB::table('history')
-                ->insert([
-                    'task_id' => $task_id,
-                    'user_id' => Auth::id(),
-                    'log_type' => 99,
-                    'created_at' => $date
-                ]);
-        }
-    }
-
     public function ShowHistory($task)
     {
-        $return_data = DB::table('history')
+        $return_data = DB::table('logs')
             ->select(DB::raw('DATE_FORMAT(created_at, "%d.%m.%Y") as created_at'))
             ->where([
                 'user_id' => Auth::id(),
                 'task_id' => $task,
-                'log_type' => 99
+                'log_type' => 'Complete task'
             ])
             ->orderByDesc('created_at')
             ->get();
 
         return response()->json($return_data, 200);
+    }
+
+    public function Upload_File(Request $request)
+    {
+        if ($request->hasFile('uploading_file')) {
+            if ($request->file('uploading_file')->getSize() < 31457280) {
+                if ($request->has('task_id')) {
+                    $task_id = $request->input('task_id');
+                    $path = $request->file('uploading_file')->store('clients_files');
+                    $name = $request->file('uploading_file')->getClientOriginalName();
+                    $size = $request->file('uploading_file')->getSize();
+
+                    if (!empty($path) && !empty($name)) {
+                        DB::table('files')
+                            ->insert([
+                                'task_id' => $task_id,
+                                'user_id' => Auth::id(),
+                                'file_name' => $name,
+                                'file_url' => $path,
+                                'file_size' => $size,
+                                'created_at' => Carbon::now()
+                            ]);
+                        $task_id = $this->JWT_encode($task_id);
+                        return redirect(route('tasks.index', $task_id));
+                    } else {
+                        return redirect(route('tasks.index'))->with('status_danger', __('tasks.files_upload_error'));
+                    };
+                } else {
+                    return redirect(route('tasks.index'))->with('status_danger', __('tasks.files_upload_error'));
+                };
+            } else {
+                return redirect(route('tasks.index'))->with('status_warning', __('tasks.files_upload_big'));
+            };
+        } else {
+            return redirect(route('tasks.index'))->with('status_danger', __('tasks.files_upload_error'));
+        };
+    }
+
+    public function Show_All_files($task_id)
+    {
+        if (isset($task_id) && !empty($task_id)) {
+            $get_files = DB::table('files')
+                ->select('id', 'file_name', 'file_url')
+                ->where('task_id', '=', $task_id)
+                ->where('user_id', '=', Auth::id())
+                ->get();
+
+            if (!empty($get_files)) {
+                foreach ($get_files as $porc => $one_file) {
+                    $get_files[$porc]->id = $this->JWT_encode($one_file->id);
+                }
+            };
+
+            return response()->json($get_files, 200);
+        }
+    }
+
+    public function Download_file($file_id)
+    {
+        $file_id = $this->JWT_decode($file_id);
+        $verify_my_file = DB::table('files')
+            ->select('file_url', 'file_name')
+            ->where('id', '=', $file_id)
+            ->where('user_id', '=', Auth::id())
+            ->get();
+
+        if (isset($verify_my_file[0])) {
+            if (Storage::exists($verify_my_file[0]->file_url)) {
+                return Storage::download($verify_my_file[0]->file_url, $verify_my_file[0]->file_name);
+            }
+        };
+        return redirect()->back();
+    }
+
+    public function DeleteFile($file_id)
+    {
+        $file_id = $this->JWT_decode($file_id);
+        $verify_my_file = DB::table('files')
+            ->select('file_url', 'file_name')
+            ->where('id', '=', $file_id)
+            ->where('user_id', '=', Auth::id())
+            ->get();
+
+        if (isset($verify_my_file[0])) {
+            if (Storage::exists($verify_my_file[0]->file_url)) {
+                $status = Storage::delete($verify_my_file[0]->file_url);
+                if ($status == TRUE) {
+                    $status_update = DB::table('files')
+                        ->where('id', '=', $file_id)
+                        ->where('user_id', '=', Auth::id())
+                        ->delete();
+                    if ($status_update == TRUE) {
+                        return redirect()->back()->with('status_success', __('alerts.files_delete_success'));
+                    } else {
+                        return redirect()->back()->with('status_danger', __('alerts.files_delete_danger'));
+                    };
+                } else {
+                    return redirect()->back()->with('status_danger', __('alerts.files_delete_danger'));
+                };
+            } else {
+                return redirect()->back()->with('status_warning', __('alerts.files_delete_warming'));
+            };
+        } else {
+            return redirect()->back()->with('status_warning', __('alerts.files_delete_warming'));
+        };
+    }
+
+    public function AllFiles(Request $request)
+    {
+        $all_files = DB::table('files')
+            ->select('files.file_name', 'files.id', 'files.file_size', 'files.created_at', 'tasks.task_name')
+            ->join('tasks', 'tasks.id', '=', 'files.task_id')
+            ->where('files.user_id', '=', Auth::id())
+            ->orderByDesc('files.created_at')
+            ->paginate(15);
+
+        if ($all_files->count() > 0) {
+            foreach ($all_files as $idcko => $file) {
+                $all_files[$idcko]->file_size = $this->formatBytes($file->file_size, 2);
+                $all_files[$idcko]->id = $this->JWT_encode($file->id);
+                $all_files[$idcko]->created_at = Carbon::parse($file->created_at)->format('d.m.Y');
+            }
+        }
+
+        return view('tasks.files.Index', [
+            'all_files' => $all_files
+        ]);
     }
 }

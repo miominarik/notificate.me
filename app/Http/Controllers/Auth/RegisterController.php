@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\VerifyGoogleRecaptcha;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -42,7 +44,31 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
-        $this->middleware(VerifyGoogleRecaptcha::class);
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function register(Request $request)
+    {
+        $this->VerifyRecaptcha($request);
+
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 201)
+            : redirect($this->redirectPath());
     }
 
     /**
@@ -74,6 +100,7 @@ class RegisterController extends Controller
 
         DB::table('users_settings')->insert([
             'user_id' => $query->id,
+            'language' => 'sk',
             'created_at' => Carbon::now()
         ]);
         DB::table('modules')->insert([

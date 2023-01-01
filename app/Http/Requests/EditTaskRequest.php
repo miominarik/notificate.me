@@ -31,6 +31,8 @@ class EditTaskRequest extends FormRequest
             'task_repeat_type' => 'nullable|integer',
             'task_notification_value' => 'required|integer',
             'task_notification_type' => 'required|integer',
+            'task_next_date_edit' => 'required|date',
+            'notification_status' => 'nullable|boolean',
         ];
     }
 }

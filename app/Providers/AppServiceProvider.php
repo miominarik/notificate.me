@@ -28,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        if (session('locale') == null){
+            session()->put('locale', app()->getLocale());
+        };
+
         Paginator::useBootstrapFive();
         date_default_timezone_set('Europe/Bratislava');
 

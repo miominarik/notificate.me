@@ -13,9 +13,10 @@
                                     {{ session('status') }}
                                 </div>
                             @endif
-                            <form method="POST" action="{{ route('password.email') }}">
+                            <form method="POST" action="{{ route('password.email') }}" id="form_f4jds232dkd23" onsubmit="event.preventDefault();submitPost('g-recaptcha-response', this.id);">
                                 @csrf
-                                {!! GoogleReCaptchaV3::renderField('reset_id', 'verify') !!}
+                                <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+                                <input type="hidden" name="action" value="validate_captcha">
                                 <div class="form-outline mb-4">
                                     <input type="email" id="email" name="email"
                                         class="form-control form-control-lg @error('email') is-invalid @enderror"
@@ -43,5 +44,4 @@
             </div>
         </div>
     </section>
-    {!! GoogleReCaptchaV3::init() !!}
 @endsection

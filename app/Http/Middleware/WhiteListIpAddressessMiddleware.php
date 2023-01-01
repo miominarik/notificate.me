@@ -8,39 +8,26 @@ use Illuminate\Support\Facades\DB;
 
 class WhiteListIpAddressessMiddleware
 {
-    public function get_ip()
-    {
-        $data = DB::table('api')
-            ->select('ip')
-            ->where('enabled', true)
-            ->get();
-
-        $ip_list = array();
-
-        if ($data) {
-            foreach ($data as $item) {
-                array_push($ip_list, $item->ip);
-            }
-
-            return $ip_list;
-        }
-    }
     /**
      * Check if actual IP adress is in DB as allowed
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!in_array($request->getClientIp(), $this->get_ip())) {
+        $startIp = ip2long('10.31.0.0');
+        $endIp = ip2long('10.31.63.255');
+        $requestIp = ip2long($request->ip());
+
+        if (($request->ip() == '193.163.77.11' || $request->ip() == '2a10:9c80::193:163:77:11') || ($request->ip() == '213.160.175.138' || $request->ip() == '127.0.0.1')) {
+            return $next($request);
+        }else{
             return response()->json([
                 'status' => 'error',
                 'note' => 'You are restricted to access the site'
             ], 403);
-        }
-
-        return $next($request);
+        };
     }
 }

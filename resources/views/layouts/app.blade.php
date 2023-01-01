@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    @if(env('APP_DEBUG') == false)
+    @if(env('APP_DEBUG') == FALSE)
         @if((new \Jenssegers\Agent\Agent())->isDesktop())
             <!-- Start cookieyes banner -->
             <script id="cookieyes" type="text/javascript"
@@ -34,41 +34,41 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta name="description"
-              content="Notificate.me Vám pomôže s evidenciou Vaších úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy."/>
-        <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vaších úloh">
-        <meta name="author" content="Miroslav Minárik"/>
-        <meta name="robots" content="noindex, nofollow"/>
-        <meta name="apple-mobile-web-app-title" content="Notificate.me">
-        <meta name="application-name" content="Notificate.me"/>
-        <meta name="msapplication-tooltip" content="Notificate.me">
-        <meta name="msapplication-starturl" content="/"/>
+    <meta name="description"
+          content="Notificate.me Vám pomôže s evidenciou Vaších úloh. Vďaka aplikácii Notificate.me môžete jednoduchšie plánovať a organizovať svoje úlohy."/>
+    <meta name="keywords" content="Úlohy, Evidencia, Task Manager, Plánovanie, Upozornenia, Evidencia Vaších úloh">
+    <meta name="author" content="Miroslav Minárik"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <meta name="apple-mobile-web-app-title" content="Notificate.me">
+    <meta name="application-name" content="Notificate.me"/>
+    <meta name="msapplication-tooltip" content="Notificate.me">
+    <meta name="msapplication-starturl" content="/"/>
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="dns-prefetch" href="//fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-        <!-- Styles -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-              crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
-              integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
-              crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        <link href="https://lipis.github.io/bootstrap-social/bootstrap-social.css" rel="stylesheet">
+    <!-- Styles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+          integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link href="https://lipis.github.io/bootstrap-social/bootstrap-social.css" rel="stylesheet">
 
-        @if(request()->is('calendar*'))
-            <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
-            <link href='{{asset('css/fullcalendar.css')}}' rel='stylesheet'/>
-            <script src='{{asset('js/fullcalendar.js')}}'></script>
-            <script src='{{asset('js/fullcalendar-sk.js')}}'></script>
-            <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
-            <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
-        @endif
+    @if(request()->is('calendar*'))
+        <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
+        <link href='{{asset('css/fullcalendar.css')}}' rel='stylesheet'/>
+        <script src='{{asset('js/fullcalendar.js')}}'></script>
+        <script src='{{asset('js/fullcalendar-sk.js')}}'></script>
+        <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+        <script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
+    @endif
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
 </head>
 
@@ -86,10 +86,27 @@
                 <div class="collapse navbar-collapse" id="mainNavbar">
                     @auth
                         <ul class="nav nav-pills">
-                            <li class="nav-item">
-                                <a class="nav-link text-white {{ request()->is('tasks*') ? 'active' : '' }}"
-                                   aria-current="page"
-                                   href="{{ route('tasks.index') }}">{{ __('layout.menu_tasks') }}</a>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown"
+                                   class="nav-link dropdown-toggle text-white {{ request()->is('tasks*') || request()->is('files*') ? 'active' : '' }}"
+                                   href="#"
+                                   role="button"
+                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('layout.menu_tasks') }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end"
+                                     aria-labelledby="navbarDropdown"
+                                     aria-current="page">
+                                    <a class="dropdown-item {{ request()->is('tasks') ? 'active' : '' }}"
+                                       href="{{ route('tasks.index') }}">
+                                        {{ __('layout.menu_tasks_head') }}
+                                    </a>
+                                    <a class="dropdown-item {{ request()->is('files*') ? 'active' : '' }}"
+                                       href="{{ route('files.all_files') }}">
+                                        {{ __('layout.menu_tasks_files') }}
+                                    </a>
+                                </div>
                             </li>
                             @if($activated_modules->module_calendar)
                                 <li class="nav-item">
@@ -210,23 +227,40 @@
     @auth
         @if((new \Jenssegers\Agent\Agent())->isMobile() ||(new \Jenssegers\Agent\Agent())->isTablet())
             <div class="sticky-footer">
-                <a href="{{ route('tasks.index') }}"
-                   class="sticky-footer item {{ request()->is('tasks*') ? 'active' : '' }}">
+                <a id="navbarDropdown"
+                   class="nav-link sticky-footer mb-1 item {{ request()->is('tasks*') || request()->is('files*') ? 'active' : '' }}"
+                   href="#"
+                   role="button"
+                   data-bs-toggle="dropdown">
                     <i class="fa-solid fa-house"></i>
                     {{ __('layout.menu_tasks') }}
                 </a>
-                <a href="{{ route('calendar.index') }}"
-                   class="sticky-footer item {{ request()->is('calendar*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-calendar-days"></i>
-                    {{__('layout.menu_calendar')}}
-                </a>
+                <div class="dropdown-menu dropdown-menu-end"
+                     aria-labelledby="navbarDropdown"
+                     aria-current="page">
+                    <a class="dropdown-item {{ request()->is('tasks') ? 'active' : '' }}"
+                       href="{{ route('tasks.index') }}">
+                        {{ __('layout.menu_tasks_head') }}
+                    </a>
+                    <a class="dropdown-item {{ request()->is('files*') ? 'active' : '' }}"
+                       href="{{ route('files.all_files') }}">
+                        {{ __('layout.menu_tasks_files') }}
+                    </a>
+                </div>
+                @if($activated_modules->module_calendar)
+                    <a href="{{ route('calendar.index') }}"
+                       class="sticky-footer mb-1 item {{ request()->is('calendar*') ? 'active' : '' }}">
+                        <i class="fa-solid fa-calendar-days"></i>
+                        {{__('layout.menu_calendar')}}
+                    </a>
+                @endif
                 <a href="{{ route('modules.index') }}"
-                   class="sticky-footer item {{ request()->is('modules*') ? 'active' : '' }}">
+                   class="sticky-footer mb-1 item {{ request()->is('modules*') ? 'active' : '' }}">
                     <i class="fa-solid fa-puzzle-piece"></i>
                     {{ __('layout.menu_modules') }}
                 </a>
                 <a href="{{ route('settings.index') }}"
-                   class="sticky-footer item {{ request()->is('settings*') ? 'active' : '' }}">
+                   class="sticky-footer mb-1 item {{ request()->is('settings*') ? 'active' : '' }}">
                     <i class="fa-solid fa-gear"></i>
                     {{ __('layout.menu_settings') }}
                 </a>
@@ -243,6 +277,17 @@
         integrity="sha512-odNmoc1XJy5x1TMVMdC7EMs3IVdItLPlCeL5vSUPN2llYKMJ2eByTTAIiiuqLg+GdNr9hF6z81p27DArRFKT7A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="{{ asset('js/main.js') }}" defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render={{env('RECAPTCHA_V3_SITE_KEY')}}"></script>
+<script>
+    function submitPost(g_recaptcha_element, form) {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('{{env('RECAPTCHA_V3_SITE_KEY')}}', {action: 'validate_captcha'}).then(function (token) {
+                document.getElementById(g_recaptcha_element).value = token;
+                document.getElementById(form).submit();
+            });
+        });
+    }
+</script>
 </body>
 
 </html>

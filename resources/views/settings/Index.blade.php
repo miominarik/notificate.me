@@ -1,5 +1,6 @@
 @php
-    $selected_time = \Carbon\Carbon::parse($settings_data[0]->notification_time)->format('G');
+    use Carbon\Carbon;
+    $selected_time = Carbon::parse($settings_data[0]->notification_time)->format('G');
 @endphp
 
 @extends('layouts.app')
@@ -93,88 +94,75 @@
                                                             @if (session('locale') == 'sk') selected @endif>{{ __('layout.lang_slovak') }}</option>
                                                 </select>
                                             </div>
+                                            @if($activated_modules->module_calendar)
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                    <label
+                                                        for="public_ics_url">{{__('settings.public_ics_url')}}</label>
+                                                    <div class="input-group mb-3">
+                                                        <input type="text" id="public_ics_url" class="form-control"
+                                                               value="{{env('APP_URL')}}/api/ics/public/{{$calendar_hash}}"
+                                                               aria-label="ICS URL" aria-describedby="copy_btn_ics_url"
+                                                               readonly>
+                                                        <button class="btn btn-outline-secondary" type="button"
+                                                                id="copy_btn_ics_url" onclick="CopyIcsUrl();">
+                                                            {{__('settings.copy_btn')}}</button>
+                                                    </div>
+
+                                                </div>
+                                            @endif
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <button type="submit"
                                                         class="btn btn-own-primary">{{ __('settings.send_btn') }}</button>
+                                                <button type="button" class="btn btn-own-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#changepassModal">{{__('settings.change_pass_btn')}}
+                                                </button>
+                                                @if(isset($mfa_info) && $mfa_info->count() == 0)
+                                                    <button type="button" class="btn btn-own-purple"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#activate_two_factorModal">{{__('settings.mfa_activate_btn')}}
+                                                    </button>
+                                                @endif
+                                                @if(isset($mfa_info) && $mfa_info->count() > 0)
+                                                    <button type="button" class="btn btn-own-purple"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#show_recocery_codesModal">{{__('settings.mfa_activated_btn')}}
+                                                    </button>
+                                                @endif
                                             </div>
                                         </form>
-                                        <hr class="my-4">
-                                        <div class="d-grid gap-2 mb-2">
-                                            @if ($apple_oauth_status[0]->apple_id == null)
-                                                <a href="javascript:void(0)">
-                                                    <button type="button"
-                                                            disabled
-                                                            class="btn btn-block btn-social"
-                                                            style="background-color: #050708; color: white; width: 100%;">
-                                                        <span class="fa-brands fa-apple"></span>
-                                                        {{ __('auth.login_apple') }}
-                                                    </button>
-                                                </a>
-                                            @else
-                                                <a href="javascript:void(0)">
-                                                    <button type="button" class="btn btn-block btn-social"
-                                                            disabled
-                                                            style="background-color: #050708; color: white; width: 100%;">
-                                                        <span
-                                                            class="fa-brands fa-apple"></span>{{ __('auth.apple_settings_setted') }}
-                                                    </button>
-                                                </a>
-                                            @endif
-                                            @if ($microsoft_oauth_status[0]->microsoft_id == null)
-                                                <a href="{{ route('oauth.microsoft-login') }}">
-                                                    <button type="button"
-                                                            class="btn btn-block btn-social btn-microsoft"
-                                                            style="width: 100%">
-                                                        <span class="fa-brands fa-microsoft"></span>
-                                                        {{ __('auth.login_microsoft') }}
-                                                    </button>
-                                                </a>
-                                            @else
-                                                <a href="javascript:void(0)">
-                                                    <button type="button" class="btn btn-block btn-social btn-microsoft"
-                                                            disabled style="width: 100%">
-                                                        <span
-                                                            class="fa-brands fa-microsoft"></span>{{ __('auth.microsoft_settings_setted') }}
-                                                    </button>
-                                                </a>
-                                            @endif
-                                        </div>
-                                        <div class="d-grid gap-2 mb-2">
-                                            @if ($google_oauth_status[0]->google_id == null)
-                                                <a href="{{ route('oauth.google-login') }}">
-                                                    <button type="button" class="btn btn-block btn-social btn-google"
-                                                            style="width: 100%">
-                                                        <span
-                                                            class="fa-brands fa-google"></span>{{ __('auth.login_google') }}
-                                                    </button>
-                                                </a>
-                                            @else
-                                                <a href="javascript:void(0)">
-                                                    <button type="button" class="btn btn-block btn-social btn-google"
-                                                            disabled style="width: 100%">
-                                                        <span
-                                                            class="fa-brands fa-github"></span>{{ __('auth.google_settings_setted') }}
-                                                    </button>
-                                                </a>
-                                            @endif
-                                        </div>
                                         <hr>
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                            <button type="button" class="btn btn-own-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#changepassModal">{{__('settings.change_pass_btn')}}
+                                            <h3 class="mb-5">{{__('settings.my_devices')}}</h3>
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">{{__('settings.device_name')}}</th>
+                                                    <th scope="col">{{__('settings.device_last_used')}}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @php($count = 1)
+                                                @forelse($my_devices as $one_device)
+                                                    <tr>
+                                                        <th scope="row">{{$count}}</th>
+                                                        <td>{{$one_device->device_model}}</td>
+                                                        <td>{{Carbon::parse($one_device->updated_at)->format('d.m.Y H:i')}}</td>
+                                                    </tr>
+                                                    @php($count++)
+                                                @empty
+                                                    <tr>
+                                                        <th scope="row">{{__('settings.device_noone')}}</th>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endforelse
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn btn-own-secondary mt-3"
+                                                    onclick="window.location.replace('{{route('settings.disconnect_all_devices')}}');">
+                                                {{__('settings.device_disconnect_all')}}
                                             </button>
-                                            @if(isset($qr_code) && $qr_code != NULL)
-                                                <button type="button" class="btn btn-own-secondary"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#activate_two_factorModal">{{__('settings.mfa_activate_btn')}}
-                                                </button>
-                                            @endif
-                                            @if(isset($recovery_codes) && $recovery_codes != NULL)
-                                                <button type="button" class="btn btn-own-secondary"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#show_recocery_codesModal">{{__('settings.mfa_activated_btn')}}
-                                                </button>
-                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -185,10 +173,8 @@
     </section>
 
     @include('settings.inc.change_pass_modal')
-    @if(isset($qr_code) && $qr_code != NULL)
-        @include('settings.inc.activate_two_factor')
-    @endif
-    @if(isset($recovery_codes) && $recovery_codes != NULL)
+    @include('settings.inc.activate_two_factor')
+    @if(isset($mfa_info) && $mfa_info->count() > 0)
         @include('settings.inc.show_mfa_recovery_codes')
     @endif
 @endsection

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\VerifyGoogleRecaptcha;
 use App\Http\Requests\ContactMailRequest;
 use App\Mail\ContactFormMail;
 use Illuminate\Http\Request;
@@ -11,18 +10,11 @@ use Illuminate\Support\Facades\Mail;
 class HomeController extends Controller
 {
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware(VerifyGoogleRecaptcha::class);
-    }
-
     public function SendContactMail(ContactMailRequest $request)
     {
+
+        $this->VerifyRecaptcha($request);
+
         $validated = $request->validated();
 
         if (!empty($validated)) {

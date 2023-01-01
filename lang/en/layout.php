@@ -4,6 +4,8 @@ return [
     'menu_dashboard' => 'Dashboard',
     'menu_settings' => 'Settings',
     'menu_tasks' => 'Dashboard',
+    'menu_tasks_head' => 'Tasks',
+    'menu_tasks_files' => 'Files',
     'menu_login' => 'Login',
     'menu_register' => 'Registration',
     'menu_logout' => 'Logout',

@@ -22,7 +22,7 @@ class SuperAdminController extends Controller
             ->paginate(15);
 
         foreach ($return_data as $one_data_id => $one_data_data) {
-            if ($one_data_data->email_verified_at !== null) {
+            if ($one_data_data->email_verified_at !== NULL) {
                 $return_data[$one_data_id]->email_verified_at = Carbon::parse($one_data_data->email_verified_at)->format('d.m.Y H:i');
             };
             $return_data[$one_data_id]->created_at = Carbon::parse($one_data_data->created_at)->format('d.m.Y H:i');
@@ -47,22 +47,26 @@ class SuperAdminController extends Controller
             ->orderByDesc('id')
             ->paginate(10);
 
+        $mfa_status = DB::table('mfa_authorization')
+            ->where('user_id', '=', $request->user_id)
+            ->count();
+
         if (isset($user_detail[0])) {
-            if ($user_detail[0]->apple_id != null) {
-                $user_detail[0]->apple_id = true;
+            if ($user_detail[0]->apple_id != NULL) {
+                $user_detail[0]->apple_id = TRUE;
             } else {
-                $user_detail[0]->apple_id = false;
+                $user_detail[0]->apple_id = FALSE;
 
             };
-            if ($user_detail[0]->google_id != null) {
-                $user_detail[0]->google_id = true;
+            if ($user_detail[0]->google_id != NULL) {
+                $user_detail[0]->google_id = TRUE;
             } else {
-                $user_detail[0]->google_id = false;
+                $user_detail[0]->google_id = FALSE;
             };
-            if ($user_detail[0]->microsoft_id != null) {
-                $user_detail[0]->microsoft_id = true;
+            if ($user_detail[0]->microsoft_id != NULL) {
+                $user_detail[0]->microsoft_id = TRUE;
             } else {
-                $user_detail[0]->microsoft_id = false;
+                $user_detail[0]->microsoft_id = FALSE;
             };
 
             if (isset($user_detail[0]->created_at)) {
@@ -77,7 +81,8 @@ class SuperAdminController extends Controller
 
             return view('superadmin.pages.user_detail', [
                 'user_detail' => $user_detail,
-                'user_tasks' => $user_tasks
+                'user_tasks' => $user_tasks,
+                'mfa_status' => $mfa_status
             ]);
         } else {
             return redirect(route('superadmin.index'));
@@ -90,7 +95,7 @@ class SuperAdminController extends Controller
         if (isset($user_id) && isset($auth_type)) {
             $allowed_auth_types = ['apple', 'microsoft', 'google'];
 
-            if ($user_id > 0 && in_array($auth_type, $allowed_auth_types) == true) {
+            if ($user_id > 0 && in_array($auth_type, $allowed_auth_types) == TRUE) {
                 $auth_type_db = match ($auth_type) {
                     'apple' => 'apple_id',
                     'microsoft' => 'microsoft_id',
@@ -160,6 +165,32 @@ class SuperAdminController extends Controller
         return view('superadmin.pages.users_modules', [
             'users_modules' => $users_modules
         ]);
+    }
+
+    public function logs()
+    {
+        $return_data = DB::table('logs')
+            ->select('logs.log_type', 'logs.ip_address', 'logs.created_at', 'users.email', 'tasks.task_name')
+            ->join('users', 'logs.user_id', '=', 'users.id')
+            ->leftJoin('tasks', 'logs.task_id', '=', 'tasks.id')
+            ->orderByDesc('logs.created_at')
+            ->paginate(150);
+
+        foreach ($return_data as $one_data_id => $one_data_data) {
+            $return_data[$one_data_id]->created_at = Carbon::parse($one_data_data->created_at)->format('d.m.Y H:i');
+        }
+
+        return view('superadmin.pages.logs', [
+            'all_logs' => $return_data
+        ]);
+    }
+
+    public function removemfa(int $user_id)
+    {
+        DB::table('mfa_authorization')
+            ->where('user_id', '=', $user_id)
+            ->delete();
+        return redirect()->back();
     }
 
 }

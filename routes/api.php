@@ -16,3 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/main_check_agent_email', "App\Http\Controllers\ApiController@AgentCheckDates")->middleware(WhiteListIpAddressessMiddleware::class);
 Route::get('/main_check_agent_sms', "App\Http\Controllers\ApiController@AgentCheckDatesSMS")->middleware(WhiteListIpAddressessMiddleware::class);
+Route::get('/main_check_agent_fcm', "App\Http\Controllers\ApiController@AgentCheckFCM")->middleware(WhiteListIpAddressessMiddleware::class);
+Route::get('/unsubscribe/{user_email}', "App\Http\Controllers\SettingsController@Email_unsubscribe");
+Route::get('/ics/public/{hash}', "App\Http\Controllers\CalendarController@GenerateICS");
+Route::post('/fcm_register', "App\Http\Controllers\ApiController@FCM_Token");
+Route::post('/mfa/verify_code/{device_id}/{user_id}', "App\Http\Controllers\SettingsController@VerifyMfaCode");
