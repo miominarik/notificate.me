@@ -31,5 +31,16 @@ return [
     'device_name' => 'Device name',
     'device_last_used' => 'Last used',
     'device_noone' => 'No devices',
-    'device_disconnect_all' => 'Disconnect all devices'
+    'device_disconnect_all' => 'Disconnect all devices',
+    'mfa_activate_btn' => 'Activate two-factor authentication',
+    'mfa_activated_btn' => 'Two-factor authentication set up',
+    'mfa_activate_start2' => 'Download and activate our mobile application',
+    'mfa_activate_start3' => 'Choose your device',
+    'mfa_activate_start4' => 'Enter the activation code from the device we sent you',
+    'mfa_success' => 'Two-factor authentication has been successfully set up',
+    'mfa_warning' => 'Two-factor authentication has not been set up. Invalid code',
+    'mfa_disabled' => 'Two-factor authentication has been successfully disabled',
+    'mfa_recovery_code' => 'Backup codes',
+    'mfa_deactivate' => 'Disable two-factor authentication',
+    'btn_select' => 'Choose',
 ];

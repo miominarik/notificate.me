@@ -7,6 +7,7 @@ use App\Http\Requests\EditSettingsRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -15,7 +16,6 @@ class SettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
@@ -30,10 +30,14 @@ class SettingsController extends Controller
                 ->get(),
             'calendar_hash' => Auth::user()->email,
             'my_devices' => DB::table('fcm_tokens')
-                ->select('device_model', 'updated_at')
+                ->select('device_model', 'updated_at', 'id')
                 ->where('user_id', '=', Auth::id())
                 ->where('enabled', '=', 1)
                 ->orderByDesc('updated_at')
+                ->get(),
+            'mfa_info' => DB::table('mfa_authorization')
+                ->where('user_id', '=', Auth::id())
+                ->where('enabled', '=', 1)
                 ->get()
         ]);
     }
@@ -57,7 +61,7 @@ class SettingsController extends Controller
 
             if (isset($actual_pass_db[0]->password)) {
                 //Porovnaj stare heslo z formu a db
-                if (Hash::check($oldpass, $actual_pass_db[0]->password) == true) {
+                if (Hash::check($oldpass, $actual_pass_db[0]->password) == TRUE) {
                     //Skontroluj či nové hesla sú rovnaké
                     if ($newpass2 === $newpass1) {
                         if (strlen($newpass1) >= 8) {
@@ -99,6 +103,7 @@ class SettingsController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(EditSettingsRequest $request)
@@ -177,5 +182,120 @@ class SettingsController extends Controller
             ->delete();
 
         return redirect(route('settings.index'));
+    }
+
+    public function VerifyMfaCode(int $device_id, int $user_id)
+    {
+        if (isset($device_id) && !empty($device_id) && is_numeric($device_id) && $device_id > 0 && isset($user_id) && !empty($user_id) && is_numeric($user_id) && $user_id > 0) {
+            $verify_device_id = DB::table('fcm_tokens')
+                ->where('id', '=', $device_id)
+                ->where('user_id', '=', $user_id)
+                ->where('enabled', '=', 1)
+                ->count();
+
+            if ($verify_device_id > 0) {
+                $get_fcm_token = DB::table('fcm_tokens')
+                    ->select('fcm_token')
+                    ->where('id', '=', $device_id)
+                    ->where('user_id', '=', $user_id)
+                    ->where('enabled', '=', 1)
+                    ->get();
+
+                if ($get_fcm_token->count() > 0) {
+
+                    $rand_code = rand(1000, 32766);
+
+                    DB::table('mfa_codes')
+                        ->insert([
+                            'user_id' => $user_id,
+                            'device_id' => $device_id,
+                            'code' => $rand_code,
+                            'used' => 0,
+                            'created_at' => Carbon::now()
+                        ]);
+
+                    $body = "Kód: " . $rand_code . ". ";
+                    $body .= "Overovací kód pre dvojfaktorové prihlásenie. ";
+
+                    $apiController = new ApiController();
+                    $status = $apiController->sendNotification("Notificate.me", $body, $user_id, $get_fcm_token[0]->fcm_token);
+
+                    if (empty($status)) {
+                        return 1;
+                    } else {
+                        return 2;
+                    };
+                } else {
+                    return 2;
+                };
+            } else {
+                return 2;
+            };
+        }
+    }
+
+    public function CheckMfaCode(Request $request)
+    {
+        $validated = $request->validate([
+            'device_id' => 'numeric|required|min:1',
+            'user_id' => 'numeric|required|min:1',
+            'mfacode' => 'numeric|required|min:1000'
+        ]);
+
+        $verify = DB::table('mfa_codes')
+            ->select('code')
+            ->where('device_id', '=', $validated['device_id'])
+            ->where('user_id', '=', $validated['user_id'])
+            ->where('used', '=', 0)
+            ->orderByDesc('id')
+            ->whereDate('created_at', '>', Carbon::now()->subDays(1))
+            ->limit(1)
+            ->get();
+
+        if ($verify->count() > 0) {
+            $recovery_words = "";
+            for ($i = 1; $i <= 10; $i++) {
+                if ($recovery_words == "") {
+                    $recovery_words .= strtoupper($this->getrandomstring(10));
+                } else {
+                    $recovery_words .= "," . strtoupper($this->getrandomstring(10));
+                };
+            }
+
+            if ($verify[0]->code == $validated['mfacode']) {
+                DB::table('mfa_authorization')
+                    ->insert([
+                        'user_id' => $validated['user_id'],
+                        'device_id' => $validated['device_id'],
+                        'enabled' => 1,
+                        'recovery_codes' => Crypt::encrypt($recovery_words),
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+
+                DB::table('mfa_codes')
+                    ->where('device_id', '=', $validated['device_id'])
+                    ->where('user_id', '=', $validated['user_id'])
+                    ->where('code', '=', $validated['mfacode'])
+                    ->update([
+                        'used' => 1,
+                        'updated_at' => Carbon::now()
+                    ]);
+
+                return redirect()->back()->with('status_success', __('settings.mfa_success'));
+            } else {
+                return redirect()->back()->with('status_warning', __('settings.mfa_warning'));
+            };
+        } else {
+            return redirect()->back()->with('status_warning', __('settings.mfa_warning'));
+        };
+    }
+
+    public function DisableMFA()
+    {
+        DB::table('mfa_authorization')
+            ->where('user_id', '=', Auth::id())
+            ->delete();
+        return redirect()->back()->with('status_success', 'Dvojfaktorové prihlásenie bolo úspešne deaktivované');
     }
 }

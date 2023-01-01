@@ -127,4 +127,25 @@ class Controller extends BaseController
         return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
     }
 
+    public function getrandomstring($length)
+    {
+        global $template;
+        settype($template, "string");
+
+        $template = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        $template .= "123456789";
+
+        settype($length, "integer");
+        settype($rndstring, "string");
+        settype($a, "integer");
+        settype($b, "integer");
+
+        for ($a = 0; $a <= $length; $a++) {
+            $b = rand(0, strlen($template) - 1);
+            $rndstring .= $template[$b];
+        }
+
+        return $rndstring;
+    }
+
 }

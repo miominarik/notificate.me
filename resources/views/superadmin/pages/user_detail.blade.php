@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-9">
                     <input type="text" class="form-control" id="apple_id" required readonly disabled
-                           value="{{$user_detail[0]->apple_id == true ? 'Autorizované' : 'Neautorizované'}}">
+                           value="{{$user_detail[0]->apple_id == TRUE ? 'Autorizované' : 'Neautorizované'}}">
                 </div>
                 <div class="col-3">
                     <a href="{{route('superadmin.users_deauthorization', ['user_id' => $user_detail[0]->id, 'auth_type' => 'apple'])}}">
@@ -49,7 +49,7 @@
             <div class="row">
                 <div class="col-9">
                     <input type="text" class="form-control" id="google_id" required readonly disabled
-                           value="{{$user_detail[0]->google_id == true ? 'Autorizované' : 'Neautorizované'}}">
+                           value="{{$user_detail[0]->google_id == TRUE ? 'Autorizované' : 'Neautorizované'}}">
                 </div>
                 <div class="col-3">
                     <a href="{{route('superadmin.users_deauthorization', ['user_id' => $user_detail[0]->id, 'auth_type' => 'google'])}}">
@@ -63,7 +63,7 @@
             <div class="row">
                 <div class="col-9">
                     <input type="text" class="form-control" id="microsoft_id" required readonly disabled
-                           value="{{$user_detail[0]->microsoft_id == true ? 'Autorizované' : 'Neautorizované'}}">
+                           value="{{$user_detail[0]->microsoft_id == TRUE ? 'Autorizované' : 'Neautorizované'}}">
                 </div>
                 <div class="col-3">
                     <a href="{{route('superadmin.users_deauthorization', ['user_id' => $user_detail[0]->id, 'auth_type' => 'microsoft'])}}">
@@ -72,9 +72,14 @@
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            <label for="blocked" class="pb-2 pt-2">Dvojfaktorová Autentifikácia</label>
+            <input type="text" class="form-control" id="mfa" required readonly disabled
+                   value="{{$mfa_status > 0 ? 'Aktivovaná' : 'Neaktivovaná'}}">
+        </div>
         <div class="form-group pt-2 text-start">
             <button type="submit" class="btn btn-primary">Uložiť</button>
-            @if($user_detail[0]->blocked == false)
+            @if($user_detail[0]->blocked == FALSE)
                 <button type="button" class="btn btn-warning"
                         onclick="document.getElementById('tooglestatus_form').submit();">Zablokovať
                     užívatela
@@ -84,6 +89,9 @@
                         onclick="document.getElementById('tooglestatus_form').submit();">Odblokovať
                     užívatela
                 </button>
+            @endif
+            @if($mfa_status > 0)
+                <button type="button" class="btn btn-secondary" onclick="window.location.replace('{{route('superadmin.removemfa', $user_detail[0]->id )}}')">Deaktivovať MFA</button>
             @endif
         </div>
     </form>

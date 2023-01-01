@@ -31,5 +31,16 @@ return [
     'device_name' => 'Názov zariadenia',
     'device_last_used' => 'Naposledný použité',
     'device_noone' => 'Žiadne zariadenie',
-    'device_disconnect_all' => 'Odpojiť všetky zariadenia'
+    'device_disconnect_all' => 'Odpojiť všetky zariadenia',
+    'mfa_activate_btn' => 'Aktivovať dvojfaktorovú autentifikáciu',
+    'mfa_activated_btn' => 'Dvojfaktorová autentifikácia nastavená',
+    'mfa_activate_start2' => 'Stiahnite a aktivujte si našu mobilnú aplikáciu',
+    'mfa_activate_start3' => 'Vyberte si zariadenie',
+    'mfa_activate_start4' => 'Zadajte aktivačný kód zo zariadenia ktorý sme Vám zaslali',
+    'mfa_success' => 'Dvojfaktorová autentifikácia bola úspešne nastavená',
+    'mfa_warning' => 'Dvojfaktorová autentifikácia nebola nastavená. Nesprávny kód',
+    'mfa_disabled' => 'Dvojfaktorová autentifikácia bola úspešne deaktivovaná',
+    'mfa_recovery_code' => 'Záložné kódy',
+    'mfa_deactivate' => 'Deaktivovať dvojfaktorovú autentifikáciu',
+    'btn_select' => 'Zvoliť',
 ];

@@ -60,11 +60,11 @@ class ApiController extends Controller
 
                 if ($item->task_notification_type == 1) { //Add x days
                     $new_date = $checked_date->subDays($item->task_notification_value);
-                } elseif ($item->task_notification_type == 2) { //Add x weeks
+                } else if ($item->task_notification_type == 2) { //Add x weeks
                     $new_date = $checked_date->subWeeks($item->task_notification_value);
-                } elseif ($item->task_notification_type == 3) { //Add x months
+                } else if ($item->task_notification_type == 3) { //Add x months
                     $new_date = $checked_date->subMonths($item->task_notification_value);
-                } elseif ($item->task_notification_type == 4) { //Add x months
+                } else if ($item->task_notification_type == 4) { //Add x months
                     $new_date = $checked_date->subYears($item->task_notification_value);
                 };
 
@@ -99,7 +99,6 @@ class ApiController extends Controller
     /**
      * Skontroluje všetky úlohy. Následne pozrie či je aktívny sms modul a skontroluje či je zadané tel.č.
      * Následne pozrie úlohy ktorým za jeden den konči platnosť a rozopošle im sms
-     *
      * @return void
      */
     protected function AgentCheckDatesSMS()
@@ -131,11 +130,11 @@ class ApiController extends Controller
 
                 if ($item->task_notification_type == 1) { //Add x days
                     $new_date = $checked_date->subDays($item->task_notification_value);
-                } elseif ($item->task_notification_type == 2) { //Add x weeks
+                } else if ($item->task_notification_type == 2) { //Add x weeks
                     $new_date = $checked_date->subWeeks($item->task_notification_value);
-                } elseif ($item->task_notification_type == 3) { //Add x months
+                } else if ($item->task_notification_type == 3) { //Add x months
                     $new_date = $checked_date->subMonths($item->task_notification_value);
-                } elseif ($item->task_notification_type == 4) { //Add x months
+                } else if ($item->task_notification_type == 4) { //Add x months
                     $new_date = $checked_date->subYears($item->task_notification_value);
                 };
 
@@ -279,11 +278,11 @@ class ApiController extends Controller
 
                 if ($item->task_notification_type == 1) { //Add x days
                     $new_date = $checked_date->subDays($item->task_notification_value);
-                } elseif ($item->task_notification_type == 2) { //Add x weeks
+                } else if ($item->task_notification_type == 2) { //Add x weeks
                     $new_date = $checked_date->subWeeks($item->task_notification_value);
-                } elseif ($item->task_notification_type == 3) { //Add x months
+                } else if ($item->task_notification_type == 3) { //Add x months
                     $new_date = $checked_date->subMonths($item->task_notification_value);
-                } elseif ($item->task_notification_type == 4) { //Add x months
+                } else if ($item->task_notification_type == 4) { //Add x months
                     $new_date = $checked_date->subYears($item->task_notification_value);
                 };
 
@@ -315,14 +314,22 @@ class ApiController extends Controller
 
     }
 
-    protected function sendNotification(string $title, string $body, int $user_id)
+    public function sendNotification(string $title, string $body, int $user_id, $fcm_token = NULL)
     {
-        $all_fcm_tokens = DB::table('fcm_tokens')
-            ->select('fcm_token')
-            ->where('user_id', '=', $user_id)
-            ->where('enabled', '=', 1)
-            ->get();
-
+        if ($fcm_token == NULL){
+            $all_fcm_tokens = DB::table('fcm_tokens')
+                ->select('fcm_token')
+                ->where('user_id', '=', $user_id)
+                ->where('enabled', '=', 1)
+                ->get();
+        }else{
+            $all_fcm_tokens = DB::table('fcm_tokens')
+                ->select('fcm_token')
+                ->where('fcm_token', '=', $fcm_token)
+                ->where('user_id', '=', $user_id)
+                ->where('enabled', '=', 1)
+                ->get();
+        };
 
         if (!empty($all_fcm_tokens)) {
             $all_tokens = array();

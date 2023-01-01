@@ -116,6 +116,18 @@
                                                 <button type="button" class="btn btn-own-danger" data-bs-toggle="modal"
                                                         data-bs-target="#changepassModal">{{__('settings.change_pass_btn')}}
                                                 </button>
+                                                @if(isset($mfa_info) && $mfa_info->count() == 0)
+                                                    <button type="button" class="btn btn-own-purple"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#activate_two_factorModal">{{__('settings.mfa_activate_btn')}}
+                                                    </button>
+                                                @endif
+                                                @if(isset($mfa_info) && $mfa_info->count() > 0)
+                                                    <button type="button" class="btn btn-own-purple"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#show_recocery_codesModal">{{__('settings.mfa_activated_btn')}}
+                                                    </button>
+                                                @endif
                                             </div>
                                         </form>
                                         <hr>
@@ -161,10 +173,8 @@
     </section>
 
     @include('settings.inc.change_pass_modal')
-    @if(isset($qr_code) && $qr_code != NULL)
-        @include('settings.inc.activate_two_factor')
-    @endif
-    @if(isset($recovery_codes) && $recovery_codes != NULL)
+    @include('settings.inc.activate_two_factor')
+    @if(isset($mfa_info) && $mfa_info->count() > 0)
         @include('settings.inc.show_mfa_recovery_codes')
     @endif
 @endsection

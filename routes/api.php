@@ -20,3 +20,4 @@ Route::get('/main_check_agent_fcm', "App\Http\Controllers\ApiController@AgentChe
 Route::get('/unsubscribe/{user_email}', "App\Http\Controllers\SettingsController@Email_unsubscribe");
 Route::get('/ics/public/{hash}', "App\Http\Controllers\CalendarController@GenerateICS");
 Route::post('/fcm_register', "App\Http\Controllers\ApiController@FCM_Token");
+Route::post('/mfa/verify_code/{device_id}/{user_id}', "App\Http\Controllers\SettingsController@VerifyMfaCode");

@@ -75,6 +75,10 @@ Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(
     Route::post('settings/change_password', "App\Http\Controllers\SettingsController@change_password")->name('settings.change_password');
     Route::get('settings/disconnect_all_devices', "App\Http\Controllers\SettingsController@disconnect_all_devices")->name('settings.disconnect_all_devices');
 
+    //MFA
+    Route::post('/mfa/checkcode', "App\Http\Controllers\SettingsController@CheckMfaCode")->name('mfa.checkcode');
+    Route::get('/mfa/disablemfa', "App\Http\Controllers\SettingsController@DisableMFA")->name('mfa.disablemfa');
+
     //Calendar
     Route::middleware('check_module:module_calendar')->group(function () {
         Route::get('calendar', "App\Http\Controllers\CalendarController@index")->name('calendar.index');
@@ -100,6 +104,7 @@ Route::middleware(['auth', 'verified', 'superadmin'])->group(function () {
     Route::get('superadmin/users/{user_id}/{auth_type}/deauthorization', "App\Http\Controllers\SuperAdminController@users_deauthorization")->name('superadmin.users_deauthorization');
     Route::post('superadmin/users/{user_id}/tooglestatus', "App\Http\Controllers\SuperAdminController@tooglestatus")->name('superadmin.tooglestatus');
     Route::get('superadmin/logs', "App\Http\Controllers\SuperAdminController@logs")->name('superadmin.logs');
+    Route::get('superadmin/users/{user_id}/removemfa', "App\Http\Controllers\SuperAdminController@removemfa")->name('superadmin.removemfa');
 
 
 });
