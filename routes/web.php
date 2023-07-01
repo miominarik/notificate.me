@@ -74,6 +74,8 @@ Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(
     Route::put('settings/update', "App\Http\Controllers\SettingsController@update")->name('settings.update');
     Route::post('settings/change_password', "App\Http\Controllers\SettingsController@change_password")->name('settings.change_password');
     Route::get('settings/disconnect_all_devices', "App\Http\Controllers\SettingsController@disconnect_all_devices")->name('settings.disconnect_all_devices');
+    Route::post('settings/ics/add', "App\Http\Controllers\SettingsController@add_ics_source")->name('settings.add_ics_source');
+    Route::get('settings/ics/{id}/remove', "App\Http\Controllers\SettingsController@remove_ics_source")->name('settings.remove_ics_source');
 
     //MFA
     Route::post('/mfa/checkcode', "App\Http\Controllers\SettingsController@CheckMfaCode")->name('mfa.checkcode');

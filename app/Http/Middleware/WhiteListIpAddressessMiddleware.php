@@ -19,14 +19,15 @@ class WhiteListIpAddressessMiddleware
     {
         $startIp = ip2long('10.31.0.0');
         $endIp = ip2long('10.31.63.255');
-        $requestIp = ip2long($request->ip());
+        $requestIp = ip2long($_SERVER['HTTP_CF_CONNECTING_IP']);
 
-        if (($request->ip() == '109.123.245.143') || ($request->ip() == '213.160.175.138' || $request->ip() == '127.0.0.1')) {
+        if (($requestIp >= $startIp && $requestIp <= $endIp) || ($_SERVER['HTTP_CF_CONNECTING_IP'] == '213.160.175.138' || $_SERVER['HTTP_CF_CONNECTING_IP'] == '127.0.0.1')) {
             return $next($request);
         }else{
             return response()->json([
                 'status' => 'error',
-                'note' => 'You are restricted to access the site'
+                'note' => 'You are restricted to access the site',
+                'ip' => $_SERVER['HTTP_CF_CONNECTING_IP']
             ], 403);
         };
     }

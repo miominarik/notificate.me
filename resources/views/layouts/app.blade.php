@@ -75,7 +75,7 @@
 <body>
 <div id="app">
     @if((new \Jenssegers\Agent\Agent())->isDesktop())
-        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/app">{{ config('app.name', 'Laravel') }}</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -86,27 +86,17 @@
                 <div class="collapse navbar-collapse" id="mainNavbar">
                     @auth
                         <ul class="nav nav-pills">
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown"
-                                   class="nav-link dropdown-toggle text-white {{ request()->is('tasks*') || request()->is('files*') ? 'active' : '' }}"
-                                   href="#"
-                                   role="button"
-                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ __('layout.menu_tasks') }}
+                            <li class="nav-item">
+                                <a class="nav-link text-white {{ request()->is('tasks*') ? 'active' : '' }}"
+                                   aria-current="page"
+                                   href="{{ route('tasks.index') }}">
+                                    {{ __('layout.menu_tasks_head') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white {{ request()->is('files*') ? 'active' : '' }}"
+                                   href="{{ route('files.all_files') }}">
+                                    {{ __('layout.menu_tasks_files') }}
                                 </a>
-
-                                <div class="dropdown-menu dropdown-menu-end"
-                                     aria-labelledby="navbarDropdown"
-                                     aria-current="page">
-                                    <a class="dropdown-item {{ request()->is('tasks') ? 'active' : '' }}"
-                                       href="{{ route('tasks.index') }}">
-                                        {{ __('layout.menu_tasks_head') }}
-                                    </a>
-                                    <a class="dropdown-item {{ request()->is('files*') ? 'active' : '' }}"
-                                       href="{{ route('files.all_files') }}">
-                                        {{ __('layout.menu_tasks_files') }}
-                                    </a>
-                                </div>
                             </li>
                             @if($activated_modules->module_calendar)
                                 <li class="nav-item">
@@ -115,15 +105,24 @@
                                        href="{{ route('calendar.index') }}">{{__('layout.menu_calendar')}}</a>
                                 </li>
                             @endif
-                            <li class="nav-item">
-                                <a class="nav-link text-white {{ request()->is('modules*') ? 'active' : '' }}"
-                                   aria-current="page"
-                                   href="{{ route('modules.index') }}">{{ __('layout.menu_modules') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white {{ request()->is('settings*') ? 'active' : '' }}"
-                                   aria-current="page"
-                                   href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown"
+                                   class="nav-link dropdown-toggle text-white {{ request()->is('settings*') || request()->is('modules*') ? 'active' : '' }}"
+                                   href="#"
+                                   role="button"
+                                   data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('layout.menu_settings') }}
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end"
+                                     aria-labelledby="navbarDropdown"
+                                     aria-current="page">
+                                    <a class="dropdown-item {{ request()->is('modules*') ? 'active' : '' }}"
+                                       aria-current="page"
+                                       href="{{ route('modules.index') }}">{{ __('layout.menu_modules') }}</a>
+                                    <a class="dropdown-item {{ request()->is('settings*') ? 'active' : '' }}"
+                                       aria-current="page"
+                                       href="{{ route('settings.index') }}">{{ __('layout.menu_settings') }}</a>
+                                </div>
                             </li>
                             @if(session()->get('user_superadmin') === 1)
                                 <li class="nav-item">
@@ -227,26 +226,11 @@
     @auth
         @if((new \Jenssegers\Agent\Agent())->isMobile() ||(new \Jenssegers\Agent\Agent())->isTablet())
             <div class="sticky-footer">
-                <a id="navbarDropdown"
-                   class="nav-link sticky-footer mb-1 item {{ request()->is('tasks*') || request()->is('files*') ? 'active' : '' }}"
-                   href="#"
-                   role="button"
-                   data-bs-toggle="dropdown">
-                    <i class="fa-solid fa-house"></i>
-                    {{ __('layout.menu_tasks') }}
+                <a class="sticky-footer mb-1 item {{ request()->is('tasks') ? 'active' : '' }}"
+                   href="{{ route('tasks.index') }}">
+                    <i class="fas fa-tasks"></i>
+                    {{ __('layout.menu_tasks_head') }}
                 </a>
-                <div class="dropdown-menu dropdown-menu-end"
-                     aria-labelledby="navbarDropdown"
-                     aria-current="page">
-                    <a class="dropdown-item {{ request()->is('tasks') ? 'active' : '' }}"
-                       href="{{ route('tasks.index') }}">
-                        {{ __('layout.menu_tasks_head') }}
-                    </a>
-                    <a class="dropdown-item {{ request()->is('files*') ? 'active' : '' }}"
-                       href="{{ route('files.all_files') }}">
-                        {{ __('layout.menu_tasks_files') }}
-                    </a>
-                </div>
                 @if($activated_modules->module_calendar)
                     <a href="{{ route('calendar.index') }}"
                        class="sticky-footer mb-1 item {{ request()->is('calendar*') ? 'active' : '' }}">
@@ -254,16 +238,31 @@
                         {{__('layout.menu_calendar')}}
                     </a>
                 @endif
-                <a href="{{ route('modules.index') }}"
-                   class="sticky-footer mb-1 item {{ request()->is('modules*') ? 'active' : '' }}">
-                    <i class="fa-solid fa-puzzle-piece"></i>
-                    {{ __('layout.menu_modules') }}
+                <a class="sticky-footer mb-1 item {{ request()->is('files*') ? 'active' : '' }}"
+                   href="{{ route('files.all_files') }}">
+                    <i class="fa-solid fa-file"></i>
+                    {{ __('layout.menu_tasks_files') }}
                 </a>
-                <a href="{{ route('settings.index') }}"
-                   class="sticky-footer mb-1 item {{ request()->is('settings*') ? 'active' : '' }}">
+                <a id="navbarDropdown"
+                   class="nav-link sticky-footer mb-1 item {{ request()->is('modules*') || request()->is('settings*') ? 'active' : '' }}"
+                   href="#"
+                   role="button"
+                   data-bs-toggle="dropdown">
                     <i class="fa-solid fa-gear"></i>
                     {{ __('layout.menu_settings') }}
                 </a>
+                <div class="dropdown-menu dropdown-menu-end"
+                     aria-labelledby="navbarDropdown"
+                     aria-current="page">
+                    <a href="{{ route('modules.index') }}"
+                       class="dropdown-item {{ request()->is('modules*') ? 'active' : '' }}">
+                        {{ __('layout.menu_modules') }}
+                    </a>
+                    <a href="{{ route('settings.index') }}"
+                       class="dropdown-item {{ request()->is('settings*') ? 'active' : '' }}">
+                        {{ __('layout.menu_settings') }}
+                    </a>
+                </div>
             </div>
         @endif
     @endauth

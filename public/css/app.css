@@ -46,6 +46,17 @@ body {
   background-color: #3f5b87;
 }
 
+.btn-primary {
+  color: white;
+  background-color: #3f5b87;
+  padding: 10px;
+  border: 0px;
+}
+.btn-primary:hover, .btn-primary:active {
+  color: white;
+  background-color: #3f5b87;
+}
+
 .btn-own-success {
   color: white;
   background-color: #3f8749;

@@ -14,7 +14,7 @@
                 timeZone: 'Europe/Bratislava',
                 firstDay: 1,
                 @if((new \Jenssegers\Agent\Agent())->isMobile())
-                initialView: 'listWeek',
+                initialView: 'listDay',
                 titleFormat: {day: 'numeric', month: 'numeric'},
                 headerToolbar: {
                     start: 'title', // will normally be on the left. if RTL, will be on the right
@@ -23,6 +23,11 @@
                 },
                 @else
                 initialView: 'dayGridMonth',
+                headerToolbar: {
+                    start: 'title', // will normally be on the left. if RTL, will be on the right
+                    center: '',
+                    end: 'today dayGridMonth,timeGridWeek,timeGridDay,listWeek prev,next' // will normally be on the right. if RTL, will be on the left
+                },
                 @endif
                 nowIndicator: true,
                 dayMaxEvents: true,

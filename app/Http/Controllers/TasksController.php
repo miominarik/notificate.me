@@ -36,6 +36,7 @@ class TasksController extends Controller
                 ->select('id', 'task_name', 'task_note', 'task_next_date', 'task_repeat_value', 'task_repeat_type', 'notification')
                 ->where('user_id', Auth::id())
                 ->where('task_enabled', TRUE)
+                ->whereNull('ics_source_id')
                 ->orderBy('task_next_date', 'ASC')
                 ->paginate(10);
         };

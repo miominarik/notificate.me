@@ -38,6 +38,9 @@ class SettingsController extends Controller
             'mfa_info' => DB::table('mfa_authorization')
                 ->where('user_id', '=', Auth::id())
                 ->where('enabled', '=', 1)
+                ->get(),
+            'ics_sources' => DB::table('ics_sources')
+                ->where("user_id", "=", Auth::id())
                 ->get()
         ]);
     }
@@ -297,5 +300,50 @@ class SettingsController extends Controller
             ->where('user_id', '=', Auth::id())
             ->delete();
         return redirect()->back()->with('status_success', 'Dvojfaktorové prihlásenie bolo úspešne deaktivované');
+    }
+
+    public function add_ics_source(Request $request)
+    {
+        $validated = $request->validate([
+            'ics_name' => 'string|required|min:1|max:255',
+            'ics_url' => 'URL|required',
+            'ics_notif' => 'boolean'
+        ]);
+
+        $inserted_id = DB::table('ics_sources')
+            ->insertGetId([
+                'user_id' => Auth::id(),
+                'name' => $validated['ics_name'],
+                'ics_url' => $validated['ics_url'],
+                'allow_notif' => $validated['ics_notif'],
+                'created_at' => Carbon::now()
+            ]);
+        if ($inserted_id) {
+            return redirect()->back()->with('status_success', __('settings.ics_add_success'));
+        }
+    }
+
+    public function remove_ics_source(int $ics_id)
+    {
+        if ($ics_id > 0) {
+            $check_if_exist = DB::table("ics_sources")
+                ->where('user_id', '=', Auth::id())
+                ->where('id', '=', $ics_id)
+                ->count();
+            if ($check_if_exist > 0) {
+                //Remove all tasks
+                DB::table('tasks')
+                    ->where('user_id', '=', Auth::id())
+                    ->where('ics_source_id', '=', $ics_id)
+                    ->delete();
+                DB::table('ics_sources')
+                    ->where('user_id', '=', Auth::id())
+                    ->where('id', '=', $ics_id)
+                    ->delete();
+                return redirect()->back()->with('status_success', __('settings.ics_remove_success'));
+                
+            }
+        }
+        return redirect()->back()->with('status_danger', __('settings.ics_remove_fail'));
     }
 }

@@ -37,6 +37,19 @@ body {
     border: 0px;
 }
 
+.btn-primary{
+    color: white;
+    background-color: $primary;
+
+    &:hover, &:active {
+        color: white;
+        background-color: $primary;
+    }
+    padding: 10px;
+    border: 0px;
+}
+
+
 .btn-own-success {
     color: white;
     background-color: $success;
