@@ -170,62 +170,65 @@
                                             <form class="row g-2 align-items-start" method="POST"
                                                   action="{{route('settings.add_ics_source')}}">
                                                 @csrf
-                                                <div class="col-4">
+                                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                                                     <input type="text" class="form-control" name="ics_name"
                                                            placeholder="{{__('settings.ics_add_name')}}">
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12">
                                                     <input type="text" class="form-control" name="ics_url"
                                                            placeholder="{{__('settings.ics_add_url')}}">
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
                                                     <select name="ics_notif" class="form-select">
                                                         <option value="0">{{__('settings.ics_add_notif_no')}}</option>
                                                         <option value="1">{{__('settings.ics_add_notif_yes')}}</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-1">
+                                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-12 col-12">
                                                     <button type="submit"
                                                             class="btn btn-own-primary btn-sm">{{__('settings.ics_add_submit')}}
                                                     </button>
                                                 </div>
                                             </form>
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">{{__('settings.ics_name')}}</th>
-                                                    <th scope="col">{{__('settings.ics_url')}}</th>
-                                                    <th scope="col">{{__('settings.allow_notif')}}</th>
-                                                    <th scope="col">{{__('settings.ics_created_at')}}</th>
-                                                    <th scope="col">{{__('settings.ics_remove')}}</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                @php($count = 1)
-                                                @forelse($ics_sources as $one_ics)
+                                            <div class="table-responsive">
+
+                                                <table class="table">
+                                                    <thead>
                                                     <tr>
-                                                        <th scope="row">{{$count}}</th>
-                                                        <td>{{$one_ics->name}}</td>
-                                                        <td>{{$one_ics->ics_url}}</td>
-                                                        <td>{{$one_ics->allow_notif == TRUE ? __('settings.yes') : __('settings.no')}}</td>
-                                                        <td>{{Carbon::parse($one_ics->created_at)->format('d.m.Y H:i')}}</td>
-                                                        <td>
-                                                            <a href="{{route("settings.remove_ics_source", $one_ics->id)}}"><i
-                                                                    class="fa-solid fa-trash text-danger"
-                                                                    style="cursor: pointer;"></i></a></td>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">{{__('settings.ics_name')}}</th>
+                                                        <th scope="col">{{__('settings.ics_url')}}</th>
+                                                        <th scope="col">{{__('settings.allow_notif')}}</th>
+                                                        <th scope="col">{{__('settings.ics_created_at')}}</th>
+                                                        <th scope="col">{{__('settings.ics_remove')}}</th>
                                                     </tr>
-                                                    @php($count++)
-                                                @empty
-                                                    <tr>
-                                                        <th scope="row">{{__('settings.ics_none')}}</th>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                @endforelse
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                    @php($count = 1)
+                                                    @forelse($ics_sources as $one_ics)
+                                                        <tr>
+                                                            <th scope="row">{{$count}}</th>
+                                                            <td>{{$one_ics->name}}</td>
+                                                            <td>{{$one_ics->ics_url}}</td>
+                                                            <td>{{$one_ics->allow_notif == TRUE ? __('settings.yes') : __('settings.no')}}</td>
+                                                            <td>{{Carbon::parse($one_ics->created_at)->format('d.m.Y H:i')}}</td>
+                                                            <td>
+                                                                <a href="{{route("settings.remove_ics_source", $one_ics->id)}}"><i
+                                                                        class="fa-solid fa-trash text-danger"
+                                                                        style="cursor: pointer;"></i></a></td>
+                                                        </tr>
+                                                        @php($count++)
+                                                    @empty
+                                                        <tr>
+                                                            <th scope="row">{{__('settings.ics_none')}}</th>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+                                                    @endforelse
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
