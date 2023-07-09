@@ -43,7 +43,7 @@ class NotificationController extends Controller
 
                 if ($new_date <= Carbon::now()) {
                     array_push($notification_array['data'], [
-                        'task_name' => $item->task_name,
+                        'task_name' => $this->DecryptWithECC(Auth::user()->private_key, $item->task_name),
                         'task_next_date' => Carbon::createFromFormat('Y-m-d', $item->task_next_date)->format('d.m.Y'),
                     ]);
                     $notification_array['count']++;

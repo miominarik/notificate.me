@@ -41,6 +41,13 @@ class TasksController extends Controller
                 ->paginate(10);
         };
 
+        if ($task_pick->count() > 0) {
+            foreach ($task_pick as $index => $one_task) {
+                $task_pick[$index]->task_name = $this->DecryptWithECC(Auth::user()->private_key, $one_task->task_name);
+                $task_pick[$index]->task_note = (!is_null($one_task->task_note) ? $this->DecryptWithECC(Auth::user()->private_key, $one_task->task_note) : "");
+            }
+        }
+
         return view('tasks.Index', [
             'all_enabled_tasks' => $task_pick
         ]);
@@ -76,8 +83,8 @@ class TasksController extends Controller
 
                 $task = DB::table('tasks')->insertGetId([
                     'user_id' => Auth::id(),
-                    'task_name' => $validated['task_name'],
-                    'task_note' => $validated['task_note'],
+                    'task_name' => $this->EncryptWithECC(Auth::user()->private_key, $validated['task_name']),
+                    'task_note' => (!empty($validated['task_note']) && !is_null($validated['task_note']) ? $this->EncryptWithECC(Auth::user()->private_key, $validated['task_note']) : NULL),
                     'task_type' => $validated['task_type'],
                     'task_next_date' => $validated['task_next_date'],
                     'task_repeat_value' => $validated['task_repeat_value'],
@@ -114,6 +121,12 @@ class TasksController extends Controller
             ->where('id', $task)
             ->get();
 
+
+        $return_data[0]->task_name = $this->DecryptWithECC(Auth::user()->private_key, $return_data[0]->task_name);
+        if (!is_null($return_data[0]->task_note)) {
+            $return_data[0]->task_note = $this->DecryptWithECC(Auth::user()->private_key, $return_data[0]->task_note);
+        }
+
         return response()->json($return_data, 200);
     }
 
@@ -138,8 +151,8 @@ class TasksController extends Controller
 
         if (is_null($validated['task_repeat_value'])) {
             $update_arr = [
-                'task_name' => $validated['task_name'],
-                'task_note' => $validated['task_note'],
+                'task_name' => $this->EncryptWithECC(Auth::user()->private_key, $validated['task_name']),
+                'task_note' => (!empty($validated['task_note']) && !is_null($validated['task_note']) ? $this->EncryptWithECC(Auth::user()->private_key, $validated['task_note']) : NULL),
                 'task_repeat_value' => NULL,
                 'task_repeat_type' => NULL,
                 'task_notification_value' => $validated['task_notification_value'],
@@ -150,8 +163,8 @@ class TasksController extends Controller
             ];
         } else {
             $update_arr = [
-                'task_name' => $validated['task_name'],
-                'task_note' => $validated['task_note'],
+                'task_name' => $this->EncryptWithECC(Auth::user()->private_key, $validated['task_name']),
+                'task_note' => (!empty($validated['task_note']) && !is_null($validated['task_note']) ? $this->EncryptWithECC(Auth::user()->private_key, $validated['task_note']) : NULL),
                 'task_repeat_value' => $validated['task_repeat_value'],
                 'task_repeat_type' => $validated['task_repeat_type'],
                 'task_notification_value' => $validated['task_notification_value'],
@@ -381,6 +394,7 @@ class TasksController extends Controller
 
         if ($all_files->count() > 0) {
             foreach ($all_files as $idcko => $file) {
+                $all_files[$idcko]->task_name = $this->DecryptWithECC(Auth::user()->private_key, $file->task_name);
                 $all_files[$idcko]->file_size = $this->formatBytes($file->file_size, 2);
                 $all_files[$idcko]->id = $this->JWT_encode($file->id);
                 $all_files[$idcko]->created_at = Carbon::parse($file->created_at)->format('d.m.Y');

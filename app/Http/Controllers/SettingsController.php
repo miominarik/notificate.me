@@ -20,10 +20,16 @@ class SettingsController extends Controller
      */
     public function index()
     {
+        $settings_data = DB::table('users_settings')
+            ->where('user_id', Auth::id())
+            ->get();
+
+        if (!is_null($settings_data[0]->mobile_number)) {
+            $settings_data[0]->mobile_number = $this->DecryptWithECC(Auth::user()->private_key, $settings_data[0]->mobile_number);
+        }
+
         return view('settings.Index', [
-            'settings_data' => DB::table('users_settings')
-                ->where('user_id', Auth::id())
-                ->get(),
+            'settings_data' => $settings_data,
             'modules_status' => DB::table('modules')
                 ->select('module_sms')
                 ->where('user_id', Auth::id())
@@ -126,7 +132,7 @@ class SettingsController extends Controller
                 ->update([
                     'enable_email_notification' => $validated['enable_email_notif'],
                     'notification_time' => $validated['notification_time'],
-                    'mobile_number' => $validated['mobile_number'],
+                    'mobile_number' => (!empty($validated['mobile_number']) ? $this->EncryptWithECC(Auth::user()->private_key, $validated['mobile_number']) : NULL),
                     'language' => $validated['language'],
                     'updated_at' => Carbon::now()
                 ]);
@@ -341,7 +347,7 @@ class SettingsController extends Controller
                     ->where('id', '=', $ics_id)
                     ->delete();
                 return redirect()->back()->with('status_success', __('settings.ics_remove_success'));
-                
+
             }
         }
         return redirect()->back()->with('status_danger', __('settings.ics_remove_fail'));

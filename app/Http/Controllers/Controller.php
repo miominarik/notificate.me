@@ -148,4 +148,47 @@ class Controller extends BaseController
         return $rndstring;
     }
 
+    public function EncryptWithECC(string $private_key, string $stringToEncrypt)
+    {
+        $privateKey = base64_decode($private_key);
+        if (!empty($privateKey)) {
+            $publicKey = sodium_crypto_box_publickey_from_secretkey($privateKey);
+            if (!empty($publicKey)) {
+                // Vygenerujte náhodné nonce (inicializačný vektor)
+                $nonce = random_bytes(SODIUM_CRYPTO_BOX_NONCEBYTES);
+                // Zašifrujte text pomocou verejného kľúča
+                $key_pairs = sodium_crypto_box_keypair_from_secretkey_and_publickey($privateKey, $publicKey);
+                $encryptedData = sodium_crypto_box($stringToEncrypt, $nonce, $key_pairs);
+                // Konvertovanie zašifrovaných dát na base64 reťazec
+                $encryptedData = base64_encode($nonce . $encryptedData);
+                if (!empty($encryptedData)) {
+                    return $encryptedData;
+                }
+            }
+        }
+        return FALSE;
+    }
+
+    public function DecryptWithECC(string $private_key, string $stringToDecrypt)
+    {
+        $privateKey = base64_decode($private_key);
+        if (!empty($privateKey)) {
+            $publicKey = sodium_crypto_box_publickey_from_secretkey($privateKey);
+            if (!empty($publicKey)) {
+                // Dekódovanie zašifrovaného base64 reťazca
+                $encryptedData = base64_decode($stringToDecrypt);
+                // Rozdelenie zašifrovaných dát na nonce a zašifrovaný text
+                $nonce = mb_substr($encryptedData, 0, SODIUM_CRYPTO_BOX_NONCEBYTES, '8bit');
+                $ciphertext = mb_substr($encryptedData, SODIUM_CRYPTO_BOX_NONCEBYTES, NULL, '8bit');
+                $key_pairs = sodium_crypto_box_keypair_from_secretkey_and_publickey($privateKey, $publicKey);
+                // Dešifrovanie textu pomocou súkromného kľúča
+                $decryptedData = sodium_crypto_box_open($ciphertext, $nonce, $key_pairs);
+                if (!empty($decryptedData)) {
+                    return $decryptedData;
+                }
+            }
+        }
+        return FALSE;
+    }
+
 }

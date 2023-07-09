@@ -42,7 +42,7 @@ class ApiController extends Controller
         $data = DB::table('tasks')
             ->join('users', 'tasks.user_id', '=', 'users.id')
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
-            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users.email', 'users_settings.enable_email_notification', 'users_settings.notification_time', 'users_settings.language')
+            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users.email', 'users.private_key', 'users_settings.enable_email_notification', 'users_settings.notification_time', 'users_settings.language')
             ->where([
                 'task_enabled' => TRUE,
                 'notification' => TRUE
@@ -79,7 +79,7 @@ class ApiController extends Controller
                     if ($new_date <= Carbon::now()->format('Y-m-d')) {
                         array_push($notification_array, [
                             'task_id' => $item->id,
-                            'task_name' => $item->task_name,
+                            'task_name' => $this->DecryptWithECC($item->private_key, $item->task_name),
                             'task_next_date' => $item->task_next_date,
                             'user_email' => $item->email,
                             'language' => $item->language,
@@ -109,8 +109,9 @@ class ApiController extends Controller
 
         $data = DB::table('tasks')
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
+            ->join('users', 'tasks.user_id', '=', 'users.id')
             ->join('modules', 'tasks.user_id', '=', 'modules.user_id')
-            ->select('tasks.id', 'tasks.task_name', 'tasks.user_id', 'tasks.task_next_date', 'tasks.task_notification_type', 'users_settings.mobile_number', 'users_settings.notification_time', 'modules.module_sms', 'tasks.task_notification_value')
+            ->select('tasks.id', 'tasks.task_name', 'tasks.user_id', 'tasks.task_next_date', 'tasks.task_notification_type', 'users_settings.mobile_number', 'users_settings.notification_time', 'modules.module_sms', 'tasks.task_notification_value', 'users.private_key')
             ->where([
                 'tasks.task_enabled' => TRUE,
                 'tasks.sms_sent' => FALSE,
@@ -149,9 +150,9 @@ class ApiController extends Controller
                     if ($new_date <= Carbon::now()->format('Y-m-d')) {
                         array_push($notification_array, [
                             'task_id' => $item->id,
-                            'task_name' => $item->task_name,
+                            'task_name' => $this->DecryptWithECC($item->private_key, $item->task_name),
                             'task_next_date' => $item->task_next_date,
-                            'user_mobile_number' => $item->mobile_number,
+                            'user_mobile_number' => (!is_null($item->mobile_number) ? $this->DecryptWithECC($item->private_key, $item->mobile_number) : NULL),
                             'user_id' => $item->user_id,
                         ]);
                     }
@@ -171,7 +172,7 @@ class ApiController extends Controller
             $sender->setDefaultCountry(Country::SLOVAKIA);
 
             foreach ($notification_array as $one_task) {
-                if (str_contains($one_task['user_mobile_number'], '421')) {
+                if (!is_null($one_task['user_mobile_number']) && str_contains($one_task['user_mobile_number'], '421')) {
                     $checked_date = Carbon::createFromFormat('Y-m-d', $one_task['task_next_date'])->format('d.m.Y');
                     $message_text = "Úloha: " . $one_task['task_name'] . ". Dátum splnenia: " . $checked_date;
                     $message = new Message($one_task['user_mobile_number'], $message_text);
@@ -261,7 +262,8 @@ class ApiController extends Controller
 
         $data = DB::table('tasks')
             ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
-            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users_settings.notification_time', 'tasks.user_id')
+            ->join('users', 'tasks.user_id', '=', 'users.user_id')
+            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users_settings.notification_time', 'tasks.user_id', 'users.private_key')
             ->where([
                 'task_enabled' => TRUE,
                 'notification' => TRUE
@@ -296,7 +298,7 @@ class ApiController extends Controller
                 if ($now == $date2) {
                     if ($new_date <= Carbon::now()->format('Y-m-d')) {
                         array_push($notification_array, [
-                            'task_name' => $item->task_name,
+                            'task_name' => $this->DecryptWithECC($item->private_key, $item->task_name),
                             'task_next_date' => Carbon::parse($item->task_next_date)->format('d.m.Y'),
                             'user_id' => $item->user_id,
                         ]);
@@ -389,100 +391,106 @@ class ApiController extends Controller
 
         if ($all_ics_in_db->count() > 0) {
             foreach ($all_ics_in_db as $one_ics) {
-                list($status) = get_headers($one_ics->ics_url);
-                if (strpos($status, '404') == FALSE) {
-                    try {
-                        $ical = new ICal($one_ics->ics_url, array(
-                            'defaultSpan' => 2,     // Default value
-                            'defaultTimeZone' => 'UTC',
-                            'defaultWeekStart' => 'MO',  // Default value
-                            'disableCharacterReplacement' => FALSE, // Default value
-                            'filterDaysAfter' => NULL,  // Default value
-                            'filterDaysBefore' => NULL,  // Default value
-                            'httpUserAgent' => NULL,  // Default value
-                            'skipRecurrence' => FALSE, // Default value
-                        ));
+                $user_data = DB::table('users')
+                    ->select('private_key')
+                    ->where('id', '=', $one_ics->user_id)
+                    ->get();
+                if ($user_data->count() > 0) {
+                    list($status) = get_headers($one_ics->ics_url);
+                    if (strpos($status, '404') == FALSE) {
+                        try {
+                            $ical = new ICal($one_ics->ics_url, array(
+                                'defaultSpan' => 2,     // Default value
+                                'defaultTimeZone' => 'UTC',
+                                'defaultWeekStart' => 'MO',  // Default value
+                                'disableCharacterReplacement' => FALSE, // Default value
+                                'filterDaysAfter' => NULL,  // Default value
+                                'filterDaysBefore' => NULL,  // Default value
+                                'httpUserAgent' => NULL,  // Default value
+                                'skipRecurrence' => FALSE, // Default value
+                            ));
 
-                        if (isset($ical->eventCount) && $ical->eventCount > 0) {
-                            if (count($ical->cal['VEVENT']) > 0) {
-                                foreach ($ical->cal['VEVENT'] as $one_event) {
-                                    $uuid = $one_event['UID'];
-                                    if ($uuid) {
-                                        $check_exist = DB::table('tasks')
-                                            ->where("user_id", "=", $one_ics->user_id)
-                                            ->where("uuid", "=", $uuid)
-                                            ->count();
+                            if (isset($ical->eventCount) && $ical->eventCount > 0) {
+                                if (count($ical->cal['VEVENT']) > 0) {
+                                    foreach ($ical->cal['VEVENT'] as $one_event) {
+                                        $uuid = $one_event['UID'];
+                                        if ($uuid) {
+                                            $check_exist = DB::table('tasks')
+                                                ->where("user_id", "=", $one_ics->user_id)
+                                                ->where("uuid", "=", $uuid)
+                                                ->count();
 
-                                        $start = Carbon::parse($one_event['DTSTART_tz'])->format("H:i");
-                                        $end = Carbon::parse($one_event['DTEND_tz'])->format("H:i");
-                                        $start = ($start != "00:00") ? $start : "";
-                                        $end = ($end != "00:00") ? $end : "";
+                                            $start = Carbon::parse($one_event['DTSTART_tz'])->format("H:i");
+                                            $end = Carbon::parse($one_event['DTEND_tz'])->format("H:i");
+                                            $start = ($start != "00:00") ? $start : "";
+                                            $end = ($end != "00:00") ? $end : "";
 
-                                        $final_note = ($start != "" && $end != "" ? $start . " - " . $end : NULL);
+                                            $final_note = ($start != "" && $end != "" ? $start . " - " . $end : NULL);
 
-                                        $date = Carbon::parse($one_event['DTSTART'])->format("Y-m-d");
+                                            $date = Carbon::parse($one_event['DTSTART'])->format("Y-m-d");
 
-                                        if (Carbon::parse($date)->gte(Carbon::now())) {
-                                            if ($check_exist == 0) { // Insert new
-                                                DB::table('tasks')
-                                                    ->insertOrIgnore([
-                                                        'uuid' => $uuid,
-                                                        'ics_source_id' => $one_ics->id,
-                                                        'user_id' => $one_ics->user_id,
-                                                        'task_name' => $one_event['SUMMARY'],
-                                                        'task_note' => $final_note,
-                                                        'task_type' => 0,
-                                                        'task_next_date' => Carbon::parse($date)->format("Y-m-d"),
-                                                        'task_repeat_value' => NULL,
-                                                        'task_repeat_type' => NULL,
-                                                        'task_notification_value' => 1,
-                                                        'task_notification_type' => 1,
-                                                        'task_enabled' => 1,
-                                                        'sms_sent' => 0,
-                                                        'notification' => $one_ics->allow_notif,
-                                                        'created_at' => Carbon::now(),
-                                                        'updated_at' => NULL
-                                                    ]);
-                                            } else { //Exist, then update
-                                                DB::table('tasks')
-                                                    ->where('uuid', '=', $uuid)
-                                                    ->where('ics_source_id', '=', $one_ics->id)
-                                                    ->where('user_id', '=', $one_ics->user_id)
-                                                    ->update([
-                                                        'task_name' => $one_event['SUMMARY'],
-                                                        'task_note' => $final_note,
-                                                        'task_type' => 0,
-                                                        'task_next_date' => Carbon::parse($date)->format("Y-m-d"),
-                                                        'task_repeat_value' => NULL,
-                                                        'task_repeat_type' => NULL,
-                                                        'task_notification_value' => 1,
-                                                        'task_notification_type' => 1,
-                                                        'task_enabled' => 1,
-                                                        'sms_sent' => 0,
-                                                        'notification' => $one_ics->allow_notif,
-                                                        'created_at' => Carbon::now(),
-                                                        'updated_at' => Carbon::now()
-                                                    ]);
-                                            }
-                                        } else {
-                                            if ($check_exist > 0) {
-                                                DB::table('tasks')
-                                                    ->where('uuid', '=', $uuid)
-                                                    ->where('ics_source_id', '=', $one_ics->id)
-                                                    ->where('user_id', '=', $one_ics->user_id)
-                                                    ->update([
-                                                        'task_enabled' => 0,
-                                                        'notification' => 0,
-                                                        'updated_at' => Carbon::now()
-                                                    ]);
+                                            if (Carbon::parse($date)->gte(Carbon::now())) {
+                                                if ($check_exist == 0) { // Insert new
+                                                    DB::table('tasks')
+                                                        ->insertOrIgnore([
+                                                            'uuid' => $uuid,
+                                                            'ics_source_id' => $one_ics->id,
+                                                            'user_id' => $one_ics->user_id,
+                                                            'task_name' => $this->EncryptWithECC($user_data[0]->private_key, $one_event['SUMMARY']),
+                                                            'task_note' => (!empty($final_note) && !is_null($final_note) ? $this->EncryptWithECC($user_data[0]->private_key, $final_note) : NULL),
+                                                            'task_type' => 0,
+                                                            'task_next_date' => Carbon::parse($date)->format("Y-m-d"),
+                                                            'task_repeat_value' => NULL,
+                                                            'task_repeat_type' => NULL,
+                                                            'task_notification_value' => 1,
+                                                            'task_notification_type' => 1,
+                                                            'task_enabled' => 1,
+                                                            'sms_sent' => 0,
+                                                            'notification' => $one_ics->allow_notif,
+                                                            'created_at' => Carbon::now(),
+                                                            'updated_at' => NULL
+                                                        ]);
+                                                } else { //Exist, then update
+                                                    DB::table('tasks')
+                                                        ->where('uuid', '=', $uuid)
+                                                        ->where('ics_source_id', '=', $one_ics->id)
+                                                        ->where('user_id', '=', $one_ics->user_id)
+                                                        ->update([
+                                                            'task_name' => $this->EncryptWithECC($user_data[0]->private_key, $one_event['SUMMARY']),
+                                                            'task_note' => (!empty($final_note) && !is_null($final_note) ? $this->EncryptWithECC($user_data[0]->private_key, $final_note) : NULL),
+                                                            'task_type' => 0,
+                                                            'task_next_date' => Carbon::parse($date)->format("Y-m-d"),
+                                                            'task_repeat_value' => NULL,
+                                                            'task_repeat_type' => NULL,
+                                                            'task_notification_value' => 1,
+                                                            'task_notification_type' => 1,
+                                                            'task_enabled' => 1,
+                                                            'sms_sent' => 0,
+                                                            'notification' => $one_ics->allow_notif,
+                                                            'created_at' => Carbon::now(),
+                                                            'updated_at' => Carbon::now()
+                                                        ]);
+                                                }
+                                            } else {
+                                                if ($check_exist > 0) {
+                                                    DB::table('tasks')
+                                                        ->where('uuid', '=', $uuid)
+                                                        ->where('ics_source_id', '=', $one_ics->id)
+                                                        ->where('user_id', '=', $one_ics->user_id)
+                                                        ->update([
+                                                            'task_enabled' => 0,
+                                                            'notification' => 0,
+                                                            'updated_at' => Carbon::now()
+                                                        ]);
+                                                }
                                             }
                                         }
                                     }
                                 }
                             }
+                        } catch (\Exception $e) {
+                            die($e);
                         }
-                    } catch (\Exception $e) {
-                        die($e);
                     }
                 }
             }

@@ -41,11 +41,11 @@ class CalendarController extends Controller
             foreach ($DB_data as $one_data) {
                 array_push($response_data, [
                     'id' => $this->JWT_encode($one_data->id),
-                    'title' => $one_data->task_name,
+                    'title' => $this->DecryptWithECC(Auth::user()->private_key, $one_data->task_name),
                     'start' => $one_data->task_next_date,
                     'end' => $one_data->task_next_date,
                     'extendedProps' => [
-                        'description' => $one_data->task_note
+                        'description' => (!is_null($one_data->task_note) ? $this->DecryptWithECC(Auth::user()->private_key, $one_data->task_note) : "")
                     ],
                 ]);
             }
@@ -81,7 +81,7 @@ class CalendarController extends Controller
                 //Získanie eventov z DB
 
                 $user_id = DB::table('users')
-                    ->select('id')
+                    ->select('id', 'private_key')
                     ->where('email', '=', $hash)
                     ->get();
 
@@ -97,8 +97,8 @@ class CalendarController extends Controller
                         $array_events = array();
                         foreach ($events as $one_event) {
                             $event = Event::create()
-                                ->name($one_event->task_name)
-                                ->description(!empty($one_event->task_note) ? $one_event->task_note : '')
+                                ->name($this->DecryptWithECC($user_id[0]->private_key, $one_event->task_name))
+                                ->description(!is_null($one_event->task_note) ? $this->DecryptWithECC($user_id[0]->private_key, $one_event->task_note) : '')
                                 ->uniqueIdentifier('notificateme_' . $one_event->id)
                                 ->createdAt(new \DateTime(Carbon::parse($one_event->created_at)->format('Y-m-d')))
                                 ->startsAt(new \DateTime($one_event->task_next_date . '00:00'))
