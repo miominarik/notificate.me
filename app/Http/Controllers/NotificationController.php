@@ -26,7 +26,7 @@ class NotificationController extends Controller
         if (!empty($data)) {
             foreach ($data as $item) {
 
-                $checked_date = Carbon::createFromFormat('Y-m-d', $item->task_next_date);
+                $checked_date = Carbon::createFromFormat('Y-m-d H:i:s', $item->task_next_date);
 
                 if ($item->task_notification_type == 1) { //Add x days
                     $new_date = $checked_date->subDays($item->task_notification_value);
@@ -38,13 +38,13 @@ class NotificationController extends Controller
                     $new_date = $checked_date->subYears($item->task_notification_value);
                 };
 
-                $new_date = $new_date->format('Y-m-d');
+                $new_date = $new_date->format('Y-m-d H:i:s');
 
 
                 if ($new_date <= Carbon::now()) {
                     array_push($notification_array['data'], [
                         'task_name' => $this->DecryptWithECC(Auth::user()->private_key, $item->task_name),
-                        'task_next_date' => Carbon::createFromFormat('Y-m-d', $item->task_next_date)->format('d.m.Y'),
+                        'task_next_date' => Carbon::createFromFormat('Y-m-d H:i:s', $item->task_next_date)->format('d.m.Y H:i:s'),
                     ]);
                     $notification_array['count']++;
                 }

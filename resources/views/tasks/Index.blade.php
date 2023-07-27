@@ -64,7 +64,7 @@
                                                     <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
                                                         {{ $item->task_note }}</td>
                                                     <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
-                                                        {{ \Carbon\Carbon::parse($item->task_next_date)->format('d.m.Y') }}
+                                                        {{ \Carbon\Carbon::parse($item->task_next_date)->format('d.m.Y H:i') }}
                                                     </td>
                                                     <td scope="row" onclick="getDataToEditTaskForm({{ $item->id }})">
                                                         {{ $item->task_repeat_value }}
@@ -97,7 +97,7 @@
                                                         <h6 class="card-subtitle mb-2 text-muted">{{ $item->task_note }}</h6>
                                                         <p class="card-text">
                                                             {{ __('tasks.task_date') }}:
-                                                            {{ \Carbon\Carbon::parse($item->task_next_date)->format('d.m.Y') }}
+                                                            {{ \Carbon\Carbon::parse($item->task_next_date)->format('d.m.Y H:i') }}
                                                             <br>
                                                             {{ __('tasks.task_repeat') }}
                                                             : {{ $item->task_repeat_value }}
@@ -293,7 +293,7 @@
                     <label for="task_next_date"
                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_next_date') }}</label>
                     <div class="col-sm-1-12">
-                        <input type="date" class="form-control" name="task_next_date_edit" id="task_next_date_edit">
+                        <input type="datetime-local" class="form-control" name="task_next_date_edit" id="task_next_date_edit">
                     </div>
                 </div>
                 <div class="form-group row" id="add_task_repeat_group_edit" style="display: none;">

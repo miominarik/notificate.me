@@ -57,7 +57,7 @@ class ApiController extends Controller
                     continue;
                 };
 
-                $checked_date = Carbon::createFromFormat('Y-m-d', $item->task_next_date);
+                $checked_date = Carbon::createFromFormat('Y-m-d H:i:s', $item->task_next_date);
 
                 if ($item->task_notification_type == 1) { //Add x days
                     $new_date = $checked_date->subDays($item->task_notification_value);
@@ -128,7 +128,7 @@ class ApiController extends Controller
                     continue;
                 };
 
-                $checked_date = Carbon::createFromFormat('Y-m-d', $item->task_next_date);
+                $checked_date = Carbon::createFromFormat('Y-m-d H:i:s', $item->task_next_date);
 
                 if ($item->task_notification_type == 1) { //Add x days
                     $new_date = $checked_date->subDays($item->task_notification_value);
@@ -173,7 +173,7 @@ class ApiController extends Controller
 
             foreach ($notification_array as $one_task) {
                 if (!is_null($one_task['user_mobile_number']) && str_contains($one_task['user_mobile_number'], '421')) {
-                    $checked_date = Carbon::createFromFormat('Y-m-d', $one_task['task_next_date'])->format('d.m.Y');
+                    $checked_date = Carbon::createFromFormat('Y-m-d H:i:s', $one_task['task_next_date'])->format('d.m.Y');
                     $message_text = "Úloha: " . $one_task['task_name'] . ". Dátum splnenia: " . $checked_date;
                     $message = new Message($one_task['user_mobile_number'], $message_text);
                     $sender->send($message);
@@ -277,7 +277,7 @@ class ApiController extends Controller
                     continue;
                 };*/
 
-                $checked_date = Carbon::createFromFormat('Y-m-d', $item->task_next_date);
+                $checked_date = Carbon::createFromFormat('Y-m-d H:i:s', $item->task_next_date);
 
                 if ($item->task_notification_type == 1) { //Add x days
                     $new_date = $checked_date->subDays($item->task_notification_value);
@@ -427,7 +427,7 @@ class ApiController extends Controller
 
                                             $final_note = ($start != "" && $end != "" ? $start . " - " . $end : NULL);
 
-                                            $date = Carbon::parse($one_event['DTSTART'])->format("Y-m-d");
+                                            $date = Carbon::parse($one_event['DTSTART'])->format("Y-m-d H:i:s");
 
                                             if (Carbon::parse($date)->gte(Carbon::now())) {
                                                 if ($check_exist == 0) { // Insert new
@@ -437,9 +437,9 @@ class ApiController extends Controller
                                                             'ics_source_id' => $one_ics->id,
                                                             'user_id' => $one_ics->user_id,
                                                             'task_name' => $this->EncryptWithECC($user_data[0]->private_key, $one_event['SUMMARY']),
-                                                            'task_note' => (!empty($final_note) && !is_null($final_note) ? $this->EncryptWithECC($user_data[0]->private_key, $final_note) : NULL),
+                                                            'task_note' => NULL,
                                                             'task_type' => 0,
-                                                            'task_next_date' => Carbon::parse($date)->format("Y-m-d"),
+                                                            'task_next_date' => Carbon::parse($date)->format("Y-m-d H:i:s"),
                                                             'task_repeat_value' => NULL,
                                                             'task_repeat_type' => NULL,
                                                             'task_notification_value' => 1,
@@ -457,9 +457,9 @@ class ApiController extends Controller
                                                         ->where('user_id', '=', $one_ics->user_id)
                                                         ->update([
                                                             'task_name' => $this->EncryptWithECC($user_data[0]->private_key, $one_event['SUMMARY']),
-                                                            'task_note' => (!empty($final_note) && !is_null($final_note) ? $this->EncryptWithECC($user_data[0]->private_key, $final_note) : NULL),
+                                                            'task_note' => NULL,
                                                             'task_type' => 0,
-                                                            'task_next_date' => Carbon::parse($date)->format("Y-m-d"),
+                                                            'task_next_date' => Carbon::parse($date)->format("Y-m-d H:i:s"),
                                                             'task_repeat_value' => NULL,
                                                             'task_repeat_type' => NULL,
                                                             'task_notification_value' => 1,

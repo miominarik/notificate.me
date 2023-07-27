@@ -26,8 +26,8 @@ class CalendarController extends Controller
             ->where('task_enabled', TRUE);
 
         if (isset($request->start) && !empty($request->start) && isset($request->end) && !empty($request->end)) {
-            $odkedy = Carbon::createFromDate($request->start)->format('Y-m-d');
-            $dokedy = Carbon::createFromDate($request->end)->format('Y-m-d');
+            $odkedy = Carbon::createFromDate($request->start)->format('Y-m-d H:i:s');
+            $dokedy = Carbon::createFromDate($request->end)->format('Y-m-d H:i:s');
 
             $DB_data->whereBetween('task_next_date', [$odkedy, $dokedy]);
 
@@ -63,7 +63,7 @@ class CalendarController extends Controller
             DB::table('tasks')
                 ->where('id', $task_id)
                 ->update([
-                    'task_next_date' => Carbon::createFromDate($request->time)->format('Y-m-d'),
+                    'task_next_date' => Carbon::createFromDate($request->time)->format('Y-m-d H:i:s'),
                     'updated_at' => Carbon::now()
                 ]);
 
@@ -100,7 +100,7 @@ class CalendarController extends Controller
                                 ->name($this->DecryptWithECC($user_id[0]->private_key, $one_event->task_name))
                                 ->description(!is_null($one_event->task_note) ? $this->DecryptWithECC($user_id[0]->private_key, $one_event->task_note) : '')
                                 ->uniqueIdentifier('notificateme_' . $one_event->id)
-                                ->createdAt(new \DateTime(Carbon::parse($one_event->created_at)->format('Y-m-d')))
+                                ->createdAt(new \DateTime(Carbon::parse($one_event->created_at)->format('Y-m-d H:i:s')))
                                 ->startsAt(new \DateTime($one_event->task_next_date . '00:00'))
                                 ->endsAt(new \DateTime($one_event->task_next_date . '23:59'))
                                 ->fullDay();

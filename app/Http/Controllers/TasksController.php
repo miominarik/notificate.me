@@ -231,7 +231,7 @@ class TasksController extends Controller
 
             if (!empty($next_data[0])) {
 
-                $date = Carbon::createFromFormat('Y-m-d', $validated['complete_date']);
+                $date = Carbon::createFromFormat('Y-m-d H:i:s', $validated['complete_date']);
 
                 if ($next_data[0]->task_repeat_type == 1) { //Add x days
                     $new_date = $date->addDays($next_data[0]->task_repeat_value);
@@ -243,7 +243,7 @@ class TasksController extends Controller
                     $new_date = $date->addYears($next_data[0]->task_repeat_value);
                 };
 
-                $new_date = $date->format('Y-m-d');
+                $new_date = $date->format('Y-m-d H:i:s');
 
                 DB::table('tasks')
                     ->where([
@@ -256,7 +256,7 @@ class TasksController extends Controller
                         'updated_at' => Carbon::now()
                     ]);
 
-                $this->add_log('Complete task', $request->ip(), $task, Carbon::createFromFormat('Y-m-d', $validated['complete_date'])->format('Y-m-d H:i:s'));
+                $this->add_log('Complete task', $request->ip(), $task, Carbon::createFromFormat('Y-m-d H:i:s', $validated['complete_date'])->format('Y-m-d H:i:s'));
 
                 return redirect(route('tasks.index'))->with('status_success', __('alerts.task_completed'));
             }
