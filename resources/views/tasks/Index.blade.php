@@ -188,7 +188,7 @@
                     <label for="task_next_date"
                            class="col-sm-1-12 col-form-label">{{ __('tasks.task_next_date') }}</label>
                     <div class="col-sm-1-12">
-                        <input type="date" class="form-control" name="task_next_date" id="task_next_date" required>
+                        <input type="datetime-local" class="form-control" name="task_next_date" id="task_next_date" required>
                     </div>
                 </div>
                 <div class="form-group row" id="add_task_repeat_group" style="display: none;">

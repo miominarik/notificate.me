@@ -5,25 +5,25 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.2",
         "bulkgate/sms": "^2.1",
         "doctrine/dbal": "^3.6",
-        "firebase/php-jwt": "^6.3",
+        "firebase/php-jwt": "^6.8.1",
         "guzzlehttp/guzzle": "^7.2",
         "jenssegers/agent": "^2.6",
         "johngrogg/ics-parser": "^v3.2.1",
         "kreait/firebase-php": "^6.9",
-        "laravel/framework": "^9.2",
-        "laravel/sanctum": "^2.14.1",
-        "laravel/socialite": "^5.5",
+        "laravel/framework": "^10.0",
+        "laravel/sanctum": "^3.2",
+        "laravel/socialite": "^5.8",
         "laravel/tinker": "^2.7",
-        "laravel/ui": "^3.4",
-        "league/flysystem-ftp": "^3.4",
+        "laravel/ui": "^4.2.2",
+        "league/flysystem-ftp": "^3.15",
         "nyholm/psr7": "^1.5",
         "socialiteproviders/apple": "^5.2",
         "socialiteproviders/microsoft": "^4.1",
         "spatie/icalendar-generator": "^2.3",
-        "symfony/psr-http-message-bridge": "^2.1"
+        "symfony/psr-http-message-bridge": "^2.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -31,7 +31,7 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {
