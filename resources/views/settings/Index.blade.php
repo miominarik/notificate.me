@@ -163,6 +163,10 @@
                                                     onclick="window.location.replace('{{route('settings.disconnect_all_devices')}}');">
                                                 {{__('settings.device_disconnect_all')}}
                                             </button>
+                                            <button type="button" class="btn btn-own-success mt-3"
+                                                    onclick="Notification.requestPermission().then(function(permission) {});YR">
+                                                {{__('settings.btn_allow_notif')}}
+                                            </button>
                                         </div>
                                         <hr>
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">

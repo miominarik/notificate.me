@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NotificationMail;
+use App\Models\User;
+use App\Notifications\WebPushNotification;
 use BulkGate\Message\Connection;
 use BulkGate\Sms\Message;
 use Carbon\Carbon;
@@ -20,6 +22,7 @@ use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use Ramsey\Uuid\Type\Integer;
 use BulkGate\Sms\Country;
+use Illuminate\Support\Facades\Notification as NotificationLaravel;
 
 class ApiController extends Controller
 {
@@ -314,7 +317,6 @@ class ApiController extends Controller
                 return $this->sendNotification("Notificate.me", $body, $one_task['user_id']);
             }
         };
-
     }
 
     public function sendNotification(string $title, string $body, int $user_id, $fcm_token = NULL)
@@ -495,5 +497,58 @@ class ApiController extends Controller
                 }
             }
         }
+    }
+
+    /**
+     * Checks all tasks and their completion dates. If the due date is less than the current one, it will send an
+     * e-mail.
+     */
+    protected function AgentCheckWebPush()
+    {
+        $notification_array = array();
+        $data = DB::table('tasks')
+            ->join('users_settings', 'tasks.user_id', '=', 'users_settings.user_id')
+            ->join('users', 'tasks.user_id', '=', 'users.id')
+            ->select('tasks.id', 'tasks.task_name', 'tasks.task_next_date', 'tasks.task_notification_value', 'tasks.task_notification_type', 'users_settings.notification_time', 'tasks.user_id', 'users.private_key')
+            ->where([
+                'task_enabled' => TRUE,
+                'notification' => TRUE
+            ])
+            ->get();
+        if (!empty($data)) {
+            foreach ($data as $item) {
+                $checked_date = Carbon::createFromFormat('Y-m-d H:i:s', $item->task_next_date);
+                if ($item->task_notification_type == 1) { //Add x days
+                    $new_date = $checked_date->subDays($item->task_notification_value);
+                } else if ($item->task_notification_type == 2) { //Add x weeks
+                    $new_date = $checked_date->subWeeks($item->task_notification_value);
+                } else if ($item->task_notification_type == 3) { //Add x months
+                    $new_date = $checked_date->subMonths($item->task_notification_value);
+                } else if ($item->task_notification_type == 4) { //Add x months
+                    $new_date = $checked_date->subYears($item->task_notification_value);
+                };
+
+                $new_date = $new_date->format('Y-m-d');
+
+                //check whether the current time is the same as set by the user
+                $now = Carbon::now()->format('H');
+                $date2 = Carbon::createFromFormat('H:i:s', $item->notification_time)->format('H');
+
+                if ($now == $date2) {
+                    if ($new_date <= Carbon::now()->format('Y-m-d')) {
+                        array_push($notification_array, [
+                            'task_name' => $this->DecryptWithECC($item->private_key, $item->task_name),
+                            'task_next_date' => Carbon::parse($item->task_next_date)->format('d.m.Y H.i'),
+                            'user_id' => $item->user_id,
+                        ]);
+                    }
+                }
+            }
+        }
+        if (!empty($notification_array)) {
+            foreach ($notification_array as $one_task) {
+                NotificationLaravel::send(User::find($one_task['user_id']), new WebPushNotification($one_task['task_name'], $one_task['task_next_date']));
+            }
+        };
     }
 }

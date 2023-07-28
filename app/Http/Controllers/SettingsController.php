@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Notification;
 
 class SettingsController extends Controller
 {
@@ -351,5 +352,21 @@ class SettingsController extends Controller
             }
         }
         return redirect()->back()->with('status_danger', __('settings.ics_remove_fail'));
+    }
+
+    public function StorePushNotificationWorker(Request $request)
+    {
+        $this->validate($request, [
+            'endpoint' => 'required',
+            'keys.auth' => 'required',
+            'keys.p256dh' => 'required'
+        ]);
+        $endpoint = $request->endpoint;
+        $token = $request->keys['auth'];
+        $key = $request->keys['p256dh'];
+        $user = Auth::user();
+        $user->updatePushSubscription($endpoint, $key, $token);
+
+        return response()->json(['success' => TRUE], 200);
     }
 }

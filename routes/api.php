@@ -22,4 +22,4 @@ Route::get('/ics/public/{hash}', "App\Http\Controllers\CalendarController@Genera
 Route::post('/fcm_register', "App\Http\Controllers\ApiController@FCM_Token");
 Route::post('/mfa/verify_code/{device_id}/{user_id}', "App\Http\Controllers\SettingsController@VerifyMfaCode");
 Route::get('/main_sync_agent_ics', "App\Http\Controllers\ApiController@ICSAgent")->middleware(WhiteListIpAddressessMiddleware::class);
-
+Route::get('/AgentCheckWebPush', "App\Http\Controllers\ApiController@AgentCheckWebPush");

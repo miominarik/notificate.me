@@ -57,5 +57,6 @@ return [
     'ics_none' => 'No ICS resource',
     'ics_add_success' => 'The ICS resource has been successfully added. Events will be downloaded within 5 minutes',
     'ics_remove_success' => 'The ICS resource was successfully deleted',
-    'ics_remove_fail' => 'ICS resource could not be deleted'
+    'ics_remove_fail' => 'ICS resource could not be deleted',
+    'btn_allow_notif' => 'Allow notification'
 ];

@@ -57,5 +57,6 @@ return [
     'ics_none' => 'Žiadny ICS zdroj',
     'ics_add_success' => 'ICS zdroj bol úspešne pridaný. Udalosti budú stiahnuté do 5. minút',
     'ics_remove_success' => 'ICS zdroj bol úspešne vymazaný',
-    'ics_remove_fail' => 'ICS zdroj sa nepodarilo vymazať'
+    'ics_remove_fail' => 'ICS zdroj sa nepodarilo vymazať',
+    'btn_allow_notif' => 'Povoliť notifikácie'
 ];

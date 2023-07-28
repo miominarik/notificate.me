@@ -80,6 +80,7 @@ Route::middleware(['auth', 'verified', 'blockedstatus', 'auth.session'])->group(
     //MFA
     Route::post('/mfa/checkcode', "App\Http\Controllers\SettingsController@CheckMfaCode")->name('mfa.checkcode');
     Route::get('/mfa/disablemfa', "App\Http\Controllers\SettingsController@DisableMFA")->name('mfa.disablemfa');
+    Route::post('/registerpushnotification','App\Http\Controllers\SettingsController@StorePushNotificationWorker');
 
     //Calendar
     Route::middleware('check_module:module_calendar')->group(function () {
